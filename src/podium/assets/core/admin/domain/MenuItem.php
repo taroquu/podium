@@ -20,16 +20,37 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\WebPage;
+use picon\ComonDomainBase;
+use picon\Identifier;
+use picon\Args;
 
 /**
- * Description of FrontPage
+ * Description of MenuItem
  *
  * @author Martin Cassidy
  */
-class FrontPage extends WebPage
+class MenuItem extends ComonDomainBase
 {
+    private $name;
+    private $page;
+    private $subMenu = array();
     
+    public function __construct($name, Identifier $page, $submenu = null)
+    {
+        $this->name = $name;
+        $this->page = $page;
+        
+        if($submenu!=null)
+        {
+            Args::isArray($submenu, 'submenu');
+            $this->subMenu = $submenu;
+        }
+    }
+    
+    public function addSubMenuItem(MenuItem $item)
+    {
+        array_push($this->subMenu, $item);
+    }
 }
 
 ?>

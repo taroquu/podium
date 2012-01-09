@@ -20,16 +20,15 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\WebPage;
-
 /**
- * Description of FrontPage
+ * Description of AdminHomePage
  *
  * @author Martin Cassidy
+ * @Path(path='admin')
  */
-class FrontPage extends WebPage
+class AdminHomePage extends AbstractAdminPage
 {
-    
+    //put your code here
 }
 
 ?>

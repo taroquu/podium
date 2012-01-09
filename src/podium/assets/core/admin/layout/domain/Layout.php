@@ -20,16 +20,26 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\WebPage;
+use picon\ComonDomainBase;
 
 /**
- * Description of FrontPage
+ * Description of Layout
  *
- * @author Martin Cassidy
+ * @author Martin
  */
-class FrontPage extends WebPage
+class Layout extends ComonDomainBase
 {
+    private $blocks = array();
     
+    public function addBlock(AbstractLayoutBlock $block, $index = 0)
+    {
+        array_push($this->blocks, $block);
+    }
+    
+    public function getBlocks()
+    {
+        return $this->blocks;
+    }
 }
 
 ?>

@@ -20,16 +20,32 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\WebPage;
+use picon\Label;
+use picon\BasicModel;
+use picon\MarkupContainer;
 
 /**
- * Description of FrontPage
+ * Description of AbstractAdminInnerPage
  *
  * @author Martin Cassidy
  */
-class FrontPage extends WebPage
+abstract class AbstractAdminTitlePage extends AbstractAdminPage
 {
+    protected function onInitialize()
+    {
+        parent::onInitialize();
+        $this->add(new Label('title', new BasicModel($this->getTitle())));
+        $seperator = new MarkupContainer('seperator');
+        $seperator->setVisible($this->isSeperatorVisible());
+        $this->add($seperator);
+    }
     
+    protected function isSeperatorVisible()
+    {
+        return true;
+    }
+    
+    protected abstract function getTitle();
 }
 
 ?>

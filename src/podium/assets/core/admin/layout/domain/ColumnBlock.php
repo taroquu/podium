@@ -20,16 +20,24 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\WebPage;
-
 /**
- * Description of FrontPage
+ * Description of ColumnBlock
  *
- * @author Martin Cassidy
+ * @author Martin
  */
-class FrontPage extends WebPage
+class ColumnBlock extends AbstractLayoutBlock
 {
+    private $columns = array();
     
+    public function addColumn(ColumnElement $column)
+    {
+        array_push($this->columns, $column);
+    }
+    
+    public function getColumns()
+    {
+        return $this->columns;
+    }
 }
 
 ?>

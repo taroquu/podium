@@ -49,6 +49,7 @@ abstract class PiconApplication
     private $componentInitializationListeners;
     private $componentBeforeRenderListeners;
     private $componentAfterRenderListeners;
+    private $componentRenderHeadListener;
     
     //Converter
     private $converters = array();
@@ -111,6 +112,7 @@ abstract class PiconApplication
         $this->componentInitializationListeners = new ComponentInitializationListenerCollection();
         $this->componentBeforeRenderListeners = new ComponentBeforeRenderListenerCollection();
         $this->componentAfterRenderListeners = new ComponentAfterRenderListenerCollection();
+        $this->componentRenderHeadListener = new ComponentRenderHeadListenerCollection();
         
         $this->init();
     }
@@ -180,6 +182,11 @@ abstract class PiconApplication
         return $this->componentAfterRenderListeners;
     }
     
+    public function getComponentRenderHeadListener()
+    {
+        return $this->componentRenderHeadListener;
+    }
+    
     public function addConfigLoaderListener(ApplicationInitializerConfigLoadListener $listener)
     {
         $this->configLoadListeners->add($listener);
@@ -197,17 +204,22 @@ abstract class PiconApplication
     
     public function addComponentInitializationListener(ComponentInitializationListener $listener)
     {
-        return $this->componentInitializationListener->add($listener);
+        $this->componentInitializationListener->add($listener);
     }
     
     public function addComponentBeforeRenderListener(ComponentBeforeRenderListener $listener)
     {
-        return $this->componentBeforeRenderListeners->add($listener);
+        $this->componentBeforeRenderListeners->add($listener);
     }
     
     public function addComponentAfterRenderListenersr(ComponentAfterRenderListener $listener)
     {
-        return $this->componentAfterRenderListeners->add($listener);
+        $this->componentAfterRenderListeners->add($listener);
+    }
+    
+    public function addComponentRenderHeadListener(ComponentRenderHeadListener $listener)
+    {
+        $this->componentRenderHeadListener->add($listener);
     }
     
     public function getConverter($className)

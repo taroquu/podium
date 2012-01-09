@@ -9,14 +9,23 @@
         <title>Podium Admin</title>
     </head>
     <body>
+        <div class="global">
         <div class="head">
             <div class="wrap">
                 <a picon:id="home" class="logo">Podium</a>
                 <ul class="mainMenu">
-                    <li picon:id="menuItem"><a picon:id="itemLink"><span picon:id="itemName"></span></a></li>
+                    <li picon:id="menuItem"><a picon:id="itemLink"><span picon:id="itemName"></span></a>
+                        <ul><li picon:id="submenu"><a picon:id="itemLink"><span picon:id="itemName"></span></a></li></ul></li>
                 </ul>
             </div>
         </div>
     <picon:child/>
+    <div class="push"> </div>
+    </div>
+    <div class="footer">
+        &copy; 2012 Podium CMS <a href="http://code.google.com/p/podium/">Podium Project</a>
+        <br/>
+        This is a development version and should not be used in production.
+    </div>
     </body>
 </html>

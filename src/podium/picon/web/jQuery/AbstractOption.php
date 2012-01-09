@@ -23,22 +23,33 @@
 namespace picon;
 
 /**
- * Description of AbstractJQueryBehaviour
+ * Description of AbstractOption
  *
  * @author Martin Cassidy
  */
-abstract class AbstractJQueryBehaviour extends AbstractBehaviour
+abstract class AbstractOption
 {
-    private static $header = false;
+    private $name;
+    private $value;
     
-    public function __construct()
+    public function __construct($name, $value)
     {
-        if(!self::$header)
-        {
-            PiconApplication::get()->addComponentRenderHeadListener(new JQueryRenderHeadListener());
-            self::$header = true;
-        }
+        Args::isString($name, 'name');
+        $this->name = $name;
+        $this->value = $value;
     }
+    
+    protected function getName()
+    {
+        return $this->name;
+    }
+    
+    protected function getValue()
+    {
+        return $this->value;
+    }
+    
+    public abstract function render();
 }
 
 ?>

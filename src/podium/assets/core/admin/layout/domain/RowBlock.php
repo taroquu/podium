@@ -20,16 +20,15 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\WebPage;
 
 /**
- * Description of FrontPage
+ * Description of RowBlock
  *
- * @author Martin Cassidy
+ * @author Martin
  */
-class FrontPage extends WebPage
+class RowBlock extends AbstractLayoutBlock
 {
-    
+    //put your code here
 }
 
 ?>

@@ -20,16 +20,13 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\WebPage;
-
 /**
- * Description of FrontPage
  *
  * @author Martin Cassidy
  */
-class FrontPage extends WebPage
+interface ToolbarContributor
 {
-    
+    function toolbarRender(RepeatingView &$toolbar);
 }
 
 ?>

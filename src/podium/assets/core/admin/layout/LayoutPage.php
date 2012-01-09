@@ -20,16 +20,18 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\WebPage;
 
 /**
- * Description of FrontPage
+ * Description of LayoutPage
  *
  * @author Martin Cassidy
  */
-class FrontPage extends WebPage
+class LayoutPage extends AbstractAdminTitlePage
 {
-    
+    protected function getTitle()
+    {
+        return 'Layouts';
+    }
 }
 
 ?>

@@ -20,16 +20,17 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\WebPage;
+use picon\ComonDomainBase;
 
 /**
- * Description of FrontPage
+ * Description of AbstractLayoutBlock
  *
  * @author Martin Cassidy
  */
-class FrontPage extends WebPage
+class AbstractLayoutBlock extends ComonDomainBase
 {
-    
+    private $height;
+    private $width;
 }
 
 ?>

@@ -20,16 +20,36 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\WebPage;
+use picon\AttributeAppender;
+use picon\BasicModel;
 
 /**
- * Description of FrontPage
+ * Description of FloatingBlockPanel
  *
  * @author Martin Cassidy
  */
-class FrontPage extends WebPage
+class FloatingBlockPanel extends AbstractLayoutBlockPanel
 {
+    public function __construct($id, FloatingBlock $block)
+    {
+        parent::__construct($id, $block);
+        $style = '';
+        $properties = array('top', 'bottom', 'left', 'right');
+        foreach($properties as $property)
+        {
+            if($block->$property!=null)
+            {
+                $style .= sprintf('%s:%dpx;', $property, $block->$property);
+            }
+        }
+        
+        $this->add(new AttributeAppender('style', new BasicModel($style), ''));
+    }
     
+    public function getClass()
+    {
+        return 'layoutBlock floating n e s w ne nw se sw';
+    }
 }
 
 ?>

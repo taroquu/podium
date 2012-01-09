@@ -23,21 +23,33 @@
 namespace picon;
 
 /**
- * Description of AbstractJQueryBehaviour
+ * A set of jQuery options for use with a jQuery behaviour
  *
  * @author Martin Cassidy
  */
-abstract class AbstractJQueryBehaviour extends AbstractBehaviour
+class Options
 {
-    private static $header = false;
+    private $options = array();
     
-    public function __construct()
+    public function render()
     {
-        if(!self::$header)
+        $out = '{';
+        $total = count($this->options);
+        foreach($this->options as $index => $option)
         {
-            PiconApplication::get()->addComponentRenderHeadListener(new JQueryRenderHeadListener());
-            self::$header = true;
+            $out .= $option->render();
+            
+            if($index!=$total-1)
+            {
+                $out .= ',';
+            }
         }
+        $out .= '}';
+    }
+    
+    public function add(AbstractOption $option)
+    {
+        array_push($this->options, $option);
     }
 }
 

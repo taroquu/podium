@@ -20,16 +20,37 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\WebPage;
+use picon\Panel;
+use picon\AttributeModifier;
+use picon\BasicModel;
+use picon\AttributeAppender;
 
 /**
- * Description of FrontPage
+ * Description of AbstractLayoutBlockPanel
  *
  * @author Martin Cassidy
  */
-class FrontPage extends WebPage
+abstract class AbstractLayoutBlockPanel extends Panel
 {
+    public function __construct($id, AbstractLayoutBlock $block)
+    {
+        parent::__construct($id);
+        $this->add(new AttributeModifier('class', new BasicModel($this->getClass())));
+        
+        $style = '';
+        $properties = array('width', 'height');
+        foreach($properties as $property)
+        {
+            if($block->$property!=null)
+            {
+                $style .= sprintf('%s:%dpx;', $property, $block->$property);
+            }
+        }
+        
+        $this->add(new AttributeAppender('style', new BasicModel($style), ''));
+    }
     
+    public abstract function getClass();
 }
 
 ?>

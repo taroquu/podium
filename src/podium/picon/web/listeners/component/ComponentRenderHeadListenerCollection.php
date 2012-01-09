@@ -23,21 +23,23 @@
 namespace picon;
 
 /**
- * Description of AbstractJQueryBehaviour
+ * Description of ComponentRenderHeadListenerCollection
  *
  * @author Martin Cassidy
  */
-abstract class AbstractJQueryBehaviour extends AbstractBehaviour
+class ComponentRenderHeadListenerCollection extends ListenerCollection implements ComponentRenderHeadListener
 {
-    private static $header = false;
-    
-    public function __construct()
+    public function onHeadRendering(HeaderContainer &$container, HeaderResponse &$response)
     {
-        if(!self::$header)
+        $this->notify(function($listener) use (&$container, &$response)
         {
-            PiconApplication::get()->addComponentRenderHeadListener(new JQueryRenderHeadListener());
-            self::$header = true;
-        }
+            $listener->onHeadRendering($container, $response);
+        });
+    }
+    
+    protected function validateListener($listener)
+    {
+        return $listener instanceof ComponentRenderHeadListener;
     }
 }
 

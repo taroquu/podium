@@ -20,16 +20,18 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\WebPage;
 
 /**
- * Description of FrontPage
+ * Description of FloatingBlock
  *
- * @author Martin Cassidy
+ * @author Martin
  */
-class FrontPage extends WebPage
+class FloatingBlock extends AbstractLayoutBlock
 {
-    
+    private $top;
+    private $left;
+    private $right;
+    private $bottom;
 }
 
 ?>

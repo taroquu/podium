@@ -23,21 +23,24 @@
 namespace picon;
 
 /**
- * Description of AbstractJQueryBehaviour
+ * Description of AttributeAppender
  *
  * @author Martin Cassidy
  */
-abstract class AbstractJQueryBehaviour extends AbstractBehaviour
+class AttributeAppender extends AttributeModifier
 {
-    private static $header = false;
+    private $seperator;
     
-    public function __construct()
+    public function __construct($attributeName, Model $value, $seperator)
     {
-        if(!self::$header)
-        {
-            PiconApplication::get()->addComponentRenderHeadListener(new JQueryRenderHeadListener());
-            self::$header = true;
-        }
+        parent::__construct($attributeName, $value);
+        Args::isString($seperator, 'seperator');
+        $this->seperator = $seperator;
+    }
+    
+    public function newValue($current)
+    {
+        return $current.$this->seperator.$this->value->getModelObject();
     }
 }
 

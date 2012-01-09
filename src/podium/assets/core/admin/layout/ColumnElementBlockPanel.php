@@ -20,16 +20,19 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\WebPage;
+use picon\Panel;
 
 /**
- * Description of FrontPage
+ * Description of ColumnElementBlock
  *
  * @author Martin Cassidy
  */
-class FrontPage extends WebPage
+class ColumnElementBlockPanel extends AbstractLayoutBlockPanel
 {
-    
+    public function getClass()
+    {
+        return 'layoutBlock columnElement s e se';
+    }
 }
 
 ?>

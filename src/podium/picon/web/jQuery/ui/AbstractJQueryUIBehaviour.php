@@ -23,19 +23,20 @@
 namespace picon;
 
 /**
- * Description of AbstractJQueryBehaviour
- *
+ * Description of AbstractJQueryUIBehaviour
+ * @todo add support fo the jquery ui css
  * @author Martin Cassidy
  */
-abstract class AbstractJQueryBehaviour extends AbstractBehaviour
+class AbstractJQueryUIBehaviour extends AbstractJQueryBehaviour
 {
     private static $header = false;
     
     public function __construct()
     {
+        parent::__construct();
         if(!self::$header)
         {
-            PiconApplication::get()->addComponentRenderHeadListener(new JQueryRenderHeadListener());
+            PiconApplication::get()->addComponentRenderHeadListener(new JQueryUIRenderHeadListener());
             self::$header = true;
         }
     }

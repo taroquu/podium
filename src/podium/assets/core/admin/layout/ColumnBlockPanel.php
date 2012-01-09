@@ -20,16 +20,38 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\WebPage;
+use picon\Panel;
+use picon\RepeatingView;
+use picon\AttributeAppender;
+use picon\BasicModel;
 
 /**
- * Description of FrontPage
+ * Description of ColumnBlockPanel
  *
  * @author Martin Cassidy
  */
-class FrontPage extends WebPage
+class ColumnBlockPanel extends AbstractLayoutBlockPanel
 {
+    public function __construct($id, ColumnBlock $block)
+    {
+        parent::__construct($id, $block);
+        
+        $view = new RepeatingView('columns');
+        $this->add($view);
+        
+        foreach($block->getColumns() as $column)
+        {
+            $view->add(new ColumnElementBlockPanel($view->getNextChildId(), $column));
+        }
+        $first = $block->getColumns();
+        $first = $first[0];
+        $this->add(new AttributeAppender('style', new BasicModel(sprintf('height:%spx;', $first->height)), ''));
+    }
     
+    public function getClass()
+    {
+        return 'layoutBlock columnBlock';
+    }
 }
 
 ?>

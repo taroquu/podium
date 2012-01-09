@@ -101,6 +101,7 @@ class XMLParser
         else
         {
             $this->stack[$this->depth-1]->addChild($tag);
+            $this->stack[$this->depth-1]->setTagType(new XmlTagType(XmlTagType::OPEN));
         }
         
         $this->depth++;
@@ -123,7 +124,6 @@ class XMLParser
      */
     private function endElement($parser, $name) 
     {
-        $this->stack[$this->depth-1]->setTagType(new XmlTagType(XmlTagType::OPEN));
         $this->depth--;
     }
     
@@ -135,6 +135,7 @@ class XMLParser
      */
     private function characterData($parser, $data) 
     {
+        $this->stack[$this->depth-1]->setTagType(new XmlTagType(XmlTagType::OPEN));
         $this->onCharacterData($data, $this->stack[$this->depth-1]);
     }
     

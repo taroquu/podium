@@ -20,16 +20,27 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\WebPage;
+use picon\Panel;
+use picon\MarkupContainer;
+use picon\AttributeModifier;
+use picon\BasicModel;
+use picon\Label;
 
 /**
- * Description of FrontPage
+ * Description of NewElementToolbarPanel
  *
- * @author Martin Cassidy
+ * @author Martin
  */
-class FrontPage extends WebPage
+class NewElementToolbarPanel extends Panel
 {
-    
+    public function __construct($id, $class, $title)
+    {
+        parent::__construct($id);
+        $element = new MarkupContainer('element');
+        $this->add($element);
+        $element->add(new AttributeModifier('class', new BasicModel('new '.$class)));
+        $element->add(new Label('label', new BasicModel($title)));
+    }
 }
 
 ?>
