@@ -21,6 +21,7 @@
  * */
 
 use picon\ComonDomainBase;
+use picon\Args;
 
 /**
  * Description of AbstractLayoutBlock
@@ -29,8 +30,31 @@ use picon\ComonDomainBase;
  */
 class AbstractLayoutBlock extends ComonDomainBase
 {
-    private $height;
-    private $width;
+    private $id;
+    private $attributes = array();
+    
+    /**
+     *
+     * @todo this is only used for mapping at the moment the value becomes
+     * stale if updated client side
+     */
+    private $parent;
+    
+    public function addAttribute(LayoutBlockAttribute $attribute)
+    {
+        array_push($this->attributes, $attribute);
+    }
+    
+    public function setAttributes($attributes)
+    {
+        Args::isArray($attributes, 'attributes');
+        $this->attributes = $attributes;
+    }
+    
+    public function getAttributes()
+    {
+        return $this->attributes;
+    }
 }
 
 ?>

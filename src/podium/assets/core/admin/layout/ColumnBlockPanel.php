@@ -43,9 +43,6 @@ class ColumnBlockPanel extends AbstractLayoutBlockPanel
         {
             $view->add(new ColumnElementBlockPanel($view->getNextChildId(), $column));
         }
-        $first = $block->getColumns();
-        $first = $first[0];
-        $this->add(new AttributeAppender('style', new BasicModel(sprintf('height:%spx;', $first->height)), ''));
     }
     
     public function getClass()

@@ -38,16 +38,13 @@ abstract class AbstractLayoutBlockPanel extends Panel
         $this->add(new AttributeModifier('class', new BasicModel($this->getClass())));
         
         $style = '';
-        $properties = array('width', 'height');
-        foreach($properties as $property)
+        
+        foreach($block->getAttributes() as $attribute)
         {
-            if($block->$property!=null)
-            {
-                $style .= sprintf('%s:%dpx;', $property, $block->$property);
-            }
+            $style .= sprintf('%s:%d;', $attribute->name, $attribute->value);
         }
         
-        $this->add(new AttributeAppender('style', new BasicModel($style), ''));
+        $this->add(new AttributeModifier('style', new BasicModel($style), ''));
     }
     
     public abstract function getClass();

@@ -29,9 +29,11 @@ use picon\ComonDomainBase;
  */
 class Layout extends ComonDomainBase
 {
+    private $id;
+    private $name;
     private $blocks = array();
     
-    public function addBlock(AbstractLayoutBlock $block, $index = 0)
+    public function addBlock(AbstractLayoutBlock $block)
     {
         array_push($this->blocks, $block);
     }

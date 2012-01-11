@@ -27,6 +27,7 @@ use picon\HeaderResponse;
 use picon\DefaultJQueryUIBehaviour;
 use picon\AttributeModifier;
 use picon\BasicModel;
+use picon\Link;
 
 /**
  * Description of LayoutEditorPanel
@@ -35,11 +36,24 @@ use picon\BasicModel;
  */
 class LayoutEditorPanel extends Panel implements ToolbarContributor
 {
+    /**
+     * @Resource
+     */
+    private $layoutService;
+    
     public function __construct($id, Layout $layout)
     {
         parent::__construct($id, null);
+        $this->setModel(new BasicModel($layout));
         $this->add(new AttributeModifier('class', new BasicModel('layoutEditor')));
-        $this->add(new DefaultJQueryUIBehaviour('podiumLayout'));
+        $layoutUI = new DefaultJQueryUIBehaviour('podiumLayout');
+        $this->add($layoutUI);
+        
+        $layoutUI->getOptions()->add(new \picon\CallbackOption('test2', function(picon\AjaxRequestTarget $target) 
+        {
+            
+        }));
+        
         $view = new RepeatingView('layoutBlock');
         $this->add($view);
         
@@ -74,6 +88,17 @@ class LayoutEditorPanel extends Panel implements ToolbarContributor
         $toolbar->add(new NewElementToolbarPanel($toolbar->getNextChildId(), 'createRow', 'New Row'));
         $toolbar->add(new NewElementToolbarPanel($toolbar->getNextChildId(), 'createColumn', 'New Column'));
         $toolbar->add(new NewElementToolbarPanel($toolbar->getNextChildId(), 'createFloating', 'New Floating Block'));
+        
+        $self = $this;
+        $toolbar->add(new ToolbarLink($toolbar->getNextChildId(), 'Save', function() use ($self)
+        {
+            $self->getLayoutService()->createOrUpdateLayout($self->getModelObject());
+        }));
+    }
+    
+    public function getLayoutService()
+    {
+        return $this->layoutService;
     }
 }
 

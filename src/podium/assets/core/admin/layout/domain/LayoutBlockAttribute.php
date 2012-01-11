@@ -20,30 +20,24 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
+use picon\ComonDomainBase;
 
 /**
- * Description of CreateLayoutPage
+ * Description of LayoutBlockAttribute
  *
  * @author Martin
  */
-class CreateLayoutPage extends AbstractAdminToolbarPage
+class LayoutBlockAttribute extends ComonDomainBase
 {
-    /**
-     * @Resource
-     */
-    private $layoutService;
+    private $name;
+    private $value;
     
-    public function __construct()
+    public function __construct($name, $value)
     {
-        parent::__construct();
-        $layout = $this->layoutService->getLayout(6);
-        
-        $this->add(new LayoutEditorPanel('layout', $layout));
-    }
-    
-    protected function getTitle()
-    {
-        return 'Create Layout';
+        Args::isString($name, 'name');
+        Args::isString($value, 'value');
+        $this->name = $name;
+        $this->value = $value;
     }
 }
 

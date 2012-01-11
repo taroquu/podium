@@ -20,30 +20,23 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
+use picon\Link;
+use picon\Label;
+use picon\BasicModel;
 
 /**
- * Description of CreateLayoutPage
+ * Description of ToolbarLink
  *
  * @author Martin
  */
-class CreateLayoutPage extends AbstractAdminToolbarPage
+class ToolbarLink extends AbstractToolbarItem
 {
-    /**
-     * @Resource
-     */
-    private $layoutService;
-    
-    public function __construct()
+    public function __construct($id, $title, $callback)
     {
-        parent::__construct();
-        $layout = $this->layoutService->getLayout(6);
-        
-        $this->add(new LayoutEditorPanel('layout', $layout));
-    }
-    
-    protected function getTitle()
-    {
-        return 'Create Layout';
+        parent::__construct($id);
+        $link = new Link('link', $callback);
+        $link->add(new Label('label', new BasicModel($title)));
+        $this->add($link);
     }
 }
 

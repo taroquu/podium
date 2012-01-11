@@ -20,30 +20,23 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
+use picon\DaoSupport;
 
 /**
- * Description of CreateLayoutPage
+ * Description of AbstractDao
  *
- * @author Martin
+ * @author Martin Cassidy
  */
-class CreateLayoutPage extends AbstractAdminToolbarPage
+class AbstractDao extends DaoSupport
 {
     /**
-     * @Resource
+     * @Resource(name = 'podiumDB')
      */
-    private $layoutService;
+    private $dataSource;
     
-    public function __construct()
+    protected function init()
     {
-        parent::__construct();
-        $layout = $this->layoutService->getLayout(6);
-        
-        $this->add(new LayoutEditorPanel('layout', $layout));
-    }
-    
-    protected function getTitle()
-    {
-        return 'Create Layout';
+        $this->setDataSource($this->dataSource);
     }
 }
 

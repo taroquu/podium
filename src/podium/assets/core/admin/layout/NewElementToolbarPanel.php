@@ -31,7 +31,7 @@ use picon\Label;
  *
  * @author Martin
  */
-class NewElementToolbarPanel extends Panel
+class NewElementToolbarPanel extends AbstractToolbarItem
 {
     public function __construct($id, $class, $title)
     {

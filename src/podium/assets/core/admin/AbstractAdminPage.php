@@ -82,23 +82,23 @@ abstract class AbstractAdminPage extends WebPage
         $this->add(new ListView('menuItem', function(picon\ListItem $item) use ($self)
         {
             $menuItem = $item->getModelObject();
-            $link = new Link('itemLink', function() use($self, $menuItem)
+            $link = new picon\Link('itemLink', function() use($self, $menuItem)
             {
                 $self->setPage($menuItem->page);
             });
             $item->add($link);
             $link->add(new picon\Label('itemName', new picon\BasicModel(ucwords($menuItem->name))));
             
-            $item->add(new ListView('submenu', function(picon\ListItem $item) use ($self)
+            $item->add(new picon\ListView('submenu', function(picon\ListItem $item) use ($self)
             {
                 $menuItem = $item->getModelObject();
-                $link = new Link('itemLink', function() use($self, $menuItem)
+                $link = new picon\Link('itemLink', function() use($self, $menuItem)
                 {
                     $self->setPage($menuItem->page);
                 });
                 $item->add($link);
                 $link->add(new picon\Label('itemName', new picon\BasicModel(ucwords($menuItem->name))));
-            }, new ArrayModel($menuItem->subMenu)));
+            }, new picon\ArrayModel($menuItem->subMenu)));
         }, new ArrayModel($menuItems)));
     }
     

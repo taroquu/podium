@@ -310,8 +310,14 @@ var placeHolderUpdate = function(container, p)
         });
     }
 
-    $.fn.podiumLayout = function() 
+    $.fn.podiumLayout = function(settings) 
     {
+        var options = $.extend( {
+          'test2'         : function(){}
+        }, settings);
+
+        options.test2();
+        
         //Force the layout editor to be the full height available
         if($(this).height()<$(window).height()-$(this).offset().top)
         {

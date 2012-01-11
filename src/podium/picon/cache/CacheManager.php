@@ -122,7 +122,6 @@ class CacheManager
     private function internalSaveResource($directory, $name, $resource)
     {
         $fileName = $this->getFileName($directory, $name);
-        
         if(is_object($resource) && $resource instanceof PiconSerializable)
         {
             $resource->preparForSerialize();

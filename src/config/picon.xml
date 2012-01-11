@@ -3,11 +3,11 @@
     <homePage>FrontPage</homePage>
     <mode>development</mode><!-- todo this needs to go into ENV-->
     <startUp>auto</startUp>
-    <dataSource name="demo">
+    <dataSource name="podiumDB">
         <host>localhost</host>
         <username>basic</username>
         <password>P@ssword1</password>
-        <database>picontest</database>
+        <database>podium</database>
         <type>MYSQL</type>
     </dataSource>
 </piconApplication>
