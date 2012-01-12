@@ -20,32 +20,42 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\ComonDomainBase;
+use picon\AbstractColumn;
+use picon\Args;
+use picon\GridItem;
+use picon\Model;
+use picon\Panel;
+use picon\SerializableClosure;
 
 /**
- * Description of Layout
+ * Description of PanelColumn
  *
  * @author Martin
  */
-class Layout extends ComonDomainBase
+class PanelColumn extends AbstractColumn
 {
-    private $id;
-    private $name;
-    private $blocks = array();
+    private $callback;
     
-    public function addBlock(AbstractLayoutBlock $block)
+    public function __construct($heading, $callback)
     {
-        array_push($this->blocks, $block);
+        parent::__construct($heading);
+        Args::callBackArgs($callback, 2, 'callback');
+        $this->callback = new SerializableClosure($callback);
     }
     
-    public function getBlocks()
+    public function populateCell(GridItem $item, $componentId, Model $model)
     {
-        return $this->blocks;
-    }
-    
-    public function removeAll()
-    {
-        $this->blocks = array();
+        $callable = $this->callback;
+        $panel = $callable($componentId, $model);
+        
+        if($panel instanceof Panel)
+        {
+            $item->add($panel);
+        }
+        else
+        {
+            throw new IllegalStateException('Callback for panel column must return a panel');
+        }
     }
 }
 

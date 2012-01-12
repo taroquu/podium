@@ -185,10 +185,57 @@ var placeHolderUpdate = function(container, p)
     return;
 };
 
+var serialize = function(block)
+{
+    var getType = function (object)
+    {
+        if(object.hasClass('rowBlock')) return 'rowBlock';
+        else if(object.hasClass('columnBlock')) return 'columnBlock';
+        else if(object.hasClass('columnElement')) return 'columnElement';
+        else if(object.hasClass('floating')) return 'floatingBlock';
+    };
+    
+    var appendCSS = function(object, str, prepend)
+    {
+        var css = $(object).attr('style');
+        var attributes = css.split(';');
+        for(var i = 0; i < attributes.length; i++)
+        {
+            if(attributes[i]!="")
+            {
+                var value = attributes[i].split(':');
+                str.push(prepend+'[attributes]['+value[0]+']='+value[1]);
+            }
+        }
+    }
+    
+    var str = [];
+    $(block).children('li').each(function()
+    {
+        var type = getType($(this));
+        var index = $(block).children('li').index($(this));
+        str.push('blocks['+index+'][type]='+type);
+        appendCSS(this, str, 'blocks['+index+']');
+        
+        var item = $('ul', $(this));
+        $(item).children('li').each(function()
+        {
+            var innerIndex = $(item).children('li').index($(this));
+            str.push('blocks['+index+'][children]['+innerIndex+'][type]='+getType($(this)));
+            appendCSS(this, str, 'blocks['+index+'][children]['+innerIndex+']');
+        });
+    });
+    return str.join('&');
+};
+
 (function($) 
 {
-    $.fn.layoutBlock = function()
+    $.fn.layoutBlock = function(settings)
     {
+        var options = $.extend( {
+          'updated' : function(data){ }
+        }, settings);
+        
        $(this).each(function()
        {
            var status = jQuery.data($(this), 'status');
@@ -243,6 +290,7 @@ var placeHolderUpdate = function(container, p)
                                 $(this).css('top', '');
                                 $(this).css('left', '');
                             }
+                            options.updated(serialize($(this).parents('ul.vertical')));
                         }
                     });
                 }
@@ -250,7 +298,9 @@ var placeHolderUpdate = function(container, p)
                 $(this).append('<div class="remove blockControl" />');
                 $('.remove', $(this)).click(function()
                 {
+                    var parent = $(this).parents('ul.vertical');
                     $(this).parent().remove();
+                    options.updated(serialize(parent));
                     cleanup();
                 });
                 jQuery.data(this, 'status', true);
@@ -273,28 +323,36 @@ var placeHolderUpdate = function(container, p)
                         }
                         ui.placeholder.css('height', ui.placeholder.parents('.columnBlock').height()+'px');
                     },
-                    stop: function(event, ui)
+                    beforeStop : function(event, ui)
                     {
                         if (ui.item.hasClass("new")) 
                         {
                             var $newItem = $('<li/>');
                             $newItem.insertBefore(ui.item);
 
-                            if(ui.item.hasClass('createColumn'))
-                            {
-                                $newItem.attr('class', 'layoutBlock columnElement s e se');
-                                $newItem.css('width', '50px');
-                                $newItem.css('height', $newItem.parents('.columnBlock').height()+'px');
-                            }
-
-                            ui.item.remove();
-                            $newItem.layoutBlock();
+                            $newItem.attr('class', 'layoutBlock columnElement s e se');
+                            $newItem.css('width', '50px');
+                            $newItem.css('height', $newItem.parents('.columnBlock').height()+'px');
+                            $newItem.layoutBlock(options);
                         }
                         else
                         {
                             ui.item.css('height', ui.item.parents('.columnBlock').height()+'px');
                         }
                         cleanup();
+                    },
+                    stop: function(event, ui)
+                    {
+                        if (ui.item.hasClass("new")) 
+                        {
+                            ui.item.remove();
+                        }
+                        else
+                        {
+                            ui.item.css('height', ui.item.parents('.columnBlock').height()+'px');
+                        }
+                        cleanup();
+                        options.updated(serialize($(this).parents('ul.vertical')));
                     },
                     connectWith: 'ul.horizontal'
                 });
@@ -303,7 +361,11 @@ var placeHolderUpdate = function(container, p)
                     $(this).draggable(
                     {
                         handle: '.dragHandle',
-                        containment: '.layoutEditor'
+                        containment: '.layoutEditor',
+                        stop : function(event, ui)
+                        {
+                            options.updated(serialize($(this).parents('ul.vertical')));
+                        }
                     });
                 }
             }
@@ -313,138 +375,135 @@ var placeHolderUpdate = function(container, p)
     $.fn.podiumLayout = function(settings) 
     {
         var options = $.extend( {
-          'test2'         : function(){}
+          'updated' : function(data){alert(data);}
         }, settings);
 
-        options.test2();
-        
-        //Force the layout editor to be the full height available
-        if($(this).height()<$(window).height()-$(this).offset().top)
-        {
-            $(this).css('height', ($(window).height()-$(this).offset().top) + 'px')
-        }
-        
-        //Nudge down floating elements to account for header
-        $('.floating', $(this)).each(function()
-        {
-            if($(this).css('top')!='')
+       $(this).each(function()
+       {
+            //Force the layout editor to be the full height available
+            if($(this).height()<$(window).height()-$(this).offset().top)
             {
-                $(this).css('top', ($(this).outerHeight(true)+$(this).parents('.layoutEditor').offset().top)+'px')
+                $(this).css('height', ($(window).height()-$(this).offset().top) + 'px')
             }
-            $(this).draggable(
+
+            $('.floating', $(this)).each(function()
+            {
+                $(this).draggable(
+                {
+                    handle: '.dragHandle',
+                    containment: '.layoutEditor'
+                });
+            });
+
+            //Create new row button
+            $( ".createRow" ).draggable({
+                connectToSortable: ".layoutEditor ul.vertical",
+                helper: function()
+                {
+                    var $element = $('<li class="newRow" style="height:50px;width:100%;"/>');
+                    return $element;
+                },
+                zIndex:50
+            });
+
+            //Create new column button
+            $( ".createColumn" ).draggable({
+                connectToSortable: ".layoutEditor ul",
+                helper: function()
+                {
+                    var $element = $('<li class="newColum" style="height:50px;width:50px;"/>');
+                    return $element;
+                },
+                revert: "invalid",
+                zIndex:50
+            });
+
+            //Create new floating block
+            $( ".createFloating" ).draggable({
+                helper: function()
+                {
+                    var $element = $('<li class="newColum" style="height:50px;width:50px;"/>');
+                    return $element;
+                },
+                revert: "invalid",
+                zIndex:50,
+                start : function()
+                {
+                    $('.layoutEditor').droppable( "enable" )
+                },
+                stop : function()
+                {
+                    $('.layoutEditor').droppable( "disable" )
+                    $('.layoutEditor').removeClass('ui-droppable-disabled');
+                    $('.layoutEditor').removeClass('ui-state-disabled');
+                }
+            });
+
+            $(this).droppable(
+            {
+                disabled: true,
+                drop: function( event, ui ) 
+                {
+                    $newFloating = $('<li class="layoutBlock floating n e s w ne nw se sw"/>');
+                    $('ul.vertical', $(this)).append($newFloating)
+                    $newFloating.css('height', '50px');
+                    $newFloating.css('width', '50px');
+                    $newFloating.css('top', ui.helper.css('top'));
+                    $newFloating.css('left', ui.helper.css('left'));
+                    options.updated(serialize($('ul.vertical', $(this))));
+                    $newFloating.layoutBlock(options);
+                }
+            });
+
+            //Add verticle sorting
+            $('ul.vertical').sortable(
             {
                 handle: '.dragHandle',
-                containment: '.layoutEditor'
+                placeholder: 
+                {
+                    element: placeHolderElement,
+                    update: placeHolderUpdate
+                },
+                cancel: 'li.columnElement,li.floating',
+                revert: true,
+                beforeStop: function(event, ui)
+                {
+                    if (ui.item.hasClass("new")) 
+                    {
+                        var $newItem = $('<li/>');
+                        $newItem.insertBefore(ui.item);
+                        if(ui.item.hasClass('createRow'))
+                        {
+                            $newItem.attr('class', 'layoutBlock rowBlock s');
+                            $newItem.css('height', '50px');
+                        }
+                        if(ui.item.hasClass('createColumn'))
+                        {
+                            $newItem.attr('class', 'layoutBlock columnElement s e se');
+                            $newItem.css('width', '50px');
+                            $newItem.css('height', ui.placeholder.height());
+                            $newItem.wrap('<li class="layoutBlock columnBlock" />');
+                            $newItem.wrap('<ul class="horizontal" />');
+                            $newItem.parent().parent().layoutBlock(options);
+                            $newItem.parents('.columnBlock').css('height', ui.placeholder.height());
+                        }
+                        $newItem.layoutBlock(options);
+                    }
+                },
+                stop : function(event, ui)
+                {
+                    if (ui.item.hasClass("new")) 
+                    {
+                        ui.item.remove();
+                    }
+                    options.updated(serialize($(this)));
+                }
             });
-        });
-        
-        //Create new row button
-        $( ".createRow" ).draggable({
-            connectToSortable: ".layoutEditor ul.vertical",
-            helper: function()
-            {
-                var $element = $('<li class="newRow" style="height:50px;width:100%;"/>');
-                return $element;
-            },
-            zIndex:50
-        });
 
-        //Create new column button
-        $( ".createColumn" ).draggable({
-            connectToSortable: ".layoutEditor ul",
-            helper: function()
-            {
-                var $element = $('<li class="newColum" style="height:50px;width:50px;"/>');
-                return $element;
-            },
-            revert: "invalid",
-            zIndex:50
-        });
-        
-        //Create new floating block
-        $( ".createFloating" ).draggable({
-            helper: function()
-            {
-                var $element = $('<li class="newColum" style="height:50px;width:50px;"/>');
-                return $element;
-            },
-            revert: "invalid",
-            zIndex:50,
-            start : function()
-            {
-                $('.layoutEditor').droppable( "enable" )
-            },
-            stop : function()
-            {
-                $('.layoutEditor').droppable( "disable" )
-                $('.layoutEditor').removeClass('ui-droppable-disabled');
-                $('.layoutEditor').removeClass('ui-state-disabled');
-            }
-        });
-        
-        $(this).droppable(
-        {
-            disabled: true,
-            drop: function( event, ui ) 
-            {
-                $newFloating = $('<li class="layoutBlock floating n e s w ne nw se sw"/>');
-                $('ul.vertical', $(this)).append($newFloating)
-                $newFloating.css('height', '50px');
-                $newFloating.css('width', '50px');
-                $newFloating.css('top', ui.helper.css('top'));
-                $newFloating.css('left', ui.helper.css('left'));
-                $newFloating.layoutBlock();
-            }
-        });
-        
-        //Add verticle sorting
-        $('ul.vertical').sortable(
-        {
-            handle: '.dragHandle',
-            placeholder: 
-            {
-                element: placeHolderElement,
-                update: placeHolderUpdate
-            },
-            cancel: 'li.columnElement,li.floating',
-            revert: true,
-            beforeStop: function(event, ui)
-            {
-                if (ui.item.hasClass("new")) 
-                {
-                    var $newItem = $('<li/>');
-                    $newItem.insertBefore(ui.item);
+            $('ul', $(this)).disableSelection();
 
-                    if(ui.item.hasClass('createRow'))
-                    {
-                        $newItem.attr('class', 'layoutBlock rowBlock s');
-                        $newItem.css('height', '50px');
-                    }
-                    if(ui.item.hasClass('createColumn'))
-                    {
-                        $newItem.attr('class', 'layoutBlock columnElement s e se');
-                        $newItem.css('width', '50px');
-                        $newItem.css('height', ui.placeholder.height());
-                        $newItem.wrap('<li class="layoutBlock columnBlock" />');
-                        $newItem.wrap('<ul class="horizontal" />');
-                        $newItem.parent().parent().layoutBlock();
-                        $newItem.parents('.columnBlock').css('height', ui.placeholder.height())
-                    }
-                    $newItem.layoutBlock();
-                }
-            },
-            stop : function(event, ui)
-            {
-                if (ui.item.hasClass("new")) 
-                {
-                    ui.item.remove();
-                }
-            }
-        });
-
-        $('ul', $(this)).disableSelection();
-
-        $('.layoutBlock', $(this)).layoutBlock();
+            $('.layoutBlock', $(this)).layoutBlock(options);
+       });
     };
 
 })(jQuery);

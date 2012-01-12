@@ -21,6 +21,7 @@
  * */
 
 use picon\ComonDomainBase;
+use picon\Args;
 
 /**
  * Description of LayoutBlockAttribute

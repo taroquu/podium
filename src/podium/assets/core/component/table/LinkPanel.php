@@ -20,28 +20,27 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\Label;
+use picon\Panel;
+use picon\Link;
 use picon\BasicModel;
-use picon\MarkupContainer;
+use picon\Label;
+use picon\Args;
 
 /**
- * Description of AbstractAdminInnerPage
+ * Description of LinkPanel
  *
- * @author Martin Cassidy
+ * @author Martin
  */
-abstract class AbstractAdminTitlePage extends AbstractAdminPage
+class LinkPanel extends Panel
 {
-    protected function getSecondaryHead($id)
+    public function __construct($id, $linkText, $callback)
     {
-        return new HeadingPanel($id, $this->getTitle(), $this->isSeperatorVisible());
+        parent::__construct($id);
+        Args::callBack($callback, 'callback');
+        $link = new Link('link', $callback);
+        $this->add($link);
+        $link->add(new Label('title', new BasicModel($linkText)));
     }
-    
-    protected function isSeperatorVisible()
-    {
-        return true;
-    }
-
-    protected abstract function getTitle();
 }
 
 ?>

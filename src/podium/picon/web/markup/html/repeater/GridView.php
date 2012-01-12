@@ -77,15 +77,6 @@ class GridView extends RepeatingView
         }
     }
     
-    protected function removeAll()
-    {
-        foreach($this->rows as $row)
-        {
-            $this->remove($row);
-        }
-        $this->rows = array();
-    }
-    
     protected function populateItem(GridItem $item)
     {
         if($this->callback==null)

@@ -15,24 +15,26 @@ body {
     min-height: 100%;
     height: auto !important;
     height: 100%;
-    margin: 0 auto -30px;
+    margin: 0 auto -45px;
 }
 
-.footer, .push {
-    height: 30px;
+.push {
+    height: 45px;
 }
 
 .footer {
+    height: 30px;
     background-color:#333;
     font-size:8pt;
     color:#fff;
+    padding:10px 0 5px 0;
 }
 
 .footer a {
     color:#fff;
 }
 
-.wrap {
+.wrap, .content {
     width:90%;
     margin:0 auto;
 }
@@ -111,10 +113,20 @@ body {
     clear:both;
 }
 
-h1.mainHeading {
+.secondaryHeader h1 {
     color:#336600;
     margin:20px 0 5px 0;
     font-weight:normal;
+}
+
+.secondaryHeader hr {
+    color:#336600;
+    height: 1px;
+    border: 1px solid;
+}
+
+.content {
+    margin:10px auto 0 auto;
 }
 
 .toolbar {

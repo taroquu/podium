@@ -20,10 +20,6 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\RepeatingView;
-use picon\ArrayModel;
-use picon\Link;
-use picon\BasicModel;
 use picon\Component;
 use picon\Label;
 use picon\MarkupContainer;
@@ -36,18 +32,17 @@ use picon\AttributeModifier;
  */
 abstract class AbstractAdminToolbarPage extends AbstractAdminTitlePage
 {    
-    private $view;
+    private $toolbar;
     
-    public function __construct()
+    protected function getSecondaryHead($id)
     {
-        parent::__construct();
-        $this->view = new RepeatingView('toolbarItem');
-        $this->add($this->view);
+        $this->toolbar = new ToolbarPanel($id, $this->getTitle());
+        return $this->toolbar;
     }
     
-    protected function getToolbar()
+    public function getToolbar()
     {
-        return $this->view;
+        return $this->toolbar->getView();
     }
     
     protected function onInitialize()
@@ -62,13 +57,6 @@ abstract class AbstractAdminToolbarPage extends AbstractAdminTitlePage
             }
         };
         $this->visitChildren(Component::getIdentifier(), $callback);
-        
-        $self = $this;
-    }
-    
-    protected function isSeperatorVisible()
-    {
-        return false;
     }
 }
 

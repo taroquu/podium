@@ -27,7 +27,7 @@ namespace picon;
  * 
  * @author Martin Cassidy
  */
-class FormComponentLabel extends Label
+class FormComponentLabel extends WebComponent
 {
     private $source;
     
@@ -40,6 +40,14 @@ class FormComponentLabel extends Label
     
     protected function onComponentTagBody(ComponentTag $tag)
     {
+        parent::onComponentTagBody($tag);
+        $value = $this->source->getLabel();
+        
+        if($value=="")
+        {
+            $this->renderAll($tag->getChildren());
+            return;
+        }
         $this->getResponse()->write($this->source->getLabel());
     }
     

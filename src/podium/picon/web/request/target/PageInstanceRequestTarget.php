@@ -36,10 +36,14 @@ class PageInstanceRequestTarget implements RequestTarget
         $this->page = $page;
     }
     
+    public function getPage()
+    {
+        return $this->page;
+    }
     
     public function respond(Response $response)
     {
-        ob_clean();
+        //ob_clean();
         $response->clean();
         $this->page->renderPage();
         $response->flush();

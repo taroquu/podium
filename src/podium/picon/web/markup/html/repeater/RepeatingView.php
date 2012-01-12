@@ -36,6 +36,16 @@ class RepeatingView extends AbstractRepeater
         return $this->getChildren();
     }
     
+    protected function removeAll()
+    {
+        foreach($this->getChildren() as $child)
+        {
+            $this->remove($child);
+        }
+        $this->rows = array();
+        $this->nextId = 0;
+    }
+    
     protected function populate()
     {
         //Implementing classes will do this

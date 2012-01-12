@@ -27,23 +27,52 @@
  * @author Martin
  */
 class CreateLayoutPage extends AbstractAdminToolbarPage
-{
-    /**
-     * @Resource
-     */
-    private $layoutService;
+{    
+    private $layout;
     
-    public function __construct()
+    public function __construct($layout = null)
     {
         parent::__construct();
-        $layout = $this->layoutService->getLayout(6);
         
-        $this->add(new LayoutEditorPanel('layout', $layout));
+        if($layout==null)
+        {
+            $this->layout = new Layout();
+            $self = $this;
+            $onSavae = function() use ($self)
+            {
+                $editor = new LayoutEditorPanel('layout', $self->layout);
+                $self->addOrReplace($editor);
+                $editor->toolbarRender($self->getToolbar());
+            };
+            $this->add(new LayoutFormPanel('layout', new picon\PropertyModel($this, 'layout'), $onSavae));
+        }
+        else
+        {
+            if($layout instanceof Layout)
+            {
+                $this->layout = $layout;
+                $this->add(new LayoutEditorPanel('layout', $this->layout));
+            }
+            else
+            {
+                throw new InvalidArgumentException('Expected instance of layout');
+            }
+        }
     }
     
     protected function getTitle()
     {
         return 'Create Layout';
+    }
+    
+    public function __get($name)
+    {
+        return $this->$name;
+    }
+    
+    public function __set($name, $value)
+    {
+        $this->$name = $value;
     }
 }
 

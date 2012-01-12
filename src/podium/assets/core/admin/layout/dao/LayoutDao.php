@@ -30,6 +30,23 @@ use picon\CallbackRowMapper;
  */
 class LayoutDao extends AbstractDao
 {
+    public function getLayoutSize()
+    {
+        return $this->getTemplate()->queryForInt("SELECT count(*) FROM layout");
+    }
+    
+    public function getLayouts($start, $count)
+    {
+        $mapper = function($row)
+        {
+            $layout = new Layout();
+            $layout->id = $row->id;
+            $layout->name = $row->name;
+            return $layout;
+        };
+        return $this->getTemplate()->query("SELECT * FROM layout LIMIT %d, %d", new CallbackRowMapper($mapper), array($start, $count));
+    }
+    
     public function createLayout($name)
     {
         return $this->getTemplate()->insert("INSERT INTO layout (name) VALUES ('%s')", array($name));
@@ -88,6 +105,11 @@ class LayoutDao extends AbstractDao
         };
         
         return $this->getTemplate()->query("SELECT * FROM layout_block_attributes WHERE block_id = %d", new CallbackRowMapper($mapper), array($blockId));
+    }
+    
+    public function addBlockAttribute(LayoutBlockAttribute $attribute, $blockId)
+    {
+        return $this->getTemplate()->insert("INSERT INTO layout_block_attributes (block_id, name, value) VALUES (%d, '%s', '%s')", array($blockId, $attribute->name, $attribute->value));
     }
 }
 

@@ -183,9 +183,17 @@ class SerializableClosure
         $used_vars = array();
         foreach ($vars as $var)
         {
-            $var = trim($var, ' $&amp;');
-            $used_vars[$var] = $static_vars[$var];
+            $var = preg_replace("/\\$|\\&/", "", trim($var));
+            if(is_callable($static_vars[$var]))
+            {
+                $used_vars[$var] = new SerializableClosure($static_vars[$var]);
+            }
+            else
+            {
+                $used_vars[$var] = $static_vars[$var];
+            }
         }
+        
         return $used_vars;
     }
 

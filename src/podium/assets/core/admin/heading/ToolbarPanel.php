@@ -20,28 +20,28 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\Label;
-use picon\BasicModel;
-use picon\MarkupContainer;
+use picon\RepeatingView;
 
 /**
- * Description of AbstractAdminInnerPage
+ * Description of ToolbarPanel
  *
- * @author Martin Cassidy
+ * @author Martin
  */
-abstract class AbstractAdminTitlePage extends AbstractAdminPage
+class ToolbarPanel extends HeadingPanel
 {
-    protected function getSecondaryHead($id)
+    private $view;
+    
+    public function __construct($id, $title)
     {
-        return new HeadingPanel($id, $this->getTitle(), $this->isSeperatorVisible());
+        parent::__construct($id, $title, false);
+        $this->view = new RepeatingView('toolbarItem');
+        $this->add($this->view);
     }
     
-    protected function isSeperatorVisible()
+    public function getView()
     {
-        return true;
+        return $this->view;
     }
-
-    protected abstract function getTitle();
 }
 
 ?>

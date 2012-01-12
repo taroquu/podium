@@ -46,9 +46,9 @@ class FeedbackPanel extends Panel
         $this->add($this->messages);
     }
     
-    public function beforeComponentRender()
+    public function beforePageRender()
     {
-        parent::beforeComponentRender();
+        parent::beforePageRender();
         $this->messages->setModel($this->getFeedbackModel());
     }
 }

@@ -78,12 +78,12 @@ abstract class PiconApplication
         $this->initialiser->addScannedDirectory(PICON_DIRECTORY."\\web\\pages");
         $this->initialiser->addScannedDirectory(ASSETS_DIRECTORY);
         
-        session_start();
-        ob_start();
-        
         $this->internalInit();
         
         $this->initialiser->initialise();
+        
+        session_start();
+        ob_start();
     }
     
     private function internalInit()

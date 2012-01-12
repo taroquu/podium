@@ -45,14 +45,53 @@ class LayoutEditorPanel extends Panel implements ToolbarContributor
     {
         parent::__construct($id, null);
         $this->setModel(new BasicModel($layout));
+        
         $this->add(new AttributeModifier('class', new BasicModel('layoutEditor')));
         $layoutUI = new DefaultJQueryUIBehaviour('podiumLayout');
         $this->add($layoutUI);
         
-        $layoutUI->getOptions()->add(new \picon\CallbackOption('test2', function(picon\AjaxRequestTarget $target) 
+        $self = $this;
+        $layoutUI->getOptions()->add(new picon\CallbackFunctionOption('updated', function(picon\AjaxRequestTarget $target) use ($self)
         {
+            $layout = $self->getModelObject();
+            $layout->removeAll();
             
-        }));
+            $types = array('columnBlock' => 'ColumnBlock', 
+                'rowBlock' => 'RowBlock', 
+                'columnElement' => 'ColumnElement', 
+                'floatingBlock' => 'FloatingBlock');
+            
+            /**
+             * Very bad atm as it assumes that all inner blocks are column elements
+             * and all parent blocks are column blocks
+             */
+            foreach($_GET['blocks'] as $block)
+            {
+                $className = $types[$block['type']];
+                $dblock = new $className();
+                $layout->addBlock($dblock);
+                
+                foreach($block['attributes'] as $name => $value)
+                {
+                    $dblock->addAttribute(new LayoutBlockAttribute($name, strval($value)));
+                }
+                
+                if(array_key_exists('children', $block))
+                {
+                    foreach($block['children'] as $child)
+                    {
+                        $className = $types[$child['type']];
+                        $col = new $className();
+                        $dblock->addColumn($col);
+                        foreach($child['attributes'] as $name => $value)
+                        {
+                            $col->addAttribute(new LayoutBlockAttribute($name, strval($value)));
+                        }
+                    }
+                }
+            }
+            
+        }, 'callBackURL += \'&\'+data;', 'data'));
         
         $view = new RepeatingView('layoutBlock');
         $this->add($view);
@@ -93,6 +132,7 @@ class LayoutEditorPanel extends Panel implements ToolbarContributor
         $toolbar->add(new ToolbarLink($toolbar->getNextChildId(), 'Save', function() use ($self)
         {
             $self->getLayoutService()->createOrUpdateLayout($self->getModelObject());
+            $self->setPage(LayoutPage::getIdentifier());
         }));
     }
     

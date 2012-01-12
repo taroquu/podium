@@ -33,11 +33,32 @@ class LayoutService
      */
     private $layoutDao;
     
+    public function getLayouts($start, $count)
+    {
+        $layouts = $this->layoutDao->getLayouts($start, $count);
+        
+        foreach($layouts as $index => $layout)
+        {
+            $this->populateLayout($layout);
+        }
+        return $layouts;
+    }
+    
+    public function getLayoutsSize()
+    {
+        return $this->layoutDao->getLayoutSize();
+    }
+    
     public function getLayout($id)
     {
         $layout = $this->layoutDao->getLayout($id);
-        
-        $blocks = $this->layoutDao->getBlocks($id);
+        $this->populateLayout($layout);
+        return $layout;
+    }
+    
+    private function populateLayout(Layout &$layout)
+    {
+        $blocks = $this->layoutDao->getBlocks($layout->id);
         
         foreach($blocks as $block)
         {
@@ -68,7 +89,6 @@ class LayoutService
                 }
             }
         }
-        return $layout;
     }
     
     public function createOrUpdateLayout(Layout $layout)
@@ -76,7 +96,7 @@ class LayoutService
         $id = null;
         if($layout->id==null)
         {
-            $id = $this->layoutDao->createLayout($name);
+            $id = $this->layoutDao->createLayout($layout->name);
         }
         else
         {
@@ -88,13 +108,23 @@ class LayoutService
         foreach($layout->getBlocks() as $index => $block)
         {
             $blockid = $this->layoutDao->createBlock($id, $block, $index);
+            $this->createAttributes($block, $blockid);
             if($block instanceof ColumnBlock)
             {
                 foreach($block->getColumns() as $colIndex => $column)
                 {
-                    $this->layoutDao->createBlock($id, $column, $colIndex, $blockid);
+                    $colId = $this->layoutDao->createBlock($id, $column, $colIndex, $blockid);
+                    $this->createAttributes($column, $colId);
                 }
             }
+        }
+    }
+    
+    private function createAttributes(AbstractLayoutBlock $block, $blockId)
+    {
+        foreach($block->getAttributes() as $attribute)
+        {
+            $this->layoutDao->addBlockAttribute($attribute, $blockId);
         }
     }
 }

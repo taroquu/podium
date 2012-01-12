@@ -102,6 +102,19 @@ abstract class AbstractAdminPage extends WebPage
         }, new ArrayModel($menuItems)));
     }
     
+    protected function onInitialize()
+    {
+        parent::onInitialize();
+        $this->add($this->getSecondaryHead('secondaryHeader'));
+    }
+    
+    protected function getSecondaryHead($id)
+    {
+        $panel = new EmptyPanel($id);
+        $panel->setVisible(false);
+        return $panel;
+    }
+    
     public function renderHead(HeaderResponse $headerResponse)
     {
         $headerResponse->renderCSSResourceReference(new ResourceReference('main.css', self::getIdentifier()));

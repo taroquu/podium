@@ -28,6 +28,26 @@
  */
 class LayoutPage extends AbstractAdminTitlePage
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $self = $this;
+        $panelCallback = function($id, $layoutModel) use ($self)
+        {
+            return new LinkPanel($id, 'Edit', function() use ($self, $layoutModel)
+            {
+                $self->setPage(new CreateLayoutPage($layoutModel->getModelObject()));
+            });
+        };
+        
+        $columns = array();
+        $columns[] = new picon\PropertyColumn('Layout Name', 'name');
+        $columns[] = new PanelColumn('', $panelCallback);
+        
+        $proivder = new LayoutDataProvider();
+        $this->add(new \picon\DefaultDataTable('layouts',$proivder, $columns));
+    }
+    
     protected function getTitle()
     {
         return 'Layouts';

@@ -20,28 +20,35 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\Label;
+use picon\AbstractInjectedDataProvider;
 use picon\BasicModel;
-use picon\MarkupContainer;
 
 /**
- * Description of AbstractAdminInnerPage
+ * Description of LayoutDataProvider
  *
  * @author Martin Cassidy
  */
-abstract class AbstractAdminTitlePage extends AbstractAdminPage
+class LayoutDataProvider extends AbstractInjectedDataProvider
 {
-    protected function getSecondaryHead($id)
+    /**
+     * @Resource
+     */
+    private $layoutService;
+    
+    public function getSize()
     {
-        return new HeadingPanel($id, $this->getTitle(), $this->isSeperatorVisible());
+        return $this->layoutService->getLayoutsSize();
     }
     
-    protected function isSeperatorVisible()
+    public function getRecords($start, $count)
     {
-        return true;
+        return $this->layoutService->getLayouts($start, $count);
     }
-
-    protected abstract function getTitle();
+    
+    public function getModel($object)
+    {
+        return new BasicModel($object);
+    }
 }
 
 ?>

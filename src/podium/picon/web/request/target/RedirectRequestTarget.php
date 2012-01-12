@@ -20,28 +20,30 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\Label;
-use picon\BasicModel;
-use picon\MarkupContainer;
+namespace picon;
 
 /**
- * Description of AbstractAdminInnerPage
+ * Description of RedirectRequestTarget
  *
- * @author Martin Cassidy
+ * @author Martin
  */
-abstract class AbstractAdminTitlePage extends AbstractAdminPage
+class RedirectRequestTarget implements RequestTarget
 {
-    protected function getSecondaryHead($id)
+    private $url;
+    
+    public function __construct($url)
     {
-        return new HeadingPanel($id, $this->getTitle(), $this->isSeperatorVisible());
+        Args::isString($url, 'url');
+        $this->url = $url;
     }
     
-    protected function isSeperatorVisible()
+    public function respond(Response $response)
     {
-        return true;
+        ob_clean();
+        $response->clean();
+        $response->setHeader('Location: '.$this->url, 301);
+        $response->flush();
     }
-
-    protected abstract function getTitle();
 }
 
 ?>
