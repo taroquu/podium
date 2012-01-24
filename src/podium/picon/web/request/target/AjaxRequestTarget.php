@@ -23,9 +23,10 @@
 namespace picon;
 
 /**
- * Description of AjaxRequestTarget
+ * Request target for ajax requests
  *
  * @author Martin Cassidy
+ * @package web/request/target
  */
 class AjaxRequestTarget implements RequestTarget
 {
@@ -69,12 +70,13 @@ class AjaxRequestTarget implements RequestTarget
         foreach($this->components as $component)
         {
             $response->clean();
+            $component->beforePageRender();
             $component->render();
             $value = $response->getBody();
             $response->clean();
             array_push($ajaxResponse['components'], array('id' => $component->getMarkupId(), 'value' => $value));
         }
-        
+        FeedbackModel::get()->cleanup();
         print(json_encode($ajaxResponse));
     }
 }

@@ -23,11 +23,13 @@
 namespace picon;
 
 /**
- * Description of NavigationLink
+ * A link which, when clicked, will set the page of an associated paginatable
+ * component to the specified value
  * 
  * @author Martin Cassidy
+ * @package web/markup/html/paging
  */
-class NavigationLink extends AbstractLink
+class NavigationLink extends Link
 {
     private $pageable;
     private $page;

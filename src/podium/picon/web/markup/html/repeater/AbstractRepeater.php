@@ -23,17 +23,19 @@
 namespace picon;
 
 /**
- * Description of AbstractRepeater
+ * A component whose mark-up is rendered multiple times based on some form
+ * of repitition
  * 
  * @author Martin Cassidy
+ * @package web/markup/html/repeater
  */
 abstract class AbstractRepeater extends MarkupContainer
 {
     public function __construct($id, $model = null)
     {
-        if($model!=null && !($model instanceof ArrayModel))
+        if($model!=null && !($model instanceof ArrayModel) && gettype($model->getModelObject())!=Component::TYPE_ARRAY)
         {
-            throw new \InvalidArgumentException('List View must have an Array Model');
+            throw new \InvalidArgumentException('List View must have an Array Model or a model of an array');
         }
         if($model==null)
         {

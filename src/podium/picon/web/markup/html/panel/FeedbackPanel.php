@@ -28,6 +28,7 @@ namespace picon;
  * @todo add message level as a css class attribute
  * @todo add support for feedback message filtering
  * @author Martin Cassidy
+ * @package web/markup/html/panel
  */
 class FeedbackPanel extends Panel
 {
@@ -40,7 +41,7 @@ class FeedbackPanel extends Panel
         $this->messages = new ListView('messages', function($item)
         {
             $item->add(new \picon\Label('message', new \picon\BasicModel($item->getModelObject()->message)));
-        }, self::getFeedbackModel());
+        }, FeedbackModel::get());
         
         
         $this->add($this->messages);
@@ -48,8 +49,8 @@ class FeedbackPanel extends Panel
     
     public function beforePageRender()
     {
+        $this->messages->setModel(FeedbackModel::get());
         parent::beforePageRender();
-        $this->messages->setModel($this->getFeedbackModel());
     }
 }
 

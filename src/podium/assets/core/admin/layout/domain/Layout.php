@@ -29,11 +29,16 @@ use picon\ComonDomainBase;
  */
 class Layout extends ComonDomainBase
 {
+    const ROW_BLOCK = 1;
+    const COLUMN_BLOCK = 2;
+    const COLUMN_ELEMENT = 3;
+    const FLOATING_BLOCK = 4;
+    
     private $id;
     private $name;
     private $blocks = array();
     
-    public function addBlock(AbstractLayoutBlock $block)
+    public function addBlock(LayoutBlock $block)
     {
         array_push($this->blocks, $block);
     }

@@ -32,7 +32,7 @@ namespace picon;
  * </ol>
  * 
  * @author Martin Cassidy
- * @package web
+ * @package web/request/cycle
  * @todo create request listeners
  */
 class RequestCycle
@@ -83,6 +83,8 @@ class RequestCycle
             }
             catch(\Exception $ex)
             {
+                $iterator->rewind();
+                $this->targetStack->exchangeArray(array());
                 $this->addTarget(new ExceptionPageRequestTarget($ex));
             }
             $iterator->next();

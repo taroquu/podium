@@ -23,9 +23,10 @@
 namespace picon;
 
 /**
- * Description of ListenerRequestTarget
+ * Request target for invoking listeners
  *
  * @author Martin Cassidy
+ * @package web/request/target
  */
 class ListenerRequestTarget implements RequestTarget, Identifiable
 {
@@ -71,8 +72,7 @@ class ListenerRequestTarget implements RequestTarget, Identifiable
         {
             $page->beforePageRender();
             $listener = $this->getListener($page);
-        }
-        
+        } 
         if($listener==null || !($listener instanceof Listener))
         {
             throw new \RuntimeException(sprintf("Listener component %s was not found", $this->componentPath));

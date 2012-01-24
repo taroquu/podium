@@ -21,34 +21,38 @@
  * */
 
 use picon\Panel;
-use picon\RepeatingView;
-use picon\AttributeAppender;
+use picon\AttributeModifier;
 use picon\BasicModel;
+use picon\AttributeAppender;
 
 /**
- * Description of ColumnBlockPanel
+ * Description of AbstractLayoutBlockPanel
  *
  * @author Martin Cassidy
  */
-class ColumnBlockPanel extends AbstractLayoutBlockPanel
+abstract class AbstractLayoutBlockPanel extends Panel
 {
-    public function __construct($id, ColumnBlock $block)
+    public function __construct($id, AbstractLayoutBlock $block)
     {
-        parent::__construct($id, $block);
+        parent::__construct($id);
+        $idField = new picon\MarkupContainer('id');
+        $this->add($idField);
+        $idField->add(new AttributeModifier('value', new BasicModel($block->id)));
+        $this->addClass('layoutBlock');
+        $style = '';
         
-        $view = new RepeatingView('columns');
-        $this->add($view);
-        
-        foreach($block->getColumns() as $column)
+        foreach($block->getAttributes() as $attribute)
         {
-            $view->add(new ColumnElementBlockPanel($view->getNextChildId(), $column));
+            $style .= sprintf('%s:%d;', $attribute->name, $attribute->value);
         }
+        
+        $this->add(new AttributeModifier('style', new BasicModel($style), ''));
     }
     
-    public function getClass()
+    protected function addClass($cssClass)
     {
-        return 'layoutBlock columnBlock';
+        $this->add(new AttributeAppender('class', new BasicModel($cssClass), ' '));
     }
+    
 }
-
 ?>

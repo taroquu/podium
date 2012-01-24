@@ -20,15 +20,20 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-
 /**
- * Description of ColumnElement
- *
+ * Description of AbstractPopulatabaleLayoutBlock
+ * @todo sub classes should not exist for this, as not all row/column/floating blocks are populated,
+ * block type should be done with an enum.
  * @author Martin Cassidy
  */
-class ColumnElement extends AbstractLayoutBlock
+class PopulatedLayoutBlock extends LayoutBlock
 {
+    private $widgets = array();
     
+    public function addWidget(WidgetItem $widget)
+    {
+        array_push($this->widgets, $widget);
+    }
 }
 
 ?>

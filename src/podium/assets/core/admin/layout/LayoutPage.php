@@ -28,6 +28,11 @@
  */
 class LayoutPage extends AbstractAdminTitlePage
 {
+    /**
+     * @Resource
+     */
+    private $layoutService;
+    
     public function __construct()
     {
         parent::__construct();
@@ -40,9 +45,27 @@ class LayoutPage extends AbstractAdminTitlePage
             });
         };
         
+        $arranagementPanelCallback = function($id, $layoutModel) use ($self)
+        {
+            return new LinkPanel($id, 'Arranagements', function() use ($self, $layoutModel)
+            {
+                $self->setPage(new ArrangementPage($layoutModel->getModelObject()));
+            });
+        };
+        
+        $deletePanelCallback = function($id, $layoutModel) use ($self)
+        {
+            return new LinkPanel($id, 'Delete', function() use ($self, $layoutModel)
+            {
+                $self->getLayoutService()->delete($layoutModel->getModelObject());
+            });
+        };
+        
         $columns = array();
         $columns[] = new picon\PropertyColumn('Layout Name', 'name');
+        $columns[] = new PanelColumn('', $arranagementPanelCallback);
         $columns[] = new PanelColumn('', $panelCallback);
+        $columns[] = new PanelColumn('', $deletePanelCallback);
         
         $proivder = new LayoutDataProvider();
         $this->add(new \picon\DefaultDataTable('layouts',$proivder, $columns));
@@ -51,6 +74,11 @@ class LayoutPage extends AbstractAdminTitlePage
     protected function getTitle()
     {
         return 'Layouts';
+    }
+    
+    public function getLayoutService()
+    {
+        return $this->layoutService;
     }
 }
 

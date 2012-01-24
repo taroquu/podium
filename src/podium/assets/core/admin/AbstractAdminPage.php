@@ -62,7 +62,7 @@ abstract class AbstractAdminPage extends WebPage
         $layoutMenu[] = new MenuItem('Layouts', LayoutPage::getIdentifier());
         $layoutMenu[] = new MenuItem('Themes', LayoutPage::getIdentifier());
         $layoutMenu[] = new MenuItem('Create Layout', CreateLayoutPage::getIdentifier());
-        $layoutMenu[] = new MenuItem('Create Arrangement', LayoutPage::getIdentifier());
+        $layoutMenu[] = new MenuItem('Create Arrangement', ArrangementEditorPage::getIdentifier());
         $layoutMenu[] = new MenuItem('Create Theme', LayoutPage::getIdentifier());
         $menuItems[] = new MenuItem('layout', LayoutPage::getIdentifier(), $layoutMenu);
         
@@ -117,7 +117,8 @@ abstract class AbstractAdminPage extends WebPage
     
     public function renderHead(HeaderResponse $headerResponse)
     {
-        $headerResponse->renderCSSResourceReference(new ResourceReference('main.css', self::getIdentifier()));
+        parent::renderHead($headerResponse);
+        $headerResponse->renderCSSFile('css/main.css');
     }
 }
 

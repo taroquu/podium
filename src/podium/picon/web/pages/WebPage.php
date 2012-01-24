@@ -23,10 +23,10 @@
 namespace picon;
 
 /**
- * Description of WebPage
+ * Super class for all web pages
  * 
  * @author Martin Cassidy
- * @package web
+ * @package web/pages
  */
 class WebPage extends MarkupContainer implements RequestablePage
 {
@@ -91,6 +91,7 @@ class WebPage extends MarkupContainer implements RequestablePage
         {
             PageMap::get()->addOrUpdate($this);
         }
+        FeedbackModel::get()->cleanup();
     }
     
     public function beforePageRender()

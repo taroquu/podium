@@ -23,11 +23,13 @@
 namespace picon;
 
 /**
- * Description of FormComponentLabel
+ * A label which can be associated with a form component so that 
+ * the <b>for</b> attribute can be added to the output
  * 
  * @author Martin Cassidy
+ * @package web/markup/html/form
  */
-class FormComponentLabel extends WebComponent
+class FormComponentLabel extends Label
 {
     private $source;
     
@@ -40,14 +42,6 @@ class FormComponentLabel extends WebComponent
     
     protected function onComponentTagBody(ComponentTag $tag)
     {
-        parent::onComponentTagBody($tag);
-        $value = $this->source->getLabel();
-        
-        if($value=="")
-        {
-            $this->renderAll($tag->getChildren());
-            return;
-        }
         $this->getResponse()->write($this->source->getLabel());
     }
     

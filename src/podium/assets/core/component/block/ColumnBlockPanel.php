@@ -20,23 +20,34 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
+use picon\Panel;
+use picon\RepeatingView;
+use picon\AttributeAppender;
+use picon\BasicModel;
+
 /**
- * Description of ColumnBlock
+ * Description of ColumnBlockPanel
  *
- * @author Martin
+ * @author Martin Cassidy
  */
-class ColumnBlock extends AbstractLayoutBlock
+class ColumnBlockPanel extends LayoutBlockPanel
 {
-    private $columns = array();
-    
-    public function addColumn(ColumnElement $column)
+    public function __construct($id, ColumnBlock $block, $cssClass, $innerClass)
     {
-        array_push($this->columns, $column);
+        parent::__construct($id, $block, $cssClass);
+        $this->addClass('columnBlock');
+        $view = new RepeatingView('columns');
+        $this->add($view);
+        
+        foreach($block->getNestedBlocks() as $column)
+        {
+            $view->add($this->newColumnElement($view->getNextChildId(), $column, $innerClass));
+        }
     }
     
-    public function getColumns()
+    protected function newColumnElement($id, $column, $innerClass)
     {
-        return $this->columns;
+        return new LayoutBlockPanel($id, $column, $innerClass);
     }
 }
 

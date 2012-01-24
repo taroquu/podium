@@ -20,40 +20,16 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\ComonDomainBase;
-use picon\Args;
-
 /**
- * Description of AbstractLayoutBlock
- *
+ * Description of PopulatedLayout
+ * 
  * @author Martin Cassidy
  */
-class AbstractLayoutBlock extends ComonDomainBase
+class PopulatedLayout extends Layout
 {
-    private $id;
-    private $attributes = array();
-    
-    /**
-     *
-     * @todo this is only used for mapping at the moment the value becomes
-     * stale if updated client side
-     */
-    private $parent;
-    
-    public function addAttribute(LayoutBlockAttribute $attribute)
+    public function addBlock(PopulatedLayoutBlock $block)
     {
-        array_push($this->attributes, $attribute);
-    }
-    
-    public function setAttributes($attributes)
-    {
-        Args::isArray($attributes, 'attributes');
-        $this->attributes = $attributes;
-    }
-    
-    public function getAttributes()
-    {
-        return $this->attributes;
+        parent::addBlock($block);
     }
 }
 

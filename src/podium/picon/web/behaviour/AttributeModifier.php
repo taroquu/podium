@@ -41,7 +41,23 @@ class AttributeModifier extends AbstractBehaviour
     public function onComponentTag(Component &$component, ComponentTag &$tag)
     {
         parent::onComponentTag($component, $tag);
-        $tag->put($this->attributeName, $this->value->getModelObject());
+        $attrs = $tag->getAttributes();
+        $current = '';
+        if(array_key_exists($this->attributeName, $attrs))
+        {
+            $current = $attrs[$this->attributeName];
+        }
+        $tag->put($this->attributeName, $this->newValue($current));
+    }
+    
+    protected function getValue()
+    {
+        return $this->value;
+    }
+    
+    protected function newValue($current)
+    {
+        return $this->getValue()->getModelObject();
     }
 }
 

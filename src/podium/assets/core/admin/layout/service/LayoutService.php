@@ -84,7 +84,7 @@ class LayoutService
                 {
                     if($parent->id==$block->parent)
                     {
-                        $parent->addColumn($block);
+                        $parent->addNestedBlock($block);
                     }
                 }
             }
@@ -102,20 +102,43 @@ class LayoutService
         {
             $id = $layout->id;
             //update name
-            $this->layoutDao->deleteBlocks($id);
+            
+            $oldBlocks = $this->layoutDao->getBlocks($id);
+            
+            foreach($oldBlocks as $oldBlock)
+            {
+                $found = false;
+                foreach($layout->getBlocks() as $block)
+                {
+                    if($block->id==$oldBlock->id)
+                    {
+                        $found = true;
+                    }
+                }
+                if(!$found)
+                {
+                    $this->layoutDao->deleteBlock($oldBlock->id);
+                }
+            }
         }
         
         foreach($layout->getBlocks() as $index => $block)
         {
-            $blockid = $this->layoutDao->createBlock($id, $block, $index);
-            $this->createAttributes($block, $blockid);
-            if($block instanceof ColumnBlock)
+            if($block->id=='')
             {
-                foreach($block->getColumns() as $colIndex => $column)
-                {
-                    $colId = $this->layoutDao->createBlock($id, $column, $colIndex, $blockid);
-                    $this->createAttributes($column, $colId);
-                }
+                $blockid = $this->layoutDao->createBlock($id, $block, $index);
+            }
+            else
+            {
+                $blockid = $block->id;
+                $this->layoutDao->updateBlock($block, $index);
+                $this->layoutDao->deleteBlockAttributes($blockid);
+            }
+            $this->createAttributes($block, $blockid);
+            foreach($block->getNestedBlocks() as $colIndex => $column)
+            {
+                $colId = $this->layoutDao->createBlock($id, $column, $colIndex, $blockid);
+                $this->createAttributes($column, $colId);
             }
         }
     }
@@ -126,6 +149,11 @@ class LayoutService
         {
             $this->layoutDao->addBlockAttribute($attribute, $blockId);
         }
+    }
+    
+    public function delete(Laout $layout)
+    {
+        $this->layoutDao->delete($layout->id);
     }
 }
 

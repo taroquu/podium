@@ -20,15 +20,16 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
+use picon\Panel;
 
 /**
- * Description of RowBlock
- *
- * @author Martin
+ * Description of Widget
+ * 
+ * @author Martin Cassidy
  */
-class RowBlock extends AbstractLayoutBlock
+abstract class Widget extends Panel
 {
-    //put your code here
+    
 }
 
 ?>

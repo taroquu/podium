@@ -56,10 +56,10 @@ class LayoutEditorPanel extends Panel implements ToolbarContributor
             $layout = $self->getModelObject();
             $layout->removeAll();
             
-            $types = array('columnBlock' => 'ColumnBlock', 
-                'rowBlock' => 'RowBlock', 
-                'columnElement' => 'ColumnElement', 
-                'floatingBlock' => 'FloatingBlock');
+            $types = array('columnBlock' => Layout::COLUMN_BLOCK, 
+                'rowBlock' => Layout::ROW_BLOCK, 
+                'columnElement' => Layout::COLUMN_ELEMENT, 
+                'floatingBlock' => Layout::FLOATING_BLOCK);
             
             /**
              * Very bad atm as it assumes that all inner blocks are column elements
@@ -67,8 +67,8 @@ class LayoutEditorPanel extends Panel implements ToolbarContributor
              */
             foreach($_GET['blocks'] as $block)
             {
-                $className = $types[$block['type']];
-                $dblock = new $className();
+                $dblock = new LayoutBlock($types[$block['type']]);
+                $dblock->id = $block['id'];
                 $layout->addBlock($dblock);
                 
                 foreach($block['attributes'] as $name => $value)
@@ -80,9 +80,10 @@ class LayoutEditorPanel extends Panel implements ToolbarContributor
                 {
                     foreach($block['children'] as $child)
                     {
-                        $className = $types[$child['type']];
-                        $col = new $className();
-                        $dblock->addColumn($col);
+                        $type = $types[$child['type']];
+                        $col = new LayoutBlock($type);
+                        $col->id = $child['id'];
+                        $dblock->addNestedBlock($col);
                         foreach($child['attributes'] as $name => $value)
                         {
                             $col->addAttribute(new LayoutBlockAttribute($name, strval($value)));
@@ -99,27 +100,15 @@ class LayoutEditorPanel extends Panel implements ToolbarContributor
         foreach($layout->getBlocks() as $block)
         {
             $panel = null;
-            if($block instanceof RowBlock)
-            {
-                $panel = new RowBlockPanel($view->getNextChildId(), $block);
-            }
-            else if($block instanceof ColumnBlock)
-            {
-                $panel = new ColumnBlockPanel($view->getNextChildId(), $block);
-            }
-            else if($block instanceof FloatingBlock)
-            {
-                $panel = new FloatingBlockPanel($view->getNextChildId(), $block);
-            }
-            $view->add($panel);
+            $view->add(LayoutFactory::newLayoutBlockPanel($view->getNextChildId(), $block, true));
         }
     }
     
     public function renderHead(HeaderResponse $headerResponse)
     {
         parent::renderHead($headerResponse);
-        $headerResponse->renderJavaScriptResourceReference(new ResourceReference('layout.js', self::getIdentifier()));
-        $headerResponse->renderCSSResourceReference(new ResourceReference('layout.css', self::getIdentifier()));
+        $headerResponse->renderCSSFile('css/layout.css');
+        $headerResponse->renderJavaScriptFile('js/layout.js');
     }
     
     public function toolbarRender(RepeatingView &$toolbar)

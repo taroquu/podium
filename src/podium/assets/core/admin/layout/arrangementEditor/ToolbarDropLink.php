@@ -20,19 +20,29 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\AttributeAppender;
-use picon\BasicModel;
+use picon\ArrayModel;
+use picon\ListView;
 
 /**
- * Description of FloatingBlockPanel
- *
+ * Description of ToolbarDropLink
  * @author Martin Cassidy
  */
-class FloatingBlockPanel extends AbstractLayoutBlockPanel
+class ToolbarDropLink extends AbstractToolbarItem
 {
-    public function getClass()
+    private $ids = array();
+    public function __construct($id, WidgetCategory $widgetCategory)
     {
-        return 'layoutBlock floating n e s w ne nw se sw';
+        parent::__construct($id);
+        $this->add(new \picon\Label('dropLink', new picon\BasicModel($widgetCategory->name)));
+        
+        $ids = &$this->ids;
+        $this->add(new ListView('item', function(picon\ListItem $item) use(&$ids)
+        {
+            $widget = $item->getModelObject();
+            $item->add(new picon\Label('name', new \picon\BasicModel($widget->name)));
+            $item->setOutputMarkupId(true);
+            $item->add(new \picon\DefaultJQueryUIBehaviour('podiumArrangementButton'));
+        }, new ArrayModel($widgetCategory->widgets)));
     }
 }
 

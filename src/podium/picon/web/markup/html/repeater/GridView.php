@@ -23,9 +23,11 @@
 namespace picon;
 
 /**
- * Description of GridView
+ * Literally a repeating view of repeating views. Allows for work with both
+ * rows and coloumns, such as a table
  * 
  * @author Martin Cassidy
+ * @package web/markup/html/repeater
  */
 class GridView extends RepeatingView
 {
@@ -75,6 +77,15 @@ class GridView extends RepeatingView
             $cells->add($item);
             $this->populateItem($item);
         }
+    }
+    
+    protected function removeAll()
+    {
+        foreach($this->rows as $row)
+        {
+            $this->remove($row);
+        }
+        $this->rows = array();
     }
     
     protected function populateItem(GridItem $item)

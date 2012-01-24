@@ -23,24 +23,18 @@
 namespace picon;
 
 /**
- * Description of AbstractLink
+ * Super class for links
  * 
  * @author Martin Cassidy
+ * @package web/markup/html/link
  */
 abstract class AbstractLink extends MarkupContainer implements LinkListener
 {
-    protected function onComponentTag(ComponentTag $tag)
-    {
-        parent::onComponentTag($tag);
-        $tag->put('href', $this->urlForListener($this));
-    }
-    
     public function onEvent()
     {
         $this->onLinkClicked();
     }
     
-    protected abstract function onLinkClicked();
 }
 
 ?>

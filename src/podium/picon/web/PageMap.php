@@ -118,8 +118,9 @@ class PageMap
     
     public static function getNextPageId()
     {
-        self::get()->pageId++;
-        return 'page'.self::get()->pageId;
+        $self = self::get();
+        $self->pageId++;
+        return 'page'.$self->pageId;
     }
     
     /**
@@ -151,7 +152,7 @@ class PageMap
         {
             if (isset($_SESSION['page_map']))
             {
-                self::$self = $_SESSION['page_map']; 
+                self::$self = unserialize($_SESSION['page_map']); 
             }
             else
             {
@@ -183,7 +184,7 @@ class PageMap
         {
             CacheManager::saveResource($pageid, $page, CacheManager::SESSION_SCOPE);
         }
-        $_SESSION['page_map'] = $this;
+        $_SESSION['page_map'] = serialize($this);
     }
 }
 

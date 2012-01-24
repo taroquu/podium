@@ -20,34 +20,42 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\Panel;
-use picon\AttributeModifier;
-use picon\BasicModel;
-use picon\AttributeAppender;
-
 /**
- * Description of AbstractLayoutBlockPanel
- *
+ * Description of ArrangementFormPanel
+ * 
  * @author Martin Cassidy
  */
-abstract class AbstractLayoutBlockPanel extends Panel
+class ArrangementFormPanel extends picon\Panel
 {
-    public function __construct($id, AbstractLayoutBlock $block)
+    /**
+     * @Resource
+     */
+    private $layoutService;
+    
+    private $arrangement;
+    
+    public function __construct($id, Arrangement $arrangement)
     {
         parent::__construct($id);
-        $this->add(new AttributeModifier('class', new BasicModel($this->getClass())));
-        
-        $style = '';
-        
-        foreach($block->getAttributes() as $attribute)
+        $this->arrangement = $arrangement;
+        $form = new picon\Form('form', new picon\CompoundPropertyModel($this, 'arrangement'));
+        $this->add($form);
+        $form->add(new \picon\TextField('name'));
+        $form->add(new picon\DropDown('layout', $this->layoutService->getLayouts(0, $this->layoutService->getLayoutsSize()), new picon\ChoiceRenderer(null, function($item, $index)
         {
-            $style .= sprintf('%s:%d;', $attribute->name, $attribute->value);
-        }
-        
-        $this->add(new AttributeModifier('style', new BasicModel($style), ''));
+            return $item->name;
+        })));
     }
     
-    public abstract function getClass();
+    public function __get($name)
+    {
+        return $this->$name;
+    }
+    
+    public function __set($name, $value)
+    {
+        $this->$name = $value;
+    }
 }
 
 ?>

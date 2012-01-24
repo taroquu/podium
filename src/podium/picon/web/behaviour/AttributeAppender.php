@@ -38,9 +38,9 @@ class AttributeAppender extends AttributeModifier
         $this->seperator = $seperator;
     }
     
-    public function newValue($current)
+    protected function newValue($current)
     {
-        return $current.$this->seperator.$this->value->getModelObject();
+        return $current.$this->seperator.$this->getValue()->getModelObject();
     }
 }
 

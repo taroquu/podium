@@ -23,9 +23,10 @@
 namespace picon;
 
 /**
- * Description of TextArea
+ * A text area form component
  * 
  * @author Martin Cassidy
+ * @package web/markup/html/form
  */
 class TextArea extends AbstractTextComponent
 {
@@ -36,6 +37,7 @@ class TextArea extends AbstractTextComponent
     
     protected function onComponentTag(ComponentTag $tag)
     {
+        $tag->setTagType(new XmlTagType(XmlTagType::OPEN));
         $this->checkComponentTag($tag, 'textarea');
         parent::onComponentTag($tag);
     }

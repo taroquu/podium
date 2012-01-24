@@ -23,9 +23,10 @@
 namespace picon;
 
 /**
- * Description of PageInstanceRequestTarget
+ * Request target for rendering page instances
  * 
  * @author Martin Cassidy
+ * @package web/request/target
  */
 class PageInstanceRequestTarget implements RequestTarget
 {
@@ -43,7 +44,7 @@ class PageInstanceRequestTarget implements RequestTarget
     
     public function respond(Response $response)
     {
-        //ob_clean();
+        ob_clean();
         $response->clean();
         $this->page->renderPage();
         $response->flush();

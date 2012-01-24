@@ -215,6 +215,8 @@ var serialize = function(block)
         var type = getType($(this));
         var index = $(block).children('li').index($(this));
         str.push('blocks['+index+'][type]='+type);
+        var blockId = $('input[type=hidden]', this).first().attr('value');
+        str.push('blocks['+index+'][id]='+ (blockId==undefined?'':blockId));
         appendCSS(this, str, 'blocks['+index+']');
         
         var item = $('ul', $(this));

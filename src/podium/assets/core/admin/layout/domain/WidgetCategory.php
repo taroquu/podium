@@ -20,18 +20,26 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\Panel;
-
 /**
- * Description of RowBlockPanel
- *
+ * Description of WidgetCategory
+ * 
  * @author Martin Cassidy
  */
-class RowBlockPanel extends AbstractLayoutBlockPanel
+class WidgetCategory extends picon\ComonDomainBase
 {
-    public function getClass()
+    private $id;
+    private $name;
+    private $widgets = array();
+    
+    public function __construct($id, $name)
     {
-        return 'layoutBlock rowBlock s';
+        $this->id = $id;
+        $this->name = $name;
+    }
+    
+    public function addWidgetItme(WidgetItem $item)
+    {
+        array_push($this->widgets, $item);
     }
 }
 

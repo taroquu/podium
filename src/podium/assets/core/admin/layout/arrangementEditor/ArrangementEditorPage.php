@@ -20,18 +20,31 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-
 /**
- * Description of FloatingBlock
- *
- * @author Martin
+ * Description of ArrangementEditorPage
+ * 
+ * @author Martin Cassidy
  */
-class FloatingBlock extends AbstractLayoutBlock
+class ArrangementEditorPage extends AbstractAdminToolbarPage
 {
-    private $top;
-    private $left;
-    private $right;
-    private $bottom;
+    public function __construct($arrangement = null)
+    {
+        parent::__construct();
+        if($arrangement==null)
+        {
+            $arrangement = new Arrangement('', '');
+            $this->add(new ArrangementFormPanel('panel', $arrangement));
+        }
+        else
+        {
+            $this->add(new ArrangementEditorPanel('panel', $arrangement));
+        }
+    }
+    
+    protected function getTitle()
+    {
+        return "Arrangement";
+    }
 }
 
 ?>

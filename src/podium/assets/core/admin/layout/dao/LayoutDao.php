@@ -52,14 +52,24 @@ class LayoutDao extends AbstractDao
         return $this->getTemplate()->insert("INSERT INTO layout (name) VALUES ('%s')", array($name));
     }
     
-    public function createBlock($layouterId, AbstractLayoutBlock $block, $index, $parentBlockId = null)
+    public function createBlock($layouterId, LayoutBlock $block, $index, $parentBlockId = null)
     {
-        return $this->getTemplate()->insert("INSERT INTO layout_blocks (layout_id, type, parent_block_id, position) VALUES (%d, '%s', %d, %d)", array($layouterId, get_class($block), $parentBlockId, $index));
+        return $this->getTemplate()->insert("INSERT INTO layout_blocks (layout_id, type, parent_block_id, position) VALUES (%d, '%s', %d, %d)", array($layouterId, $block->type, $parentBlockId, $index));
     }
     
-    public function deleteBlocks($id)
+    public function updateBlock(LayoutBlock $block, $index, $parentBlockId = null)
     {
-        $this->getTemplate()->update("DELETE FROM layout_blocks WHERE layout_id = %d", array($id));
+        return $this->getTemplate()->insert("UPDATE layout_blocks SET parent_block_id = %d, position = %d WHERE id = %d", array($parentBlockId, $index, $block->id));
+    }
+    
+    public function deleteBlock($id)
+    {
+        $this->getTemplate()->update("DELETE FROM layout_blocks WHERE id = %d", array($id));
+    }
+    
+    public function deleteBlockAttributes($blockId)
+    {
+        $this->getTemplate()->update("DELETE FROM layout_block_attributes WHERE block_id = %d", array($blockId));
     }
     
     public function getLayout($id)
@@ -88,7 +98,7 @@ class LayoutDao extends AbstractDao
         $mapper = function($row)
         {
             $className = $row->type;
-            $block = new $className();
+            $block = new LayoutBlock($row->type);
             $block->parent = $row->parent_block_id;
             $block->id = $row->id;
             return $block;
@@ -110,6 +120,11 @@ class LayoutDao extends AbstractDao
     public function addBlockAttribute(LayoutBlockAttribute $attribute, $blockId)
     {
         return $this->getTemplate()->insert("INSERT INTO layout_block_attributes (block_id, name, value) VALUES (%d, '%s', '%s')", array($blockId, $attribute->name, $attribute->value));
+    }
+    
+    public function delete($layoutId)
+    {
+        $this->getTemplate()->update("DELETE FROM layout WHERE id = %d", array($layoutId));
     }
 }
 
