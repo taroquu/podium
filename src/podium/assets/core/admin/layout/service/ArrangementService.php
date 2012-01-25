@@ -52,15 +52,14 @@ class ArrangementService
     {
         $arrangement = $this->arrangementDao->getArrangement($arrangementId);
         $layout = $this->layoutService->getLayout($arrangement->layout);
-        $playout = new PopulatedLayout();
-        $playout->id = $layout->id;
-        $playout->name = $layout->name;
-        $arrangement->layout = $playout;
+
         $blocks = array();
         foreach($layout->getBlocks() as $index => $block)
         {
             array_push($blocks, $this->populateBlock($arrangementId, $block));
         }
+        $playout = new PopulatedLayout($layout->name, $blocks, $layout->id);
+        $arrangement->layout = $playout;
         $arrangement->layout->blocks = $blocks;
         return $arrangement;
     }
@@ -83,6 +82,109 @@ class ArrangementService
             $pblock->addWidget($widget);
         }
         return $pblock;
+    }
+    
+    public function createOrUpdateArrangement(Arrangement $arrangement)
+    {
+        if($arrangement->id==null)
+        {
+            $id = $this->arrangementDao->createArrangement($arrangement);
+            $arrangement->id = $id;
+        }
+        else
+        {
+            //update name
+        }
+        $oldArrangement = $this->getArrangement($arrangement->id);
+        
+        foreach($arrangement->layout->getBlocks() as $block)
+        {
+            $this->deleteWidgets($block, $this->locateBlock($oldArrangement->layout, $block->id));
+            $this->processElements($block, $arrangement->id);
+            foreach($block->getNestedBlocks() as $nested)
+            {
+                $this->deleteWidgets($nested, $this->locateBlock($oldArrangement->layout, $nested->id));
+                $this->processElements($nested, $arrangement->id);
+            }
+        }
+    }
+    
+    private function deleteWidgets(PopulatedLayoutBlock $current, PopulatedLayoutBlock $old)
+    {
+        foreach($old->getWidgets() as $widget)
+        {
+            $found = false;
+            foreach($current->getWidgets() as $search)
+            {
+                if($widget->elementId==$search->elementId)
+                {
+                    $found = true;
+                }
+            }
+            if(!$found)
+            {
+                $this->arrangementDao->deleteElement($widget->elementId);
+            }
+        }
+    }
+    
+    private function locateBlock(Layout $layout, $blockId)
+    {
+        foreach($layout->getBlocks() as $block)
+        {
+            if($block->id==$blockId)
+            {
+                return $block;
+            }
+            foreach($block->getNestedBlocks() as $nested)
+            {
+                if($nested->id==$blockId)
+                {
+                    return $nested;
+                }
+            }
+        }
+        return false;
+    }
+    
+    private function processElements(PopulatedLayoutBlock $block, $arrangementId)
+    {
+        foreach($block->getWidgets() as $index => $widget)
+        {
+            if($widget->elementId==null)
+            {
+                $this->arrangementDao->createElement($widget, $block->id, $index, $arrangementId);
+            }
+            else
+            {
+                $this->arrangementDao->updateElement($widget, $block->id, $index, $arrangementId);
+            }
+        }
+    }
+    
+    public function prePopulate(Arrangement $arrangement)
+    {
+        $layout = $arrangement->layout;
+        
+        $blocks = array();
+        foreach($layout->getBlocks() as $block)
+        {
+            $nblock = new PopulatedLayoutBlock($block->type);
+            $nblock->id = $block->id;
+            $nblock->setAttributes($block->getAttributes());
+            array_push($blocks, $nblock);
+            foreach($block->getNestedBlocks() as $nested)
+            {
+                $nnest = new PopulatedLayoutBlock($nested->type);
+                $nnest->id = $nested->id;
+                $nnest->setAttributes($nested->getAttributes());
+                $nblock->addNestedBlock($nnest);
+            }
+        }
+        
+        $playout = new PopulatedLayout($layout->name, $blocks, $layout->id);
+        $arrangement->layout = $playout;
+        return $arrangement;
     }
 }
 

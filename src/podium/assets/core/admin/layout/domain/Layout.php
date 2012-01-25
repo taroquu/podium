@@ -38,6 +38,13 @@ class Layout extends ComonDomainBase
     private $name;
     private $blocks = array();
     
+    public function __construct($name, $blocks, $id)
+    {
+        $this->name = $name;
+        $this->blocks = $blocks;
+        $this->id = $id;
+    }
+    
     public function addBlock(LayoutBlock $block)
     {
         array_push($this->blocks, $block);

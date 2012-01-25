@@ -54,3 +54,17 @@
 li:hover .blockControl {
     display:block;
 }
+
+.rowBlock li {
+    width:auto;
+    float:left;
+}
+
+.columnElement li {
+    height:auto;
+    width:100%;
+}
+
+li .widgetPlaceholder {
+    display:block;
+}

@@ -27,9 +27,11 @@
  */
 class WidgetFactory
 {
-    public static function getWidget($id, WidgetItem $item)
+    public static function getWidget($id, WidgetItem $item, $editable = false)
     {
-        return new DefaultWidget($id);
+        $className = $item->class;
+        $reflection = new ReflectionClass($className);
+        return $reflection->newInstanceArgs(array($id, $item, null, $editable));
     }
 }
 

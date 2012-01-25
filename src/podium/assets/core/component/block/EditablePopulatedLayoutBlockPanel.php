@@ -27,7 +27,10 @@
  */
 class EditablePopulatedLayoutBlockPanel extends PopulatedLayoutBlockPanel
 {
-    
+    protected function getWidget(WidgetItem $item, $id)
+    {
+        return WidgetFactory::getWidget($id, $item, true);
+    }
 }
 
 ?>

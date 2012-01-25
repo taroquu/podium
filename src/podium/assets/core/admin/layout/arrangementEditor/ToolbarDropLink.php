@@ -40,6 +40,9 @@ class ToolbarDropLink extends AbstractToolbarItem
         {
             $widget = $item->getModelObject();
             $item->add(new picon\Label('name', new \picon\BasicModel($widget->name)));
+            $idField = new picon\MarkupContainer('widgetId');
+            $item->add($idField);
+            $idField->add(new \picon\AttributeModifier('value', new picon\BasicModel($widget->id)));
             $item->setOutputMarkupId(true);
             $item->add(new \picon\DefaultJQueryUIBehaviour('podiumArrangementButton'));
         }, new ArrayModel($widgetCategory->widgets)));

@@ -30,9 +30,32 @@ class PopulatedLayoutBlock extends LayoutBlock
 {
     private $widgets = array();
     
-    public function addWidget(WidgetItem $widget)
+    public function addWidget(WidgetItem $widget, $index = null)
     {
-        array_push($this->widgets, $widget);
+        if($index==null)
+        {
+            array_push($this->widgets, $widget);
+        }
+        else
+        {
+            array_splice($this->widgets, $index, count($this->widgets), array_merge(array($widget), array_slice($this->widgets, $index))); 
+        }
+    }
+    
+    public function getWidgets()
+    {
+        return $this->widgets;
+    }
+    
+    public function removeWidget(WidgetItem $item)
+    {
+        foreach($this->widgets as $index => $widget)
+        {
+            if($item->elementId==$widget->elementId)
+            {
+                unset($this->widgets[$index]);
+            }
+        }
     }
 }
 

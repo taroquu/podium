@@ -34,17 +34,29 @@ class ArrangementFormPanel extends picon\Panel
     
     private $arrangement;
     
-    public function __construct($id, Arrangement $arrangement)
+    public function __construct($id, Model $model, $onSave)
     {
-        parent::__construct($id);
-        $this->arrangement = $arrangement;
+        parent::__construct($id, $model);
+        $this->arrangement = $model->getModelObject();
+        $this->add(new picon\FeedbackPanel('feedback'));
         $form = new picon\Form('form', new picon\CompoundPropertyModel($this, 'arrangement'));
         $this->add($form);
-        $form->add(new \picon\TextField('name'));
-        $form->add(new picon\DropDown('layout', $this->layoutService->getLayouts(0, $this->layoutService->getLayoutsSize()), new picon\ChoiceRenderer(null, function($item, $index)
+        $form->add(new \picon\RequiredTextField('name'));
+        
+        $layoutDrop = new picon\DropDown('layout', $this->layoutService->getLayouts(0, $this->layoutService->getLayoutsSize()), new picon\ChoiceRenderer(function($item, $index)
+        {
+            return $item->id;
+        }, function($item, $index)
         {
             return $item->name;
-        })));
+        }));
+        $layoutDrop->setRequired(true);
+        $form->add($layoutDrop);
+        $self = $this;
+        $form->add(new \picon\Button('submit', function() use ($self, $onSave)
+        {
+            $onSave();
+        }));
     }
     
     public function __get($name)

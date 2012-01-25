@@ -35,18 +35,129 @@ class ArrangementEditorPanel extends picon\Panel implements ToolbarContributor
      */
     private $widgetService;
     
+    /**
+     * @Resource
+     */
+    private $arrangementService;
+   
+    private $view;
+    
     public function __construct($id, Arrangement $arrangement)
     {
         parent::__construct($id);
-        $this->add(new \picon\DefaultJQueryUIBehaviour('podiumArrangement'));
-        
-        $view = new RepeatingView('layoutBlock');
-        $this->add($view);
-        
-        foreach($arrangement->layout->getBlocks() as $block)
+        $this->setModel(new \picon\BasicModel($arrangement));
+        $podiumArrangement = new \picon\DefaultJQueryUIBehaviour('podiumArrangement');
+        $this->add($podiumArrangement);
+        $this->setOutputMarkupId(true);
+        $options = $podiumArrangement->getOptions();
+        $self = $this;
+        $options->add(new \picon\CallbackFunctionOption('newElement', function(\picon\AjaxRequestTarget $target) use ($self)
         {
-            $panel = LayoutFactory::newLayoutBlockPanel($view->getNextChildId(), $block, true);
-            $view->add($panel);
+            $blockId = $self->getRequest()->getParameter('blockId');
+            $block = $self->locateBlock($self->getModelObject()->layout, $blockId);
+            $block->addWidget(new WidgetItem(5, '', ''), $index);
+
+            $target->add($self);
+        }, 'callBackURL+= \'&blockId=\'+blockId+\'&widgetId=\'+widgetId+\'&index=\'+index+\'\'; ', 'blockId', 'widgetId', 'index'));
+        
+        $options->add(new picon\CallbackFunctionOption('moved', function(picon\AjaxRequestTarget $target) use ($self)
+        {
+            $blockId = $self->getRequest()->getParameter('blockId');
+            $elementid = $self->getRequest()->getParameter('elementId');
+            $dest = $self->locateBlock($self->getModelObject()->layout, $blockId);
+            $source = $self->locateBlockOfElement($self->getModelObject()->layout, $elementid);
+            
+            $widget = null;
+            foreach($source->getWidgets() as $entry)
+            {
+                if($entry->elementId==$elementid)
+                {
+                    $widget = $entry;
+                }
+            }
+            $source->removeWidget($widget);
+            $dest->addWidget($widget, $index);
+            
+        }, 'callBackURL+= \'&blockId=\'+blockId+\'&elementId=\'+elementId+\'&index=\'+index+\'\'; ', 'blockId', 'elementId', 'index'));
+        
+        $options->add(new picon\CallbackFunctionOption('removed', function(picon\AjaxRequestTarget $target) use ($self)
+        {
+            $elementId = $self->getRequest()->getParameter('elementId');
+            $block = $self->locateBlockOfElement($self->getModelObject()->layout, $elementId);
+            foreach($block->getWidgets() as $widget)
+            {
+                if($widget->elementId==$elementId)
+                {
+                    $block->removeWidget($widget);
+                }
+            }
+            
+        }, 'callBackURL+= \'&elementId=\'+elementId; ', 'elementId'));
+        
+        
+        $this->view = new RepeatingView('layoutBlock');
+        $this->add($this->view);
+    }
+    
+    public function locateBlockOfElement(PopulatedLayout $layout, $elementId)
+    {
+        foreach($layout->getBlocks() as $block)
+        {
+            foreach($block->getWidgets() as $widget)
+            {
+                if($widget->elementId==$elementId)
+                {
+                    return $block;
+                }
+            }
+            
+            foreach($block->getNestedBlocks() as $nested)
+            {
+                foreach($nested->getWidgets() as $widget)
+                {
+                    if($widget->elementId==$elementId)
+                    {
+                        return $nested;
+                    }
+                }
+            }
+        }
+    }
+    
+    /**
+     * @todo make private in 5.4
+     * @param Layout $layout 
+     */
+    public function locateBlock(Layout $layout, $blockId)
+    {
+        foreach($layout->getBlocks() as $block)
+        {
+            if($block->id==$blockId)
+            {
+                return $block;
+            }
+            foreach($block->getNestedBlocks() as $nested)
+            {
+                if($nested->id==$blockId)
+                {
+                    return $nested;
+                }
+            }
+        }
+        return false;
+    }
+    
+    public function beforePageRender()
+    {
+        parent::beforePageRender();
+        foreach($this->view->getChildren() as $child)
+        {
+            $this->view->remove($child);
+        }
+        foreach($this->getModelObject()->layout->getBlocks() as $block)
+        {
+            $panel = LayoutFactory::newLayoutBlockPanel($this->view->getNextChildId(), $block, true);
+            $this->view->add($panel);
         }
     }
     
@@ -57,6 +168,14 @@ class ArrangementEditorPanel extends picon\Panel implements ToolbarContributor
         {
             $toolbar->add(new ToolbarDropLink($toolbar->getNextChildId(), $category));
         }
+        
+        $self = $this;
+        $toolbar->add(new ToolbarLink($toolbar->getNextChildId(), 'Save', function() use ($self)
+        {
+            $arrangement = $self->getModelObject();
+            $self->getArrangementService()->createOrUpdateArrangement($arrangement);
+            $self->setPage(new ArrangementPage($arrangement->layout));
+        }));
     }
     
     public function renderHead(HeaderResponse $headerResponse)
@@ -64,6 +183,16 @@ class ArrangementEditorPanel extends picon\Panel implements ToolbarContributor
         parent::renderHead($headerResponse);
         $headerResponse->renderCSSFile('css/arrangement.css');
         $headerResponse->renderJavaScriptFile('js/arrangement.js');
+    }
+    
+    public function __get($name)
+    {
+        return $this->$name;
+    }
+    
+    public function getArrangementService()
+    {
+        return $this->arrangementService;
     }
 }
 

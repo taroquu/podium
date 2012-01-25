@@ -27,13 +27,29 @@
  */
 class ArrangementEditorPage extends AbstractAdminToolbarPage
 {
+    /**
+     * @Resource
+     */
+    private $arrangementService;
+    
+    private $arrangment;
+    
     public function __construct($arrangement = null)
     {
         parent::__construct();
         if($arrangement==null)
         {
-            $arrangement = new Arrangement('', '');
-            $this->add(new ArrangementFormPanel('panel', $arrangement));
+            $this->arrangment = new Arrangement(null, '');
+            $self = $this;
+            $onSave = function() use ($self)
+            {
+                $layout = $self->arrangment->layout;
+                $self->arrangment = $self->arrangementService->prePopulate($self->arrangment);
+                $editor = new ArrangementEditorPanel('panel', $self->arrangment);
+                $self->addOrReplace($editor);
+                $editor->toolbarRender($self->getToolbar());
+            };
+            $this->add(new ArrangementFormPanel('panel', new picon\PropertyModel($this, 'arrangment'), $onSave));
         }
         else
         {
@@ -44,6 +60,16 @@ class ArrangementEditorPage extends AbstractAdminToolbarPage
     protected function getTitle()
     {
         return "Arrangement";
+    }
+    
+    public function __get($name)
+    {
+        return $this->$name;
+    }
+    
+    public function __set($name, $value)
+    {
+        $this->$name = $value;
     }
 }
 

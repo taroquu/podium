@@ -66,9 +66,29 @@ class ArrangementDao extends AbstractDao
     {
         $mapper = new \picon\CallbackRowMapper(function($row)
         {
-            return new WidgetItem($row->name, $row->class);
+            return new WidgetItem($row->widget_id, $row->name, $row->class, $row->element_id);
         });
         return $this->getTemplate()->query('SELECT * FROM arrangement_elements a INNER JOIN widgets w ON a.widget_id = w.id WHERE a.arrangement_id = %d AND a.block_id = %d ORDER BY a.index ASC', $mapper, array($arrangementId, $blockId));
+    }
+    
+    public function createArrangement(Arrangement $arrangement)
+    {
+        return $this->getTemplate()->insert("INSERT INTO arrangement (layout_id, name) VALUES (%d, '%s')", array($arrangement->layout->id, $arrangement->name));
+    }
+    
+    public function createElement(WidgetItem $item, $blockId, $index, $arrangmentId)
+    {
+        return $this->getTemplate()->update('INSERT INTO arrangement_elements (arrangement_id, block_id, `index`, widget_id) VALUES (%d, %d, %d, %d);', array($arrangmentId, $blockId, $index, $item->id));
+    }
+    
+    public function updateElement(WidgetItem $item, $blockId, $index, $arrangmentId)
+    {
+        return $this->getTemplate()->update('UPDATE arrangement_elements SET block_id = %d, `index` = %d WHERE element_id = %d;', array($blockId, $index, $item->elementId));
+    }
+    
+    public function deleteElement($elementId)
+    {
+        $this->getTemplate()->update('DELETE FROM arrangement_elements WHERE element_id = %d;', array($elementId));
     }
 }
 

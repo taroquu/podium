@@ -155,7 +155,7 @@ var cleanup = function()
 
 var placeHolderElement = function(item)
 {
-    var placeholder = $('<li class="ui-state-highlight"></li>');
+    var placeholder = $('<li class="panelPlaceholder"></li>');
     placeholder.css('height', item.height());
     placeholder.css('width', item.width());
 
@@ -310,6 +310,7 @@ var serialize = function(block)
                 //add horizontal sorting
                 $('ul.horizontal', $(this)).sortable(
                 {
+                    opacity : 0.5,
                     handle: '.dragHandle',
                     placeholder: 
                     {
@@ -377,7 +378,7 @@ var serialize = function(block)
     $.fn.podiumLayout = function(settings) 
     {
         var options = $.extend( {
-          'updated' : function(data){alert(data);}
+          'updated' : function(data){}
         }, settings);
 
        $(this).each(function()
@@ -460,6 +461,7 @@ var serialize = function(block)
             //Add verticle sorting
             $('ul.vertical').sortable(
             {
+                opacity : 0.5,
                 handle: '.dragHandle',
                 placeholder: 
                 {

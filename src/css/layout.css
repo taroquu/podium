@@ -1,5 +1,7 @@
 .layoutEditor {
     width:100%;
+    border:#030 solid 2px;
+    margin-bottom:20px;
 }
 
 .layoutEditor ul {
@@ -10,8 +12,20 @@
 }
 
 .layoutBlock {
-    border:1px #000 solid;
+    border:1px #070 solid;
     position:relative;
+    background-color: #e2ffe2;
+}
+
+.layoutBlock.columnBlock {
+    border-width:0 0 2px 0;
+    border-color:#fff;
+    background:#fff;
+}
+
+.panelPlaceholder {
+    background:#99ff66;
+    border:1px solid #0a0;
 }
 
 .remove {
@@ -138,8 +152,4 @@ li:hover li:hover .blockControl {
 .newRow, .newColum {
     background-color:#c77405;
     list-style:none;
-}
-
-.hoverColumnBlock {
-    background-color: blueviolet;
 }

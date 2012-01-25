@@ -34,8 +34,13 @@ class PopulatedLayoutBlockPanel extends LayoutBlockPanel
         $this->add($widgets);
         foreach($block->widgets as $widgetItem)
         {
-            $widgets->add(WidgetFactory::getWidget($widgets->getNextChildId(), $widgetItem));
+            $widgets->add($this->getWidget($widgetItem, $widgets->getNextChildId()));
         }
+    }
+    
+    protected function getWidget(WidgetItem $item, $id)
+    {
+        return WidgetFactory::getWidget($id, $item);
     }
 }
 

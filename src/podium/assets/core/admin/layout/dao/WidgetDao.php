@@ -41,7 +41,7 @@ class WidgetDao extends AbstractDao
     {
         $mapper = new picon\CallbackRowMapper(function($row)
         {
-           return new WidgetItem($row->name, $row->class); 
+           return new WidgetItem($row->id, $row->name, $row->class);
         });
         
         return $this->getTemplate()->query("SELECT * FROM widgets where category_id = %d", $mapper, array($categoryId));

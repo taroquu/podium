@@ -39,9 +39,7 @@ class LayoutDao extends AbstractDao
     {
         $mapper = function($row)
         {
-            $layout = new Layout();
-            $layout->id = $row->id;
-            $layout->name = $row->name;
+            $layout = new Layout($row->name, array(), $row->id);
             return $layout;
         };
         return $this->getTemplate()->query("SELECT * FROM layout LIMIT %d, %d", new CallbackRowMapper($mapper), array($start, $count));
@@ -76,9 +74,7 @@ class LayoutDao extends AbstractDao
     {
         $mapper = function($row)
         {
-            $layout = new Layout();
-            $layout->id = $row->id;
-            $layout->name = $row->name;
+            $layout = new Layout($row->name, array(), $row->id);
             return $layout;
         };
         $layout = $this->getTemplate()->query("SELECT * FROM layout WHERE id = %d", new CallbackRowMapper($mapper), array($id));

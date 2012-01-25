@@ -56,6 +56,12 @@ class ArrangementPage extends AbstractAdminTitlePage
         $provider = new ArrangementDataProvider($layout);
         
         $this->add(new picon\DefaultDataTable('arrangements', $provider, $columns));
+        
+        $self = $this;
+        $this->add(new picon\Link('create', function() use ($self)
+        {
+            $self->setPage(new ArrangementEditorPage());
+        }));
     }
     
     protected function getTitle()
