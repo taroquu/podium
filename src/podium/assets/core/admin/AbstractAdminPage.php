@@ -100,6 +100,12 @@ abstract class AbstractAdminPage extends WebPage
                 $link->add(new picon\Label('itemName', new picon\BasicModel(ucwords($menuItem->name))));
             }, new picon\ArrayModel($menuItem->subMenu)));
         }, new ArrayModel($menuItems)));
+        
+        $this->add(new Link('logout', function() use ($self)
+        {
+            $_SESSION['user'] = null;
+            $self->setPage(AdminHomePage::getIdentifier());
+        }));
     }
     
     protected function onInitialize()

@@ -33,7 +33,7 @@ class PodiumApplication extends PiconApplication
 {
     public function init()
     {
-
+        $this->getSecuritySettings()->setAuthorisationStrategy(new PodiumAuthorisationStrategory());
     }
 }
 
