@@ -28,6 +28,11 @@
  */
 class UserDao extends AbstractDao
 {
+    public function userExists($username)
+    {
+        return $this->getTemplate()->queryForInt("SELECT count(*) FROM users WHERE username = '%s';", array($username))==1;
+    }
+    
     public function getUserByName($username)
     {
         $mapper = new \picon\CallbackRowMapper(function($row)
@@ -42,6 +47,41 @@ class UserDao extends AbstractDao
             throw new IllegalStateException('Expected only one result');
         }
         return $users[0];
+    }
+    
+    public function getUsers($start, $count)
+    {
+        $mapper = new picon\CallbackRowMapper(function($row)
+        {
+            return new User($row->id, $row->username, $row->password);
+        });
+        
+        return $this->getTemplate()->query("SELECT * FROM users LIMIT %d, %d", $mapper, array($start, $count));
+    }
+    
+    public function getUserSize()
+    {
+        return $this->getTemplate()->queryForInt("SELECT count(*) FROM users;");
+    }
+    
+    public function createUser(User $user, $password)
+    {
+        return $this->getTemplate()->insert("INSERT INTO users (username, password) VALUES ('%s', '%s');", array($user->username, $password));
+    }
+    
+    public function updateUser(User $user)
+    {
+        $this->getTemplate()->update("UPDATE users SET username = '%s' WHERE id = %d;", array($user->username, $user->id));
+    }
+    
+    public function updatePassword($userId, $password)
+    {
+        $this->getTemplate()->update("UPDATE users SET password = '%s' WHERE id = %d;", array($password, $userId));
+    }
+   
+    public function deleteUser($userId)
+    {
+        $this->getTemplate()->update("DELETE FROM users WHERE id = %d;", array($userId));
     }
 }
 

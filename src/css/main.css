@@ -211,6 +211,8 @@ body {
 }
 
 .singleFieldBlock label {
-    width:100px;
+    min-width:100px;
+    width:auto;
+    margin-right:10px;
     display:inline-block;
 }

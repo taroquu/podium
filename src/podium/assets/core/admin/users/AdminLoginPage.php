@@ -49,7 +49,7 @@ class AdminLoginPage extends \picon\WebPage
         $self = $this;
         $form->add(new \picon\Button('login', function() use ($self)
         {
-            $user = $self->getUserService()->userLogin($self->username, $self->passwowrd);
+            $user = $self->getUserService()->userLogin($self->username, $self->password);
             if(!$user)
             {
                 $self->error('Username or password incorrect');

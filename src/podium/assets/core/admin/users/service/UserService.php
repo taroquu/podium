@@ -45,9 +45,51 @@ class UserService
         return false;
     }
     
+    public function userExists($username)
+    {
+        return $this->userDao->userExists($username);
+    }
+    
+    public function getUserByName($username)
+    {
+        return $this->userDao->getUserByName($username);
+    }
+    
     private function encryptPassword($password)
     {
         return crypt($password, '_J9..rasm');
+    }
+    
+    public function getUsers($start, $count)
+    {
+        return $this->userDao->getUsers($start, $count);
+    }
+    
+    public function getUserSize()
+    {
+        return $this->userDao->getUserSize();
+    }
+    
+    public function createOrUpdateUser(User $user)
+    {
+        if($user->id==null)
+        {
+            $this->userDao->createUser($user, $this->encryptPassword($user->password));
+        }
+        else
+        {
+            $this->userDao->updateUser($user);
+            
+            if($user->password!='')
+            {
+                $this->userDao->updatePassword($user->id, $this->encryptPassword($user->password));
+            }
+        }
+    }
+    
+    public function deleteUser($userId)
+    {
+        $this->userDao->deleteUser($userId);
     }
 }
 

@@ -74,8 +74,7 @@ abstract class AbstractAdminPage extends WebPage
         
         $userMenu = array();
         $userMenu[] = new MenuItem('view users', UserPage::getIdentifier(), $userMenu);
-        $userMenu[] = new MenuItem('create user', UserPage::getIdentifier(), $userMenu);
-        $userMenu[] = new MenuItem('group', UserPage::getIdentifier(), $userMenu);
+        $userMenu[] = new MenuItem('create user', CreateEditUserPage::getIdentifier(), $userMenu);
         $menuItems[] = new MenuItem('users', UserPage::getIdentifier(), $userMenu);
         
         $self = $this;
