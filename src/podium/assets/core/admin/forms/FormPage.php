@@ -28,9 +28,57 @@
  */
 class FormPage extends AbstractAdminTitlePage
 {
+    /**
+     * @Resource
+     */
+    private $formService;
+    
+    public function __construct()
+    {
+        parent::__construct();
+        
+        $self = $this;
+        $editCallback = function($id, $formModel) use ($self)
+        {
+            return new LinkPanel($id, 'Edit', function() use ($self, $formModel)
+            {
+                $populatedForm = $self->getFormService()->getPopulatedForm($formModel->getModelObject());
+                $self->setPage(new CreateEditFormPage($populatedForm));
+            });
+        };
+        
+        $deleteCallback = function($id, $formModel) use ($self)
+        {
+            return new LinkPanel($id, 'Delete', function() use ($self, $formModel)
+            {
+                $self->getFormService()->deleteForm($formModel->getModelObject());
+            });
+        };
+        
+        $columns = array();
+        $columns[] = new \picon\PropertyColumn('Form Name', 'name');
+        $columns[] = new PanelColumn('', $editCallback);
+        $columns[] = new PanelColumn('', $deleteCallback);
+        
+        $provider = new FormDataProvider();
+        
+        $this->add(new picon\DefaultDataTable('forms', $provider, $columns));
+        
+        $self = $this;
+        $this->add(new \picon\Link('create', function() use ($self)
+        {
+            $self->setPage(new CreateEditFormPage(new PopulatedForm()));
+        }));
+    }
+    
     protected function getTitle()
     {
         return 'Forms';
+    }
+    
+    public function getFormService()
+    {
+        return $this->formService;
     }
 }
 

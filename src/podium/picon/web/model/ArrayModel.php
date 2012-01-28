@@ -36,10 +36,10 @@ class ArrayModel implements Model
      *
      * @param array $object 
      */
-    public function __construct($object)
+    public function __construct(&$object)
     {
         Args::isArray($object, 'object');
-        $this->object = $object;
+        $this->object = &$object;
     }
     
     public function getModelObject()

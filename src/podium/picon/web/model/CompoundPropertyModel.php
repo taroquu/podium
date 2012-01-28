@@ -54,8 +54,7 @@ class CompoundPropertyModel implements CompoundModel, ComponentInheritedModel
     public function onInherit(Component &$component)
     {
         $property = $this->property;
-        $reflection = new \ReflectionClass($this->target->$property);
-        if(!$reflection->hasProperty($component->getId()))
+        if(!PropertyResolver::hasProperty($this->target->$property, $component->getId()))
         {
             return null;
         }

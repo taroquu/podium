@@ -68,7 +68,7 @@ abstract class AbstractAdminPage extends WebPage
         
         $formMenu = array();
         $formMenu[] = new MenuItem('view forms', FormPage::getIdentifier(), $formMenu);
-        $formMenu[] = new MenuItem('create form', FormPage::getIdentifier(), $formMenu);
+        $formMenu[] = new MenuItem('create form', CreateEditFormPage::getIdentifier(), $formMenu);
         $formMenu[] = new MenuItem('view submissions', FormPage::getIdentifier(), $formMenu);
         $menuItems[] = new MenuItem('forms', FormPage::getIdentifier(), $formMenu);
         

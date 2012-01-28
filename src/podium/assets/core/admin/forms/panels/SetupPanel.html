@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:picon="http://picon.webquub.com/dtds/picon-xhtml.dtd"  
+      xml:lang="en"  
+      lang="en"> 
+    <head>
+        <picon:head>
+            <style>
+                .fieldBlock, .selectedFields {
+                    list-style:none;
+                    margin:0px;
+                    padding:0px;
+                }
+                
+                .fieldBlock li, .selectedFields li {
+                    background:#ccffcc;
+                    border-radius:4px;
+                    margin:5px 0;
+                    padding:4px;
+                    width:150px;
+                }
+                
+                .selectedFields {
+                    width:540px;
+                    min-height:215px;
+                    height:auto;
+                }
+                
+                .selectedFields li {
+                    width:500px;
+                }
+            </style>
+        </picon:head>
+    </head>
+    <body>
+        <picon:panel>
+            <div class="singleFieldBlock"><label>Form Name: </label><input type="text" picon:id="name" /></div>
+            <hr />
+            <div class="borderBox"><ul class="fieldBlock"><li picon:id="fields"><input type="hidden" picon:id="fieldType" /><span picon:id="fieldName"></span></li></ul></div>
+            <div class="borderBox"><ul class="selectedFields" picon:id="fieldList"><li picon:id="field"><div picon:id="fieldPanel"></div></li></ul></div>
+            <div picon:id="mw"></div>
+        </picon:panel>
+    </body>
+</html>

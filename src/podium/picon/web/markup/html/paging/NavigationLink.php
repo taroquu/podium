@@ -36,7 +36,7 @@ class NavigationLink extends Link
     
     public function __construct($id, Pageable $pageable, $page)
     {
-        parent::__construct($id);
+        parent::__construct($id, function(){});
         Args::isNumeric($page, 'page');
         $this->pageable = $pageable;
         $this->page = $page;
