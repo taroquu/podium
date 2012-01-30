@@ -77,11 +77,30 @@ class ArrangementService
         $pblock->nestedBlocks = $cols;
             
         $widgets = $this->arrangementDao->getBlockContents($arrangementId, $block->id);
+        
         foreach($widgets as $widget)
         {
+            $widget->config = $this->getWidgetConfig($widget->elementId, $widget->configClass);
             $pblock->addWidget($widget);
         }
         return $pblock;
+    }
+    
+    /**
+     * Replace this with custom widget mappers
+     * @param type $elementId
+     * @param type $configClass 
+     */
+    private function getWidgetConfig($elementId, $configClass)
+    {
+        $items = $this->arrangementDao->getWidgetElementConfig($elementId);
+        $config = new $configClass();
+        foreach($items as $item)
+        {
+            $name = $item->name;
+            $config->$name = $item->value;
+        }
+        return $config;
     }
     
     public function createOrUpdateArrangement(Arrangement $arrangement)
@@ -93,7 +112,7 @@ class ArrangementService
         }
         else
         {
-            //update name
+            //@todo update name
         }
         $oldArrangement = $this->getArrangement($arrangement->id);
         
@@ -153,11 +172,19 @@ class ArrangementService
         {
             if($widget->elementId==null)
             {
-                $this->arrangementDao->createElement($widget, $block->id, $index, $arrangementId);
+                $widget->elementId = $this->arrangementDao->createElement($widget, $block->id, $index, $arrangementId);
             }
             else
             {
                 $this->arrangementDao->updateElement($widget, $block->id, $index, $arrangementId);
+                $this->arrangementDao->clearWidgetElementConfig($widget->elementId);
+            }
+            $reflection = new ReflectionClass($widget->config);
+
+            foreach($reflection->getProperties() as $property)
+            {
+                $property->setAccessible(true);
+                $this->arrangementDao->addWidgetElementConfig($widget->elementId, $property->getName(), $property->getValue($widget->config));
             }
         }
     }

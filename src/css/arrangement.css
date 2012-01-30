@@ -27,26 +27,6 @@
     background:#eb8f00;
 }
 
-.remove {
-    position:absolute;
-    top:10px;
-    right:10px;
-    height:25px;
-    width:25px;
-    cursor:pointer;
-    background-color:darkblue;
-}
-
-.dragHandle {
-    position:absolute;
-    top:10px;
-    left:10px;
-    height:25px;
-    width:25px;
-    cursor:move;
-    background-color:#1c94c4;
-}
-
 .blockControl {
     display:none;
 }
@@ -56,15 +36,62 @@ li:hover .blockControl {
 }
 
 .rowBlock li {
+    min-width:150px;
     width:auto;
     float:left;
+    height:100%;
 }
 
 .columnElement li {
     height:auto;
+    min-height:60px;
     width:100%;
 }
 
 li .widgetPlaceholder {
     display:block;
+}
+
+.hoverBox {
+    background:#ccffcc;
+    border:#030 1px solid;
+    border-radius:3px;
+    display:none;
+    height:20px;
+    width:20px;
+    position:absolute;
+    top:10px;
+}
+
+li:hover .hoverBox {
+    display:block;
+}
+
+.hoverBox.right {
+    right:10px;
+}
+
+.hoverBox.left {
+    left:10px;
+}
+
+.hoverBox img {
+    width:18px;
+    height:18px;
+    float:left;
+    margin:1px;
+    cursor: pointer;
+}
+
+.hoverBox a {
+    float:left;
+    display: inline-block;
+}
+
+.hoverBox.double {
+    width:44px;
+}
+
+img.dragHandle {
+    cursor:move;
 }

@@ -41,10 +41,26 @@ class WidgetDao extends AbstractDao
     {
         $mapper = new picon\CallbackRowMapper(function($row)
         {
-           return new WidgetItem($row->id, $row->name, $row->class);
+           return new WidgetItem($row->id, $row->name, $row->class, $row->setup, $row->config);
         });
         
         return $this->getTemplate()->query("SELECT * FROM widgets where category_id = %d", $mapper, array($categoryId));
+    }
+    
+    public function getWidgetItem($widgetId)
+    {
+        $mapper = new picon\CallbackRowMapper(function($row)
+        {
+           return new WidgetItem($row->id, $row->name, $row->class, $row->setup, $row->config);
+        });
+        
+        $items = $this->getTemplate()->query("SELECT * FROM widgets where id = %d", $mapper, array($widgetId));
+        
+        if(count($items)!=1)
+        {
+            throw new IllegalStateException('Expected only 1 widget item');
+        }
+        return $items[0];
     }
 }
 

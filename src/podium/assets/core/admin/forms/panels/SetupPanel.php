@@ -46,7 +46,7 @@ class SetupPanel extends picon\Panel
         $mw->setWidth(700);
         
         $self = $this;
-        $deleteCallback = function(picon\AjaxRequestTarget $target, FormField $field) use ($form, $self, $fields)
+        $deleteCallback = function(picon\AjaxRequestTarget $target, AbstractFormField $field) use ($form, $self, $fields)
         {
             $form->removeField($field);
             $self->fieldList->setModel(new \picon\ArrayModel($form->fields));
@@ -56,6 +56,9 @@ class SetupPanel extends picon\Panel
         $this->fieldList = new picon\ListView('field', function(\picon\ListItem $item) use ($mw, $fields, $deleteCallback)
         {
             $item->add(new FormFieldPanel('fieldPanel', $mw, $fields, $deleteCallback, $item->getModel()));
+            $indexValue = new \picon\MarkupContainer('index');
+            $item->add($indexValue);
+            $indexValue->add(new \picon\AttributeModifier('value', new picon\BasicModel($item->getIndex())));
         }, new \picon\ArrayModel($form->fields));
 
         $fields->add($this->fieldList);
@@ -72,6 +75,17 @@ class SetupPanel extends picon\Panel
             $mw->setContent(FieldFactory::getSetupPanel($field, $mw, $fields));
             $mw->show($target);
         }, 'callBackURL += \'&type=\'+$(\'input[type=hidden]\', ui.item).attr(\'value\')+\'&index=\'+ui.item.index();');
+        
+        $sortable->setStopCallback(function(picon\AjaxRequestTarget $target) use($fields, $form, $self, $mw)
+        {
+            $oldindex = $fields->getRequest()->getParameter('oldIndex');
+            $index = $fields->getRequest()->getParameter('index');
+            $toRemove = $form->fields[$oldindex];
+            $form->removeField($toRemove);
+            $form->addField($toRemove, $index);
+            $target->add($fields);
+            $self->fieldList->setModel(new \picon\ArrayModel($form->fields));
+        }, "if(ui.item.hasClass('newItem'))return; callBackURL += '&oldIndex='+$('input[type=hidden]', ui.item).val()+'&index='+ui.item.index();");
         
         $this->add(new picon\ListView('fields', function(\picon\ListItem $item) use ($fields)
         {

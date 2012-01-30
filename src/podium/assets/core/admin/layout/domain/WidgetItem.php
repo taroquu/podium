@@ -30,14 +30,16 @@ class WidgetItem extends picon\ComonDomainBase
     private $id;
     private $name;
     private $class;
-    private $elementId;
+    private $configClass;
+    private $setupClass;
     
-    public function __construct($id, $name, $class, $elementId)
+    public function __construct($id, $name, $class, $setupClass, $configClass)
     {
         $this->id = $id;
         $this->name = $name;
         $this->class = $class;
-        $this->elementId = $elementId;
+        $this->setupClass = $setupClass;
+        $this->configClass = $configClass;
     }
 }
 

@@ -37,6 +37,11 @@ class ArrangementEditorPage extends AbstractAdminToolbarPage
     public function __construct($arrangement = null)
     {
         parent::__construct();
+        $mw = new \picon\ModalWindow('configMw');
+        $mw->setHeight(600);
+        $mw->setWidth(500);
+        $this->add($mw);
+        
         if($arrangement==null)
         {
             $this->arrangment = new Arrangement(null, '');
@@ -45,7 +50,7 @@ class ArrangementEditorPage extends AbstractAdminToolbarPage
             {
                 $layout = $self->arrangment->layout;
                 $self->arrangment = $self->arrangementService->prePopulate($self->arrangment);
-                $editor = new ArrangementEditorPanel('panel', $self->arrangment);
+                $editor = new ArrangementEditorPanel('panel', $self->arrangment, $mw);
                 $self->addOrReplace($editor);
                 $editor->toolbarRender($self->getToolbar());
             };
@@ -53,7 +58,7 @@ class ArrangementEditorPage extends AbstractAdminToolbarPage
         }
         else
         {
-            $this->add(new ArrangementEditorPanel('panel', $arrangement));
+            $this->add(new ArrangementEditorPanel('panel', $arrangement, $mw));
         }
     }
     

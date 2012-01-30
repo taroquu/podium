@@ -44,6 +44,11 @@ class WidgetService
         
         return $categories;
     }
+    
+    public function getWidget($widgetId)
+    {
+        return $this->widgetDao->getWidgetItem($widgetId);
+    }
 }
 
 ?>

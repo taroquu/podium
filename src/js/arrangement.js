@@ -27,8 +27,7 @@
     {
         var options = $.extend( {
           newElement : function(blockId, widgetId, index){},
-          moved : function(blockId, elementId, index){},
-          removed : function(elementId) {}
+          moved : function(blockId, elementId, index){}
         }, settings);
         
         $(this).each(function()
@@ -54,20 +53,6 @@
                         options.moved(blockId, elementId, index);
                     }
                 }
-            });
-            
-            $('.layoutBlock ul li', this).each(function()
-            {
-                $(this).append('<div class="dragHandle blockControl" />');
-                var remove = $('<div class="remove blockControl" />');
-                $(this).append(remove);
-                
-                remove.click(function()
-                {
-                    var elementId = $('input[type=hidden]', $(this).parents('li').first()).first().attr('value');
-                    options.removed(elementId);
-                    $(this).parents('li').remove();
-                });
             });
         });
     };

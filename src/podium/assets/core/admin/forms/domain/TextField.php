@@ -29,7 +29,7 @@ class TextField extends AbstractRequirableFormField
 {
     private $validator;
     
-    public function __construct($name, $required, $validator, $id = null)
+    public function __construct($name, $required, $validator = null, $id = null)
     {
         parent::__construct($name, $required, $id);
         $this->validator = $validator;

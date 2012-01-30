@@ -20,14 +20,27 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
+namespace picon;
+
 /**
- * This is tempory widget to get things going
+ * Helper class for working with objects
  * 
  * @author Martin Cassidy
+ * @package utilities
  */
-class DefaultWidget extends Widget
+class Objects
 {
-    
+    public static function equals($object1, $object2)
+    {
+        if($object1 instanceof Equalable && $object2 instanceof Equalable)
+        {
+            return $object1->equals($object2);
+        }
+        else
+        {
+            return $object1==$object2;
+        }
+    }
 }
 
 ?>

@@ -29,28 +29,12 @@ use picon\Panel;
  */
 abstract class Widget extends Panel
 {
-    private $editable = false;
     private $item;
-    /**
-     * @todo take in both the widget item object and the widget config as constructor arguments
-     * @param type $id
-     * @param Model $model
-     * @param type $editable 
-     */
-    public function __construct($id, WidgetItem $item, Model $model = null, $editable = false)
-    {
-        parent::__construct($id, $model);
-        $this->item = $item;
-        $this->editable = $editable;
-    }
     
-    protected function onComponentTagBody(ComponentTag $tag)
+    public function __construct($id, WidgetItem $item)
     {
-        if($this->editable)
-        {
-            $this->getResponse()->write('<input type="hidden" value="'.$this->item->elementId.'" />');
-        }
-        parent::onComponentTagBody($tag);
+        parent::__construct($id);
+        $this->item = $item;
     }
 }
 

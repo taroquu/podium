@@ -27,7 +27,42 @@
  */
 class ValidationFieldPanel extends RequireableFieldPanel
 {
+    private $optionWrap;
+    public function __construct($id, \picon\ModalWindow $mw, $update, Model $model = null)
+    {
+        parent::__construct($id, $mw, $update, $model);
+        $validator = new picon\DropDown('validator', FieldFactory::getValidators(), new \picon\ChoiceRenderer(function($choice, $index)
+        {
+            return 'v'.$index;
+        }, 
+        function($choice, $index)
+        {
+            return $choice->name;  
+        }));
+        $this->getForm()->add($validator);
+        
+        $this->optionWrap = new \picon\MarkupContainer('optionWrap');
+        $this->optionWrap->setOutputMarkupId(true);
+        $this->getForm()->add($this->optionWrap);
+        $self = $this;
+        $validator->add(new picon\AjaxFormComponentUpdateBehavior('onChange', function(\picon\AjaxRequestTarget $target) use ($self)
+        {
+            $field = $self->getModelObject();
+            $self->getOptionWrap()->addOrReplace(FieldFactory::getValidatorSetupPanel('options', $field->validator));
+            $target->add($self->getOptionWrap());
+        }));
+    }
     
+    public function beforePageRender()
+    {
+        parent::beforePageRender();
+        $this->getOptionWrap()->addOrReplace(FieldFactory::getValidatorSetupPanel('options', $this->getModelObject()->validator));
+    }
+    
+    public function getOptionWrap()
+    {
+        return $this->optionWrap;
+    }
 }
 
 ?>

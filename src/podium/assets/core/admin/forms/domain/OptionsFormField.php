@@ -25,7 +25,7 @@
  * 
  * @author Martin Cassidy
  */
-class OptionsFormField extends FormField
+class OptionsFormField extends AbstractFormField
 {
     private $options = array();
 }

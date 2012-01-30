@@ -54,6 +54,11 @@ class FormService
             {
                 $field->options = $this->formDao->getOptions($field->id);
             }
+            
+            if($field instanceof TextField)
+            {
+                $field->validator = $this->getValidator($field);
+            }
         }
         return $populated;
     }
@@ -108,12 +113,68 @@ class FormService
                     $this->formDao->createOption($field->id, $option);
                 }
             }
+            
+            if($field instanceof TextField)
+            {
+                $this->formDao->deleteValidators($field->id);
+                $this->createValidator($field->id, $field->validator);
+            }
         }
     }
     
     public function deleteForm(Form $form)
     {
         $this->formDao->deleteForm($form->id);
+    }
+    
+    public function createValidator($fieldId, AbstractValidator $validator)
+    {
+        $validatorId = $this->formDao->addValidator($fieldId, $validator);
+        
+        if($validator instanceof MinValidator)
+        {
+            $this->formDao->addValidatorOption($validatorId, 'min', $validator->min);
+        }
+        else if($validator instanceof MaxValidator)
+        {
+            $this->formDao->addValidatorOption($validatorId, 'max', $validator->max);
+        }
+        else if($validator instanceof RangeValidator)
+        {
+            $this->formDao->addValidatorOption($validatorId, 'min', $validator->min);
+            $this->formDao->addValidatorOption($validatorId, 'max', $validator->max);
+        }
+        else if($validator instanceof SingleValueValidator)
+        {
+            $this->formDao->addValidatorOption($validatorId, 'value', $validator->value);
+        }
+    }
+    
+    private function getValidator(TextField $field)
+    {
+        //@todo add support for multiple validators
+        $validator = $this->formDao->getValidators($field->id);
+        $validator = $validator[0];
+        
+        if($validator instanceof MinValidator)
+        {
+            $validator->min = $this->formDao->getValidatorOptions($validator->id, 'min');
+        }
+        else if($validator instanceof MaxValidator)
+        {
+            $validator->max = $this->formDao->getValidatorOptions($validator->id, 'max');
+        }
+        else if($validator instanceof RangeValidator)
+        {
+            $validator->min = $this->formDao->getValidatorOptions($validator->id, 'min');
+            $validator->max = $this->formDao->getValidatorOptions($validator->id, 'max');
+        }
+        else if($validator instanceof SingleValueValidator)
+        {
+            $validator->value = $this->formDao->getValidatorOptions($validator->id, 'value');
+        }
+        
+        return $validator;
     }
 }
 

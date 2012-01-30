@@ -27,11 +27,22 @@
  */
 class WidgetFactory
 {
-    public static function getWidget($id, WidgetItem $item, $editable = false)
+    public static function getWidget($id, WidgetItem $item)
     {
         $className = $item->class;
         $reflection = new ReflectionClass($className);
-        return $reflection->newInstanceArgs(array($id, $item, null, $editable));
+        return $reflection->newInstanceArgs(array($id, $item));
+    }
+    
+    public static function getEditableWidget($id, WidgetItem $item, $editCallback, $deleteCallback)
+    {
+        return new EditableWidgetWrappingPanel($id, self::getWidget(EditableWidgetWrappingPanel::INNER_PANEL_ID, $item), $item, $editCallback, $deleteCallback);
+    }
+    
+    public static function getWidgetConfigPanel(WidgetElementItemItem $item, \picon\ModalWindow $mw, $updateComponent)
+    {
+        $className = $item->setupClass;
+        return new $className($mw->getContentId(), $mw, $updateComponent, new \picon\BasicModel($item->config));
     }
 }
 

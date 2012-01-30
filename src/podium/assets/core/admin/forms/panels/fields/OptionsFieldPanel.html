@@ -4,15 +4,32 @@
       xml:lang="en"  
       lang="en"> 
     <head>
+        <picon:head>
+            <style>
+                .opList {
+                    list-style: none;
+                    margin:0px;
+                    padding:0px;
+                }
+                .opList li {
+                    line-height:25px;
+                }
+                
+                .opList li a {
+                    display:inline-block;
+                    margin-left:20px;
+                }
+            </style>
+        </picon:head>
     </head>
     <body>
         <picon:extend>
             <hr />
             <form picon:id="opForm">
             <div picon:id="options">
-                <ul>
+                <ul class="opList">
                     <li picon:id="option">
-                        <span picon:id="value"></span> <a picon:id="delete">Delete</a>
+                        <span picon:id="value"></span> <a picon:id="delete"><img src="images/delete.png" width="15" height="15"/></a>
                     </li>
                 </ul>
             <div picon:id="feedback" />

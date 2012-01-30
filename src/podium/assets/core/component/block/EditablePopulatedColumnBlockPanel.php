@@ -27,9 +27,20 @@
  */
 class EditablePopulatedColumnBlockPanel extends PopulatedColumnBlockPanel
 {
+    private $editCallback;
+    private $deleteCallback;
+    
+    public function __construct($id, ColumnBlock $block, $cssClass, $innerClass, $editCallback, $deleteCallback)
+    {
+        $this->editCallback = $editCallback;
+        $this->deleteCallback = $deleteCallback;
+        parent::__construct($id, $block, $cssClass, $innerClass);
+
+    }
+    
     protected function newColumnElement($id, $column, $innerClass)
     {
-        return new EditablePopulatedLayoutBlockPanel($id, $column, $innerClass);
+        return new EditablePopulatedLayoutBlockPanel($id, $column, $innerClass, $this->editCallback, $this->deleteCallback);
     }
 }
 

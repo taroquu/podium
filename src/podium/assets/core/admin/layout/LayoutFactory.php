@@ -27,7 +27,7 @@
  */
 class LayoutFactory
 {
-    public static function newLayoutBlockPanel($id, LayoutBlock $block, $editable = false)
+    public static function newLayoutBlockPanel($id, LayoutBlock $block)
     {
         $panel = null;
         
@@ -35,18 +35,7 @@ class LayoutFactory
         {
             if($editable)
             {
-                if($block->type==Layout::ROW_BLOCK)
-                {
-                    $panel = new EditablePopulatedLayoutBlockPanel($id, $block, 'rowBlock');
-                }
-                else if($block->type==Layout::COLUMN_BLOCK)
-                {
-                    $panel = new EditablePopulatedColumnBlockPanel($id, $block, 'columnBlock', 'columnElement');
-                }
-                else if($block->type==Layout::FLOATING_BLOCK)
-                {
-                    $panel = new EditablePopulatedLayoutBlockPanel($id, $block, 'floating');
-                }
+
             }
             else
             {
@@ -70,6 +59,23 @@ class LayoutFactory
                 $class = $editable?' n e s w ne nw se sw':'';
                 $panel = new LayoutBlockPanel($id, $block, 'floating'.$class);
             }
+        }
+        return $panel;
+    }
+    
+    public static function newEditablePopulatedLayoutBlock($id, LayoutBlock $block, $editCallback, $deleteCallback)
+    {
+        if($block->type==Layout::ROW_BLOCK)
+        {
+            $panel = new EditablePopulatedLayoutBlockPanel($id, $block, 'rowBlock', $editCallback, $deleteCallback);
+        }
+        else if($block->type==Layout::COLUMN_BLOCK)
+        {
+            $panel = new EditablePopulatedColumnBlockPanel($id, $block, 'columnBlock', 'columnElement', $editCallback, $deleteCallback);
+        }
+        else if($block->type==Layout::FLOATING_BLOCK)
+        {
+            $panel = new EditablePopulatedLayoutBlockPanel($id, $block, 'floating', $editCallback, $deleteCallback);
         }
         return $panel;
     }

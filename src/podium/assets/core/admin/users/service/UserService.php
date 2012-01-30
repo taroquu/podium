@@ -37,7 +37,7 @@ class UserService
     {
         $encrypted = $this->encryptPassword($password);
         $user = $this->userDao->getUserByName($username);
-        
+
         if($user->password==$encrypted)
         {
             return $user;

@@ -136,6 +136,58 @@ class FormDao extends AbstractDao
         });
         return $this->getTemplate()->query("SELECT * FROM form_element_options WHERE form_element_id = %d", $mapper, array($fieldId));
     }
+    
+    public function deleteValidators($fieldId)
+    {
+        $this->getTemplate()->update("DELETE FROM form_validation WHERE form_element_id = %d", array($fieldId));
+    }
+    
+    public function addValidator($fieldId, AbstractValidator $validator)
+    {
+        return $this->getTemplate()->insert("INSERT INTO form_validation (form_element_id, `type`) VALUES (%d, '%s')", array($fieldId, $validator->name));
+    }
+    
+    public function addValidatorOption($validatorId, $name, $value)
+    {
+        return $this->getTemplate()->insert("INSERT INTO form_validation_options (form_validation_id, `name`, `value`) VALUES (%d, '%s', '%s')", array($validatorId, $name, $value));
+    }
+    
+    public function getValidators($fieldId)
+    {
+        $mapper = new picon\CallbackRowMapper(function($row)
+        {
+            return FieldFactory::mapValidator($row);
+        });
+        return $this->getTemplate()->query("SELECT * FROM form_validation WHERE form_element_id = %d", $mapper, array($fieldId));
+    }
+    
+    /**
+     * @todo Use queryForString when it exists
+     * @param type $validatorId
+     * @param type $name
+     * @return type 
+     */
+    public function getValidatorOptions($validatorId, $name)
+    {
+        $mapper = new picon\CallbackRowMapper(function($row)
+        {
+            return $row->value;
+        });
+        $options = $this->getTemplate()->query("SELECT * FROM form_validation_options WHERE form_validation_id = %d AND `name` = '%s'", $mapper, array($validatorId, $name));
+        
+        if(count($options)!=1)
+        {
+            throw new IllegalStateException('Expected only one option');
+        }
+        $option = $options[0];
+        
+        if(is_numeric($option))
+        {
+            settype($option, \picon\Component::TYPE_INT);
+        }
+        
+        return $option;
+    }
 }
 
 ?>

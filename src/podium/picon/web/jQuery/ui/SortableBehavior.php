@@ -42,6 +42,12 @@ class SortableBehavior extends DefaultJQueryUIBehaviour
         Args::callBackArgs($receiveCallback, 1, 'receiveCallback');
         $this->getOptions()->add(new CallbackFunctionOption('receive', $receiveCallback, $jsCode, 'event', 'ui'));
     }
+    
+    public function setStopCallback($stopCallback, $jsCode = '')
+    {
+        Args::callBackArgs($stopCallback, 1, 'stopCallback');
+        $this->getOptions()->add(new CallbackFunctionOption('stop', $stopCallback, $jsCode, 'event', 'ui'));
+    }
 }
 
 ?>

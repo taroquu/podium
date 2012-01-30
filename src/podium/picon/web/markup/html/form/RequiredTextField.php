@@ -30,9 +30,9 @@ namespace picon;
  */
 class RequiredTextField extends TextField
 {
-    public function __construct($id, Model $model = null)
+    public function __construct($id, Model $model = null, $type = null)
     {
-        parent::__construct($id, $model);
+        parent::__construct($id, $model, $type);
         $this->setRequired(true);
     }
 }

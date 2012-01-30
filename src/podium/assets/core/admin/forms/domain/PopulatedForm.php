@@ -32,7 +32,7 @@ class PopulatedForm extends Form
     private $message;
     private $page;
     
-    public function addField(FormField $field, $index = null)
+    public function addField(AbstractFormField $field, $index = null)
     {
         if($index==null)
         {
@@ -44,7 +44,7 @@ class PopulatedForm extends Form
         }
     }
     
-    public function removeField(FormField $field)
+    public function removeField(AbstractFormField $field)
     {
         foreach($this->fields as $index => $sfield)
         {

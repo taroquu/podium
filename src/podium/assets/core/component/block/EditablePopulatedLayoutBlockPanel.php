@@ -27,9 +27,19 @@
  */
 class EditablePopulatedLayoutBlockPanel extends PopulatedLayoutBlockPanel
 {
+    private $editCallback;
+    private $deleteCallback;
+    
+    public function __construct($id, AbstractPopulatabaleLayoutBlock $block, $cssClass = '', $editCallback, $deleteCallback)
+    {
+        $this->editCallback = $editCallback;
+        $this->deleteCallback = $deleteCallback;
+        parent::__construct($id, $block, $cssClass);
+    }
+    
     protected function getWidget(WidgetItem $item, $id)
     {
-        return WidgetFactory::getWidget($id, $item, true);
+        return WidgetFactory::getEditableWidget($id, $item, $this->editCallback, $this->deleteCallback);
     }
 }
 

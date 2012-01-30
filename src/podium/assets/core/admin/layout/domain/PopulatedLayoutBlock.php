@@ -30,7 +30,7 @@ class PopulatedLayoutBlock extends LayoutBlock
 {
     private $widgets = array();
     
-    public function addWidget(WidgetItem $widget, $index = null)
+    public function addWidget(WidgetElementItem $widget, $index = null)
     {
         if($index==null)
         {
@@ -47,11 +47,11 @@ class PopulatedLayoutBlock extends LayoutBlock
         return $this->widgets;
     }
     
-    public function removeWidget(WidgetItem $item)
+    public function removeWidget(WidgetElementItem $item)
     {
         foreach($this->widgets as $index => $widget)
         {
-            if($item->elementId==$widget->elementId)
+            if($item==$widget)
             {
                 unset($this->widgets[$index]);
             }
