@@ -21,13 +21,17 @@
  * */
 
 /**
- * Description of FormWidgetConfig
+ * Description of TextFieldPanel
  * 
  * @author Martin Cassidy
  */
-class FormWidgetConfig extends WidgetConfig
+class TextFieldPanel extends \picon\Panel
 {
-    private $form;
+    public function __construct($id, Model $model = null)
+    {
+        parent::__construct($id, $model);
+        $this->add(new picon\TextField('textField'));
+    }
 }
 
 ?>

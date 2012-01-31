@@ -46,20 +46,7 @@ class FormService
     public function getPopulatedForm(Form $form)
     {
         $populated = $this->formDao->getForm($form->id);
-        $populated->fields = $this->formDao->getFormFields($form->id);
-        
-        foreach($populated->fields as $field)
-        {
-            if($field instanceof AbstractOptionField)
-            {
-                $field->options = $this->formDao->getOptions($field->id);
-            }
-            
-            if($field instanceof TextField)
-            {
-                $field->validator = $this->getValidator($field);
-            }
-        }
+        $populated->fields = $this->getFields($form->id);
         return $populated;
     }
     
@@ -120,6 +107,25 @@ class FormService
                 $this->createValidator($field->id, $field->validator);
             }
         }
+    }
+    
+    public function getFields($formId)
+    {
+        $fields = $this->formDao->getFormFields($formId);
+        
+        foreach($fields as $field)
+        {
+            if($field instanceof AbstractOptionField)
+            {
+                $field->options = $this->formDao->getOptions($field->id);
+            }
+            
+            if($field instanceof TextField)
+            {
+                $field->validator = $this->getValidator($field);
+            }
+        }
+        return $fields;
     }
     
     public function deleteForm(Form $form)

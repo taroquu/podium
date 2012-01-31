@@ -27,7 +27,67 @@
  */
 class FormWidget extends Widget
 {
+    /**
+     * @Resource
+     */
+    private $formService;
     
+    public function __construct($id, WidgetItem $item)
+    {
+        parent::__construct($id, $item);
+        $form = new picon\Form('form');
+        $this->add($form);
+        
+        $fields = new picon\RepeatingView('field');
+        $form->add($fields);
+        
+        if($item->config->form!=null)
+        {
+            $formFields = $this->formService->getFields($item->config->form);
+            
+            foreach($formFields as $field)
+            {
+                $element = new \picon\MarkupContainer($fields->getNextChildId());
+                $fields->add($element);
+                $label = new picon\Label('label', new picon\BasicModel($field->name));
+                $element->add($label);
+                
+                $fieldElement = null;
+                
+                if($field instanceof DropDownField)
+                {
+                    $fieldElement = new DropDownPanel('element', $field->options);
+                }
+                else if($field instanceof TextField)
+                {
+                    $fieldElement = new TextFieldPanel('element');
+                }
+                else if($field instanceof TextAreaField)
+                {
+                    $fieldElement = new TextAreaPanel('element');
+                }
+                else if($field instanceof CheckBoxField)
+                {
+                    $fieldElement = new CheckBoxPanel('element', $field->label);
+                }
+                else if($field instanceof CheckGroupField)
+                {
+                    $fieldElement = new \picon\CheckChoice('element', $field->options);
+                }
+                else if($field instanceof RadioField)
+                {
+                    $fieldElement = new \picon\RadioChoice('element', $field->options);
+                }
+                else if($field instanceof ButtonField)
+                {
+                    $fieldElement = new ButtonPanel('element', $field->type, $field->text);
+                    $label->setVisible(false);
+                }
+
+                $element->add($fieldElement);
+            }
+        }
+    }
 }
 
 ?>

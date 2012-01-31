@@ -21,13 +21,17 @@
  * */
 
 /**
- * Description of FormWidgetConfig
+ * Description of DropDownPanel
  * 
  * @author Martin Cassidy
  */
-class FormWidgetConfig extends WidgetConfig
+class DropDownPanel extends \picon\Panel
 {
-    private $form;
+    public function __construct($id, $options)
+    {
+        parent::__construct($id);
+        $this->add(new \picon\DropDown('dropDown', $options));
+    }
 }
 
 ?>

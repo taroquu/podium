@@ -21,13 +21,20 @@
  * */
 
 /**
- * Description of FormWidgetConfig
+ * Description of ButtonPanel
  * 
  * @author Martin Cassidy
  */
-class FormWidgetConfig extends WidgetConfig
+class ButtonPanel extends \picon\Panel
 {
-    private $form;
+    public function __construct($id, $type, $text)
+    {
+        parent::__construct($id);
+        $button = new \picon\Button('button');
+        $this->add($button);
+        $button->add(new picon\AttributeModifier('value', new picon\BasicModel($text)));
+        $button->add(new picon\AttributeModifier('type', new picon\BasicModel($type)));
+    }
 }
 
 ?>

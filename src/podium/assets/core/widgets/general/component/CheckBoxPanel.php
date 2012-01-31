@@ -21,13 +21,18 @@
  * */
 
 /**
- * Description of FormWidgetConfig
+ * Description of CheckBoxPanel
  * 
  * @author Martin Cassidy
  */
-class FormWidgetConfig extends WidgetConfig
+class CheckBoxPanel extends \picon\Panel
 {
-    private $form;
+    public function __construct($id, $label, Model $model = null)
+    {
+        parent::__construct($id, $model);
+        $this->add(new picon\Label('checkLabel', new picon\BasicModel($label)));
+        $this->add(new picon\CheckBox('check'));
+    }
 }
 
 ?>
