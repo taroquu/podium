@@ -27,7 +27,14 @@
  */
 class HeaderWidgetConfigPanel extends AbstractWidgetSetupPanel
 {
-    
+    public function __construct($id, \picon\ModalWindow $mw, $updateComponent, Model $model = null)
+    {
+        parent::__construct($id, $mw, $updateComponent, $model);
+        
+        $this->getForm()->add(new picon\TextField('text'));
+        $types = array('Heading 1', 'Heading 2', 'Heading 3', 'Heading 4', 'Heading 5', 'Heading 6');
+        $this->getForm()->add(new picon\DropDown('type', $types));
+    }
 }
 
 ?>

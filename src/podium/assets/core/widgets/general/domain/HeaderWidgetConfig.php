@@ -27,7 +27,8 @@
  */
 class HeaderWidgetConfig extends WidgetConfig
 {
-    
+    private $type;
+    private $text;
 }
 
 ?>

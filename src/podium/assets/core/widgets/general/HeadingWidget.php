@@ -27,7 +27,21 @@
  */
 class HeadingWidget extends Widget
 {
-    
+    public function __construct($id, WidgetItem $item)
+    {
+        parent::__construct($id, $item);
+        $type = $item->config->type;
+        $heading = new \picon\Label('heading', new \picon\BasicModel($item->config->text));
+        $this->add($heading);
+        $heading->setOnComponentTagCallback(function(\picon\Component $component, \picon\ComponentTag $tag) use($type)
+        {
+            if(empty ($type))
+            {
+                $type = 'h1';
+            }
+            $tag->setName(str_replace('Heading ', 'h', $type));
+        });
+    }
 }
 
 ?>
