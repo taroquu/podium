@@ -55,7 +55,7 @@ abstract class AbstractAdminPage extends WebPage
         $contentMenu[] = new MenuItem('Posts', ContentPage::getIdentifier());
         $contentMenu[] = new MenuItem('Create Page', ContentPage::getIdentifier());
         $contentMenu[] = new MenuItem('Create Post', ContentPage::getIdentifier());
-        $contentMenu[] = new MenuItem('Content Types', ContentPage::getIdentifier());
+        $contentMenu[] = new MenuItem('Content Types', ContentTypeListPage::getIdentifier());
         $menuItems[] = new MenuItem('content', ContentPage::getIdentifier(), $contentMenu);
         
         $layoutMenu = array();
