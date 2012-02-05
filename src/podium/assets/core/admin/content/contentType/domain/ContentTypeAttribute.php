@@ -30,11 +30,13 @@ class ContentTypeAttribute extends \picon\ComonDomainBase
     private $id;
     private $name;
     private $attributeId;
+    private $widget;
     
-    public function __construct($id, $name, $attributeId = null)
+    public function __construct($id, $name, $widget, $attributeId = null)
     {
         $this->id = $id;
         $this->name = $name;
+        $this->widget = $widget;
         $this->attributeId = $attributeId;
     }
 }

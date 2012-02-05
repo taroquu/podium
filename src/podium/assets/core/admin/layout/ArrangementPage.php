@@ -49,9 +49,20 @@ class ArrangementPage extends AbstractAdminTitlePage
             });
         };
         
+        $deleteCallback = function($id, $arrangementModel) use ($self, $layout)
+        {
+            return new LinkPanel($id, 'Delete', function() use ($self, $arrangementModel, $layout)
+            {
+                $arrangement = $arrangementModel->getModelObject();
+                $self->arrangementService->deleteArrangement($arrangement);
+                $self->setPage(new ArrangementPage($layout));
+            });
+        };
+        
         $columns = array();
         $columns[] = new \picon\PropertyColumn('Arrangement Name', 'name');
         $columns[] = new PanelColumn('', $editCallback);
+        $columns[] = new PanelColumn('', $deleteCallback);
         
         $provider = new ArrangementDataProvider($layout);
         

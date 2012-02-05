@@ -35,9 +35,9 @@ class FormWidgetConfigPanel extends AbstractWidgetSetupPanel
     private $chosenForm;
     private $forms;
     
-    public function __construct($id, \picon\ModalWindow $mw, $updateComponent, Model $model = null)
+    public function __construct($id, $model)
     {
-        parent::__construct($id, $mw, $updateComponent, $model);
+        parent::__construct($id, $model);
         $this->forms = $this->formService->getRecords(0, $this->formService->getSize());
         
         $drop = new picon\DropDown('form', $this->forms, new \picon\ChoiceRenderer(function($choice, $index)
@@ -48,7 +48,7 @@ class FormWidgetConfigPanel extends AbstractWidgetSetupPanel
             return $choice->name;
         }), new \picon\PropertyModel($this, 'chosenForm'));
         
-        $this->getForm()->add($drop);
+        $this->add($drop);
         $self = $this;
         $drop->add(new picon\AjaxFormComponentUpdateBehavior('onChange', function (picon\AjaxRequestTarget $target) use ($self)
         {

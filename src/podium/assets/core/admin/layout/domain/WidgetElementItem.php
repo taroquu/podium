@@ -25,16 +25,14 @@
  * 
  * @author Martin Cassidy
  */
-class WidgetElementItem extends WidgetItem
+class WidgetElementItem extends ConfigurableWidgetItem
 {
     private $elementId;
-    private $config;
     
-    public function __construct($id, $name, $class, $setupClass, $configClass, $elementId, WidgetConfig $config)
+    public function __construct($id, $name, $class, $setupClass, $configClass, $widgetTargetTable, $elementId, WidgetConfig $config)
     {
-        parent::__construct($id, $name, $class, $setupClass, $configClass);
+        parent::__construct($id, $name, $class, $setupClass, $configClass, $widgetTargetTable, $config);
         $this->elementId = $elementId;
-        $this->config = $config;
     }
 }
 

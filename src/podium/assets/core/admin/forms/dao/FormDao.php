@@ -137,9 +137,9 @@ class FormDao extends AbstractDao
         return $this->getTemplate()->query("SELECT * FROM form_element_options WHERE form_element_id = %d", $mapper, array($fieldId));
     }
     
-    public function deleteValidators($fieldId)
+    public function deleteValidator($validatorId)
     {
-        $this->getTemplate()->update("DELETE FROM form_validation WHERE form_element_id = %d", array($fieldId));
+        $this->getTemplate()->update("DELETE FROM form_validation WHERE id = %d", array($validatorId));
     }
     
     public function addValidator($fieldId, AbstractValidator $validator)
@@ -150,6 +150,11 @@ class FormDao extends AbstractDao
     public function addValidatorOption($validatorId, $name, $value)
     {
         return $this->getTemplate()->insert("INSERT INTO form_validation_options (form_validation_id, `name`, `value`) VALUES (%d, '%s', '%s')", array($validatorId, $name, $value));
+    }
+    
+    public function deleteValidatorOptions($validatorId)
+    {
+        $this->getTemplate()->update("DELETE FROM form_validation_options WHERE form_validation_id = %d;", array($validatorId));
     }
     
     public function getValidators($fieldId)

@@ -47,7 +47,7 @@ class ContentTypeDao extends AbstractDao
     {
         $mapper = new picon\CallbackRowMapper(function($row)
         {
-            return new ContentTypeAttribute($row->id, $row->name);
+            return new ContentTypeAttribute($row->id, $row->name, $row->widget_id);
         });
         return $this->getTemplate()->query("SELECT * FROM content_attributes;", $mapper);
     }
@@ -102,9 +102,9 @@ class ContentTypeDao extends AbstractDao
     {
         $mapper = new picon\CallbackRowMapper(function($row)
         {
-            return new ContentTypeAttribute($row->attribute_id, $row->name, $row->id);
+            return new ContentTypeAttribute($row->attribute_id, $row->name, $row->widget_id, $row->id);
         });
-        return $this->getTemplate()->query("SELECT * FROM content_type_attributes WHERE content_type_id = %d;", $mapper, array($contentTypeId));
+        return $this->getTemplate()->query("SELECT content_type_attributes.*, content_attributes.widget_id FROM content_type_attributes INNER JOIN content_attributes ON content_type_attributes.attribute_id = content_attributes.id WHERE content_type_id = %d;", $mapper, array($contentTypeId));
     }
 }
 

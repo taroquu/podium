@@ -27,6 +27,12 @@
  */
 abstract class WidgetConfig extends \picon\ComonDomainBase
 {
+    private $widgetConfigId;
+    
+    public function __construct($widgetConfigId = null)
+    {
+        $this->widgetConfigId = $widgetConfigId;
+    }
 }
 
 ?>

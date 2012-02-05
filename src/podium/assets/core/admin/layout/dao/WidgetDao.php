@@ -41,7 +41,7 @@ class WidgetDao extends AbstractDao
     {
         $mapper = new picon\CallbackRowMapper(function($row)
         {
-           return new WidgetItem($row->id, $row->name, $row->class, $row->setup, $row->config);
+           return new WidgetItem($row->id, $row->name, $row->class, $row->setup, $row->config, $row->target_table);
         });
         
         return $this->getTemplate()->query("SELECT * FROM widgets where category_id = %d", $mapper, array($categoryId));
@@ -51,7 +51,7 @@ class WidgetDao extends AbstractDao
     {
         $mapper = new picon\CallbackRowMapper(function($row)
         {
-           return new WidgetItem($row->id, $row->name, $row->class, $row->setup, $row->config);
+           return new WidgetItem($row->id, $row->name, $row->class, $row->setup, $row->config, $row->target_table);
         });
         
         $items = $this->getTemplate()->query("SELECT * FROM widgets where id = %d", $mapper, array($widgetId));
@@ -61,6 +61,54 @@ class WidgetDao extends AbstractDao
             throw new IllegalStateException('Expected only 1 widget item');
         }
         return $items[0];
+    }
+    
+    public function createWidgetConfig($widgetId)
+    {
+        return $this->getTemplate()->insert("INSERT INTO widget_config (widget_id) VALUES (%d);", array($widgetId));
+    }
+    
+    public function clearWidgetConfigDetail($configId, $widgetTableTarget)
+    {
+        $this->getTemplate()->update("DELETE FROM %s WHERE config_id = %d;", array($widgetTableTarget, $configId));
+    }
+    
+    public function createWidgetConfigDetail($widgetTableTarget, $configId, $details)
+    {
+        $fields = array();
+        $values = array();
+        foreach($details as $field => $value)
+        {
+            $fields[] = '`'.$field.'`';
+            $values[] = is_numeric($value)?$value:"'".$value."'";
+        }
+        $fields = implode(', ', $fields);
+        $values = implode(', ', $values);
+        $this->getTemplate()->insert("INSERT INTO %s (config_id, %s) VALUES (%d, %s);", array($widgetTableTarget, $fields, $configId, $values));
+    }
+    
+    public function getWidgetConfig($item, $targetTable, $configId)
+    {
+        $mapper = new \picon\CallbackRowMapper(function($row) use ($item)
+        {
+            $config = WidgetFactory::newWidgetConfig($item);
+            foreach($row as $field => $value)
+            {
+                if($field!='id' && $field!='config_id')
+                {
+                    $config->$field = $value;
+                }
+            }
+            $config->widgetConfigId = $row->config_id;
+            return $config;
+        });
+        $configs = $this->getTemplate()->query("SELECT d.* FROM widget_config AS c INNER JOIN %s AS d ON c.id = d.config_id WHERE c.id = %d", $mapper, array($targetTable, $configId));
+        
+        if(count($configs)!=1)
+        {
+            throw new IllegalStateException('Expected only one config');
+        }
+        return $configs[0];
     }
 }
 

@@ -52,13 +52,13 @@ class ArrangementEditorPanel extends picon\Panel implements ToolbarContributor
         $self = $this;
         $this->onEdit = function(\picon\AjaxRequestTarget $target, WidgetElementItem $item) use($mw, $self)
         {
-            $mw->setContent(WidgetFactory::getWidgetConfigPanel($item, $mw, $self));
+            $mw->setContent(WidgetFactory::getModalWindowWidgetConfigPanel($item, $mw, $self));
             $mw->show($target);
         };
         
         $this->onDelete = function(\picon\AjaxRequestTarget $target, WidgetElementItem $item) use ($self)
         {
-            $block = $self->locateBlockOfItem($self->getModelObject()->layout, $item);
+            $block = $self->locateBlockOfItem($self->getModelObject()->layout, $item->elementId);
             $block->removeWidget($item);
             $target->add($self);
         };
@@ -75,8 +75,8 @@ class ArrangementEditorPanel extends picon\Panel implements ToolbarContributor
             $widgetId = $self->getRequest()->getParameter('widgetId');
             $block = $self->locateBlock($self->getModelObject()->layout, $blockId);
             $item = $self->getWidgetService()->getWidget($widgetId);
-            $configClassName = $item->configClass;
-            $item = new WidgetElementItem($item->id, $item->name, $item->class, $item->setupClass, $item->configClass, null, new $configClassName());
+            $config = WidgetFactory::newWidgetConfig($item);
+            $item = new WidgetElementItem($item->id, $item->name, $item->class, $item->setupClass, $item->configClass, $item->widgetTargetTable, null, $config);
             $block->addWidget($item, $index);
             $target->add($self);
             $edit = $self->onEdit;
@@ -88,7 +88,7 @@ class ArrangementEditorPanel extends picon\Panel implements ToolbarContributor
             $blockId = $self->getRequest()->getParameter('blockId');
             $elementid = $self->getRequest()->getParameter('elementId');
             $dest = $self->locateBlock($self->getModelObject()->layout, $blockId);
-            $source = $self->locateBlockOfElement($self->getModelObject()->layout, $elementid);
+            $source = $self->locateBlockOfItem($self->getModelObject()->layout, $elementid);
             
             $widget = null;
             foreach($source->getWidgets() as $entry)
@@ -107,13 +107,13 @@ class ArrangementEditorPanel extends picon\Panel implements ToolbarContributor
         $this->add($this->view);
     }
     
-    public function locateBlockOfItem(PopulatedLayout $layout, WidgetItem $item)
+    public function locateBlockOfItem(PopulatedLayout $layout, $elementId)
     {
         foreach($layout->getBlocks() as $block)
         {
             foreach($block->getWidgets() as $widget)
             {
-                if($widget==$item)
+                if($widget->elementId==$elementId)
                 {
                     return $block;
                 }
@@ -123,7 +123,7 @@ class ArrangementEditorPanel extends picon\Panel implements ToolbarContributor
             {
                 foreach($nested->getWidgets() as $widget)
                 {
-                    if($widget==$item)
+                    if($widget->elementId==$elementId)
                     {
                         return $nested;
                     }

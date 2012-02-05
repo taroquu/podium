@@ -31,6 +31,31 @@ class PopulatedLayout extends Layout
     {
         parent::addBlock($block);
     }
+    
+    public function locateWidget($elementId)
+    {
+        foreach($this->getBlocks() as $block)
+        {
+            foreach($block->getWidgets() as $widget)
+            {
+                if($widget->elementId==$elementId)
+                {
+                    return $widget;
+                }
+            }
+            foreach($block->getNestedBlocks() as $nested)
+            {
+                foreach($nested->getWidgets() as $widget)
+                {
+                    if($widget->elementId==$elementId)
+                    {
+                        return $widget;
+                    }
+                }
+            }
+        }
+        return null;
+    }
 }
 
 ?>

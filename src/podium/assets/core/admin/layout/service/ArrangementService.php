@@ -38,7 +38,12 @@ class ArrangementService
      */
     private $layoutService;
     
-    public function getArrangementsForLayout($layout, $start, $count)
+    /**
+     * @Resource
+     */
+    private $widgetService;
+    
+    public function getArrangementsForLayout(Layout $layout, $start, $count)
     {
         return $this->arrangementDao->getArrangementsForLayout($layout, $start, $count);
     }
@@ -80,27 +85,11 @@ class ArrangementService
         
         foreach($widgets as $widget)
         {
-            $widget->config = $this->getWidgetConfig($widget->elementId, $widget->configClass);
+            $configId = $this->arrangementDao->getElementConfigId($widget->elementId);
+            $widget->config = $this->widgetService->getWidgetConfig($widget, $configId);
             $pblock->addWidget($widget);
         }
         return $pblock;
-    }
-    
-    /**
-     * Replace this with custom widget mappers
-     * @param type $elementId
-     * @param type $configClass 
-     */
-    private function getWidgetConfig($elementId, $configClass)
-    {
-        $items = $this->arrangementDao->getWidgetElementConfig($elementId);
-        $config = new $configClass();
-        foreach($items as $item)
-        {
-            $name = $item->name;
-            $config->$name = $item->value;
-        }
-        return $config;
     }
     
     public function createOrUpdateArrangement(Arrangement $arrangement)
@@ -113,79 +102,55 @@ class ArrangementService
         else
         {
             //@todo update name
+            $oldArrangement = $this->getArrangement($arrangement->id);
+            $this->deleteWidgets($arrangement->layout, $oldArrangement->layout);
         }
-        $oldArrangement = $this->getArrangement($arrangement->id);
-        
+
         foreach($arrangement->layout->getBlocks() as $block)
         {
-            $this->deleteWidgets($block, $this->locateBlock($oldArrangement->layout, $block->id));
             $this->processElements($block, $arrangement->id);
             foreach($block->getNestedBlocks() as $nested)
             {
-                $this->deleteWidgets($nested, $this->locateBlock($oldArrangement->layout, $nested->id));
                 $this->processElements($nested, $arrangement->id);
             }
         }
     }
     
-    private function deleteWidgets(PopulatedLayoutBlock $current, PopulatedLayoutBlock $old)
+    private function deleteWidgets(PopulatedLayout $current, PopulatedLayout $old)
     {
-        foreach($old->getWidgets() as $widget)
+        $currentWidgets = array();
+        foreach($old->getBlocks() as $block)
         {
-            $found = false;
-            foreach($current->getWidgets() as $search)
+            $currentWidgets = array_merge($currentWidgets, $block->getWidgets());
+            foreach($block->getNestedBlocks() as $nested)
             {
-                if($widget->elementId==$search->elementId)
-                {
-                    $found = true;
-                }
+                $currentWidgets = array_merge($currentWidgets, $nested->getWidgets());
             }
-            if(!$found)
+        }
+
+        foreach($currentWidgets as $widget)
+        {
+            if($current->locateWidget($widget->elementId)==null)
             {
                 $this->arrangementDao->deleteElement($widget->elementId);
             }
         }
     }
     
-    private function locateBlock(Layout $layout, $blockId)
-    {
-        foreach($layout->getBlocks() as $block)
-        {
-            if($block->id==$blockId)
-            {
-                return $block;
-            }
-            foreach($block->getNestedBlocks() as $nested)
-            {
-                if($nested->id==$blockId)
-                {
-                    return $nested;
-                }
-            }
-        }
-        return false;
-    }
-    
     private function processElements(PopulatedLayoutBlock $block, $arrangementId)
     {
         foreach($block->getWidgets() as $index => $widget)
         {
+            $config = $this->widgetService->createOrUpdateWidgetConfig($widget);
             if($widget->elementId==null)
             {
-                $widget->elementId = $this->arrangementDao->createElement($widget, $block->id, $index, $arrangementId);
+                $widget->elementId = $this->arrangementDao->createElement($widget, $block->id, $index, $arrangementId, $config->widgetConfigId);
             }
             else
             {
                 $this->arrangementDao->updateElement($widget, $block->id, $index, $arrangementId);
-                $this->arrangementDao->clearWidgetElementConfig($widget->elementId);
             }
-            $reflection = new ReflectionClass($widget->config);
-
-            foreach($reflection->getProperties() as $property)
-            {
-                $property->setAccessible(true);
-                $this->arrangementDao->addWidgetElementConfig($widget->elementId, $property->getName(), $property->getValue($widget->config));
-            }
+            
         }
     }
     
@@ -212,6 +177,26 @@ class ArrangementService
         $playout = new PopulatedLayout($layout->name, $blocks, $layout->id);
         $arrangement->layout = $playout;
         return $arrangement;
+    }
+    
+    public function deleteArrangement(Arrangement $arrangement)
+    {
+        $currentWidgets = array();
+        $populated = $this->getArrangement($arrangement->id);
+        foreach($populated->layout->getBlocks() as $block)
+        {
+            $currentWidgets = array_merge($currentWidgets, $block->getWidgets());
+            foreach($block->getNestedBlocks() as $nested)
+            {
+                $currentWidgets = array_merge($currentWidgets, $nested->getWidgets());
+            }
+        }
+
+        foreach($currentWidgets as $widget)
+        {
+            $this->arrangementDao->deleteElement($widget->elementId);
+        }
+        $this->arrangementDao->deleteArrangement($arrangement->id);
     }
 }
 

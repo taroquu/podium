@@ -66,9 +66,9 @@ class ArrangementDao extends AbstractDao
     {
         $mapper = new \picon\CallbackRowMapper(function($row)
         {
-            return new WidgetElementItem($row->widget_id, $row->name, $row->class, $row->setup, $row->config, $row->element_id, null);
+            return new WidgetElementItem($row->id, $row->name, $row->class, $row->setup, $row->config, $row->target_table, $row->element_id, null);
         });
-        return $this->getTemplate()->query('SELECT * FROM arrangement_elements a INNER JOIN widgets w ON a.widget_id = w.id WHERE a.arrangement_id = %d AND a.block_id = %d ORDER BY a.index ASC', $mapper, array($arrangementId, $blockId));
+        return $this->getTemplate()->query('SELECT w.*, a.id AS element_id FROM arrangement_elements a INNER JOIN widgets w ON a.widget_id = w.id WHERE a.arrangement_id = %d AND a.block_id = %d ORDER BY a.index ASC', $mapper, array($arrangementId, $blockId));
     }
     
     public function createArrangement(Arrangement $arrangement)
@@ -76,38 +76,29 @@ class ArrangementDao extends AbstractDao
         return $this->getTemplate()->insert("INSERT INTO arrangement (layout_id, name) VALUES (%d, '%s')", array($arrangement->layout->id, $arrangement->name));
     }
     
-    public function createElement(WidgetItem $item, $blockId, $index, $arrangmentId)
+    public function createElement(WidgetItem $item, $blockId, $index, $arrangmentId, $configId)
     {
-        return $this->getTemplate()->update('INSERT INTO arrangement_elements (arrangement_id, block_id, `index`, widget_id) VALUES (%d, %d, %d, %d);', array($arrangmentId, $blockId, $index, $item->id));
+        return $this->getTemplate()->update('INSERT INTO arrangement_elements (arrangement_id, block_id, `index`, widget_id, widget_config_id) VALUES (%d, %d, %d, %d, %d);', array($arrangmentId, $blockId, $index, $item->id, $configId));
     }
     
     public function updateElement(WidgetItem $item, $blockId, $index, $arrangmentId)
     {
-        return $this->getTemplate()->update('UPDATE arrangement_elements SET block_id = %d, `index` = %d WHERE element_id = %d;', array($blockId, $index, $item->elementId));
+        return $this->getTemplate()->update('UPDATE arrangement_elements SET block_id = %d, `index` = %d WHERE id = %d;', array($blockId, $index, $item->elementId));
     }
     
     public function deleteElement($elementId)
     {
-        $this->getTemplate()->update('DELETE FROM arrangement_elements WHERE element_id = %d;', array($elementId));
+        $this->getTemplate()->update('DELETE FROM arrangement_elements WHERE id = %d;', array($elementId));
     }
     
-    public function getWidgetElementConfig($elementId)
+    public function getElementConfigId($elementId)
     {
-        $mapper = new picon\CallbackRowMapper(function($row)
-        {
-            return new WidgetConfigItem($row->name, $row->value);
-        });
-        return $this->getTemplate()->query('SELECT * FROM arrangement_element_config WHERE element_id = %d;', $mapper, array($elementId));
+        return $this->getTemplate()->queryForInt('SELECT widget_config_id FROM arrangement_elements WHERE id = %d;', array($elementId));
     }
     
-    public function clearWidgetElementConfig($elementId)
+    public function deleteArrangement($arrangementId)
     {
-        $this->getTemplate()->update('DELETE FROM arrangement_element_config WHERE element_id = %d;', array($elementId));
-    }
-    
-    public function addWidgetElementConfig($elementId, $name, $value)
-    {
-        return $this->getTemplate()->insert("INSERT INTO arrangement_element_config (element_id, name, value) VALUES (%d, '%s', '%s');", array($elementId, $name, $value));
+        $this->getTemplate()->update('DELETE FROM arrangement WHERE id = %d;', array($arrangementId));
     }
 }
 

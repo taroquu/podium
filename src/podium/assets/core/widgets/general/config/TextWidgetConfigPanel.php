@@ -27,10 +27,10 @@
  */
 class TextWidgetConfigPanel extends AbstractWidgetSetupPanel
 {
-    public function __construct($id, \picon\ModalWindow $mw, $updateComponent, Model $model = null)
+    public function __construct($id, $model)
     {
-        parent::__construct($id, $mw, $updateComponent, $model);
-        $this->getForm()->add(new \picon\TextArea('text'));
+        parent::__construct($id, $model);
+        $this->add(new \picon\TextArea('text'));
     }
 }
 

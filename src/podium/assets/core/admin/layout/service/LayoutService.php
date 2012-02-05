@@ -33,6 +33,11 @@ class LayoutService
      */
     private $layoutDao;
     
+    /**
+     * @Resource
+     */
+    private $arrangementService;
+    
     public function getLayouts($start, $count)
     {
         $layouts = $this->layoutDao->getLayouts($start, $count);
@@ -117,7 +122,7 @@ class LayoutService
                 }
                 if(!$found)
                 {
-                    $this->layoutDao->deleteBlock($oldBlock->id);
+                    $this->deleteBlock($oldBlock->id);
                 }
             }
         }
@@ -153,7 +158,29 @@ class LayoutService
     
     public function delete(Laout $layout)
     {
+        $arrangements = $this->arrangementService->getArrangementsForLayout($layout, 0, $this->arrangementService->getArrangementCount($layout->id));
+        
+        foreach($arrangements as $arrangement)
+        {
+            $this->arrangementService->deleteArrangement($arrangement);
+        }
+        
+        $populated = $this->getLayout($layout->id);
+        foreach($populated->getBlocks() as $block)
+        {
+            foreach($block->getNestedBlocks() as $nested)
+            {
+                $this->deleteBlock($nested->id);
+            }
+            $this->deleteBlock($block->id);
+        }
         $this->layoutDao->delete($layout->id);
+    }
+    
+    public function deleteBlock($blockId)
+    {
+        $this->layoutDao->deleteBlockAttributes($blockId);
+        $this->layoutDao->deleteBlock($blockId);
     }
 }
 

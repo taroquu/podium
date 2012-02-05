@@ -33,6 +33,11 @@ class ContentTypeService
      */
     private $contentTypeDao;
     
+    /**
+     * @Resource
+     */
+    private $widgetService;
+    
     public function getContentTypes($start, $count)
     {
         return $this->contentTypeDao->getContentTypes($start, $count);
@@ -57,13 +62,39 @@ class ContentTypeService
     public function getContentType($typeId)
     {
         $type = $this->contentTypeDao->getContentType($typeId);
-        $type->attributes = $this->contentTypeDao->getContentTypeAttributes($type->id);
+        $type->attributes = $this->getContentTypeAttributes($type->id);
         return $type;
+    }
+    
+    public function getContentTypeAttributes($typeId)
+    {
+        $attributes = $this->contentTypeDao->getContentTypeAttributes($typeId);
+        
+        foreach($attributes as $attribute)
+        {
+            $attribute->widget = $this->widgetService->getWidget($attribute->widget);
+        }
+        
+        return $attributes;
     }
     
     public function deleteContentType($typeId)
     {
         $type = $this->contentTypeDao->deleteContentType($typeId);
+    }
+    
+    public function getContentTypeByType($requiredType)
+    {
+        $types = $this->getContentTypes(0, $this->getContentTypeSize());
+        $selected = array();
+        foreach($types as $type)
+        {
+            if($type->type==$requiredType)
+            {
+                array_push($selected, $type);
+            }
+        }
+        return $selected;
     }
     
     public function createOrUpdate(PopulatedContentType $type)

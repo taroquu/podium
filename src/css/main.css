@@ -145,7 +145,7 @@ body {
 }
 
 .content {
-    margin:10px auto 0 auto;
+    margin:10px auto 20px auto;
 }
 
 .toolbar {
@@ -230,7 +230,8 @@ body {
 ****************************/
 
 .singleFieldBlock {
-    height:30px;
+    min-height: 30px;
+    height: auto !important;
     line-height:30px;
 }
 
@@ -239,6 +240,7 @@ body {
     width:auto;
     margin-right:10px;
     display:inline-block;
+    vertical-align: top;
 }
 
 /****************************

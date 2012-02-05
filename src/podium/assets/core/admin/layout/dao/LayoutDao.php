@@ -52,17 +52,19 @@ class LayoutDao extends AbstractDao
     
     public function createBlock($layouterId, LayoutBlock $block, $index, $parentBlockId = null)
     {
-        return $this->getTemplate()->insert("INSERT INTO layout_blocks (layout_id, type, parent_block_id, position) VALUES (%d, '%s', %d, %d)", array($layouterId, $block->type, $parentBlockId, $index));
+        $parent = $parentBlockId==null?'NULL':$parentBlockId;
+        return $this->getTemplate()->insert("INSERT INTO layout_blocks (layout_id, type, parent_block_id, position) VALUES (%d, '%s', %s, %d)", array($layouterId, $block->type, $parent, $index));
     }
     
     public function updateBlock(LayoutBlock $block, $index, $parentBlockId = null)
     {
-        return $this->getTemplate()->insert("UPDATE layout_blocks SET parent_block_id = %d, position = %d WHERE id = %d", array($parentBlockId, $index, $block->id));
+        $parent = $parentBlockId==null?'NULL':$parentBlockId;
+        return $this->getTemplate()->insert("UPDATE layout_blocks SET parent_block_id = %s position = %d WHERE id = %d", array($parent, $index, $block->id));
     }
     
     public function deleteBlock($id)
     {
-        $this->getTemplate()->update("DELETE FROM layout_blocks WHERE id = %d", array($id));
+        $this->getTemplate()->update("DELETE FROM layout_blocks WHERE id = %d OR parent_block_id = %d", array($id, $id));
     }
     
     public function deleteBlockAttributes($blockId)

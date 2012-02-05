@@ -32,14 +32,16 @@ class WidgetItem extends picon\ComonDomainBase
     private $class;
     private $configClass;
     private $setupClass;
+    private $widgetTargetTable;
     
-    public function __construct($id, $name, $class, $setupClass, $configClass)
+    public function __construct($id, $name, $class, $setupClass, $configClass, $widgetTargetTable)
     {
         $this->id = $id;
         $this->name = $name;
         $this->class = $class;
         $this->setupClass = $setupClass;
         $this->configClass = $configClass;
+        $this->widgetTargetTable = $widgetTargetTable;
     }
 }
 

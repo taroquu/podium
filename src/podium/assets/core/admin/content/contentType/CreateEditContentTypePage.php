@@ -106,6 +106,7 @@ class CreateEditContentTypePage extends AbstractAdminTitlePage
         {
             $attributeId = $attributeList->getRequest()->getParameter('attributeId');
             $index = $attributeList->getRequest()->getParameter('index');
+            //@todo alter this to use the full attribute object
             $newAttribute = new ContentTypeAttribute($attributeId, '');
             $type->addAttribute($newAttribute, $index);
             $target->add($attributeList);

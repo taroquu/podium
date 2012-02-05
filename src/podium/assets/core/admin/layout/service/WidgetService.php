@@ -49,6 +49,32 @@ class WidgetService
     {
         return $this->widgetDao->getWidgetItem($widgetId);
     }
+    
+    public function createOrUpdateWidgetConfig(ConfigurableWidgetItem $item)
+    {
+        $config = $item->config;
+        if($config->widgetConfigId==null)
+        {
+            $config->widgetConfigId = $this->widgetDao->createWidgetConfig($item->id);
+        }
+        
+        $this->widgetDao->clearWidgetConfigDetail($config->widgetConfigId, $item->widgetTargetTable);
+        
+        $reflection = new ReflectionClass($config);
+        $details = array();
+        foreach($reflection->getProperties() as $property)
+        {
+            $property->setAccessible(true);
+            $details[$property->getName()] = $property->getValue($config);
+        }
+        $this->widgetDao->createWidgetConfigDetail($item->widgetTargetTable, $config->widgetConfigId, $details);
+        return $config;
+    }
+    
+    public function getWidgetConfig(WidgetItem $item, $configId)
+    {
+        return $this->widgetDao->getWidgetConfig($item, $item->widgetTargetTable, $configId);
+    }
 }
 
 ?>

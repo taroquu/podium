@@ -61,23 +61,23 @@ class FormService
         {
             $formId = $form->id;
             $this->formDao->update($form);
-        }
-        
-        $oldForm = $this->getPopulatedForm($form);
-        
-        foreach($oldForm->fields as $oldField)
-        {
-            $found = false;
-            foreach($form->fields as $field)
+            
+            $oldForm = $this->getPopulatedForm($form);
+
+            foreach($oldForm->fields as $oldField)
             {
-                if($field->id==$oldField->id)
+                $found = false;
+                foreach($form->fields as $field)
                 {
-                    $found = true;
+                    if($field->id==$oldField->id)
+                    {
+                        $found = true;
+                    }
                 }
-            }
-            if(!$found)
-            {
-                $this->formDao->deleteField($oldField->id);
+                if(!$found)
+                {
+                    $this->deleteField($oldField);
+                }
             }
         }
         
@@ -103,10 +103,21 @@ class FormService
             
             if($field instanceof TextField)
             {
-                $this->formDao->deleteValidators($field->id);
-                $this->createValidator($field->id, $field->validator);
+                $validator = $this->getValidator($field);
+                $this->deleteValidator($validator);
+                
+                if($field->validator!=null)
+                {
+                    $this->createValidator($field->id, $field->validator);
+                }
             }
         }
+    }
+    
+    public function deleteValidator($validator)
+    {
+        $this->formDao->deleteValidatorOptions($validator->id);
+        $this->formDao->deleteValidator($validator->id);
     }
     
     public function getFields($formId)
@@ -130,6 +141,12 @@ class FormService
     
     public function deleteForm(Form $form)
     {
+        $fields = $this->getFields($form->id);
+        
+        foreach($fields as $field)
+        {
+            $this->deleteField($field);
+        }
         $this->formDao->deleteForm($form->id);
     }
     
@@ -181,6 +198,17 @@ class FormService
         }
         
         return $validator;
+    }
+    
+    public function deleteField($field)
+    {
+        if($field instanceof TextField)
+        {
+            $validator = $this->getValidator($field);
+            $this->deleteValidator($validator);
+        }
+        $this->formDao->deleteOptions($field->id);
+        $this->formDao->deleteField($field->id);
     }
 }
 

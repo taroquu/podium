@@ -39,10 +39,23 @@ class WidgetFactory
         return new EditableWidgetWrappingPanel($id, self::getWidget(EditableWidgetWrappingPanel::INNER_PANEL_ID, $item), $item, $editCallback, $deleteCallback);
     }
     
-    public static function getWidgetConfigPanel(WidgetElementItemItem $item, \picon\ModalWindow $mw, $updateComponent)
+    public static function getModalWindowWidgetConfigPanel(WidgetElementItem $item, picon\ModalWindow $mw, \picon\Component $updateComponent)
+    {
+        $panel = self::getWidgetConfigPanel(ModalWidgetSetupPanel::INNER_PANEL_ID, $item);
+        return new ModalWidgetSetupPanel($mw->getContentId(), $mw, $updateComponent, new \picon\BasicModel($item->config), $panel);
+    }
+    
+    public static function getWidgetConfigPanel($id, WidgetElementItem $item)
     {
         $className = $item->setupClass;
-        return new $className($mw->getContentId(), $mw, $updateComponent, new \picon\BasicModel($item->config));
+        return new $className($id, new \picon\PropertyModel($item, 'config'));
+    }
+    
+    public static function newWidgetConfig(WidgetItem $item)
+    {
+        $configClassName = $item->configClass;
+        $reflection = new ReflectionClass($configClassName);
+        return $reflection->newInstance();
     }
 }
 

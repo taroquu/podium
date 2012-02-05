@@ -46,7 +46,7 @@ class ArrangementEditorPage extends AbstractAdminToolbarPage
         {
             $this->arrangment = new Arrangement(null, '');
             $self = $this;
-            $onSave = function() use ($self)
+            $onSave = function() use ($self, $mw)
             {
                 $layout = $self->arrangment->layout;
                 $self->arrangment = $self->arrangementService->prePopulate($self->arrangment);

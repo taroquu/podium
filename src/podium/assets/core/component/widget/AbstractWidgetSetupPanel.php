@@ -27,36 +27,7 @@
  */
 class AbstractWidgetSetupPanel extends picon\Panel
 {
-    private $form;
-    private $config;
-    
-    public function __construct($id, \picon\ModalWindow $mw, $updateComponent, Model $model = null)
-    {
-        parent::__construct($id, $model);
-        $this->config = $model->getModelObject();
-        $this->form = new \picon\Form('form', new picon\CompoundPropertyModel($this, 'config'));
-        $this->add($this->form);
-        $this->form->add(new \picon\AjaxButton('save', function(\picon\AjaxRequestTarget $target) use ($mw, $updateComponent)
-        {
-            $mw->hide($target);
-            $target->add($updateComponent);
-        }));
-    }
-    
-    protected function getForm()
-    {
-        return $this->form;
-    }
-    
-    public function __get($name)
-    {
-        return $this->$name;
-    }
-    
-    public function __set($name, $value)
-    {
-        $this->$name = $value;
-    }
+
 }
 
 ?>
