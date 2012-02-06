@@ -6,13 +6,10 @@
     <head>
     </head>
     <body>
-        <picon:extend>
-            <div picon:id="feedback" />
-            <form picon:id="form">
-                <div picon:id="tabs"></div>
-                <hr />
-                <input type="submit" picon:id="save" value="Save" />
-            </form>
-        </picon:extend>
+        <picon:panel>
+                <div class="singleFieldBlock"><label>Title: </label>
+                    <input type="text" picon:id="name" /></div>
+            <div picon:id="contentType"></div>
+        </picon:panel>
     </body>
 </html>

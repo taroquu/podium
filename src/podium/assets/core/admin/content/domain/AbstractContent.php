@@ -21,18 +21,22 @@
  * */
 
 /**
- * Description of Page
+ * Description of AbstractContent
  * 
  * @author Martin Cassidy
  */
-class Page extends AbstractContent
+abstract class AbstractContent extends \picon\ComonDomainBase
 {
-    private $parent_page;
-    private $nestedPages = array();
-
-    public function addPage(Page $page)
+    private $id;
+    private $name;
+    private $contentType;
+    private $contentId;
+    
+    public function __construct($id, $contentId, $name)
     {
-        array_push($this->nestedPages, $page);
+        $this->name = $name;
+        $this->id = $id;
+        $this->contentId = $contentId;
     }
 }
 

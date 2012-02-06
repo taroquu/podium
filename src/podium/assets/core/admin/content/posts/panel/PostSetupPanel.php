@@ -21,33 +21,25 @@
  * */
 
 /**
- * Description of SelectContentTypePanel
+ * Description of PostSetupPanel
  * 
  * @author Martin Cassidy
  */
-class SelectContentTypePanel extends \picon\Panel
+class PostSetupPanel extends picon\Panel
 {
-    /**
-     * @Resource
-     */
-    private $contentTypeService;
-    
-    public function __construct($id, $type)
+    public function __construct($id, Post $post)
     {
         parent::__construct($id);
-        $types = $this->contentTypeService->getContentTypeByType($type);
-        $contentTypes = new picon\DropDown('contentType', $types, new \picon\ChoiceRenderer(function($choice, $index)
-        {
-            return 'v'.$index;
-        },
-        function($choice, $index)
-        {
-            return $choice->name;
-        }));
-        $contentTypes->setRequired(true);
-        $this->add($contentTypes);
+        $this->add(new picon\RequiredTextField('name'));
         
-        $this->add(new picon\DropDown('arrangement', array()));
+        if($post->contentType==null)
+        {
+            $this->add(new SelectContentTypePanel('contentType', 'post'));
+        }
+        else
+        {
+            $this->add(new \picon\EmptyPanel('contentType'));
+        }
     }
 }
 

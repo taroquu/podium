@@ -21,19 +21,13 @@
  * */
 
 /**
- * Description of Page
+ * Description of Post
  * 
  * @author Martin Cassidy
  */
-class Page extends AbstractContent
+class Post extends AbstractContent
 {
-    private $parent_page;
-    private $nestedPages = array();
 
-    public function addPage(Page $page)
-    {
-        array_push($this->nestedPages, $page);
-    }
 }
 
 ?>

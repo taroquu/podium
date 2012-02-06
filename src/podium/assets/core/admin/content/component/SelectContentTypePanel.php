@@ -21,18 +21,31 @@
  * */
 
 /**
- * Description of Page
+ * Description of SelectContentTypePanel
  * 
  * @author Martin Cassidy
  */
-class Page extends AbstractContent
+class SelectContentTypePanel extends \picon\Panel
 {
-    private $parent_page;
-    private $nestedPages = array();
-
-    public function addPage(Page $page)
+    /**
+     * @Resource
+     */
+    private $contentTypeService;
+    
+    public function __construct($id, $type)
     {
-        array_push($this->nestedPages, $page);
+        parent::__construct($id);
+        $types = $this->contentTypeService->getContentTypeByType($type);
+        $contentTypes = new picon\DropDown('contentType', $types, new \picon\ChoiceRenderer(function($choice, $index)
+        {
+            return 'v'.$index;
+        },
+        function($choice, $index)
+        {
+            return $choice->name;
+        }));
+        $contentTypes->setRequired(true);
+        $this->add($contentTypes);
     }
 }
 

@@ -54,6 +54,8 @@ class PageSetupPanel extends \picon\Panel
             $this->add(new picon\EmptyPanel('contentType'));
         }
         
+        $this->add(new picon\DropDown('arrangement', array()));
+        
         $this->add(new picon\TextField('seoTitle'));
         $this->add(new picon\TextField('metaKeys'));
         $this->add(new picon\TextField('metaDescription'));

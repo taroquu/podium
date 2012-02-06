@@ -21,18 +21,30 @@
  * */
 
 /**
- * Description of Page
+ * Description of PostDataProvider
  * 
  * @author Martin Cassidy
  */
-class Page extends AbstractContent
+class PostDataProvider extends \picon\AbstractInjectedDataProvider
 {
-    private $parent_page;
-    private $nestedPages = array();
-
-    public function addPage(Page $page)
+    /**
+     * @Resource
+     */
+    private $postService;
+    
+    public function getRecords($start, $count)
     {
-        array_push($this->nestedPages, $page);
+        return $this->postService->getRecords($start, $count);
+    }
+    
+    public function getSize()
+    {
+        return $this->postService->getPostSize();
+    }
+    
+    public function getModel($object)
+    {
+        return new \picon\BasicModel($object);
     }
 }
 
