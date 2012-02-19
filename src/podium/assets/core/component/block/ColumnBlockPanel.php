@@ -32,22 +32,22 @@ use picon\BasicModel;
  */
 class ColumnBlockPanel extends LayoutBlockPanel
 {
-    public function __construct($id, ColumnBlock $block, $cssClass, $innerClass)
+    public function __construct($id, ColumnBlock $block, $cssClass, $innerClass, $includeId = false)
     {
-        parent::__construct($id, $block, $cssClass);
+        parent::__construct($id, $block, $cssClass, $includeId);
         $this->addClass('columnBlock');
         $view = new RepeatingView('columns');
         $this->add($view);
         
         foreach($block->getNestedBlocks() as $column)
         {
-            $view->add($this->newColumnElement($view->getNextChildId(), $column, $innerClass));
+            $view->add($this->newColumnElement($view->getNextChildId(), $column, $innerClass, $includeId));
         }
     }
     
-    protected function newColumnElement($id, $column, $innerClass)
+    protected function newColumnElement($id, $column, $innerClass, $includeId)
     {
-        return new LayoutBlockPanel($id, $column, $innerClass);
+        return new LayoutBlockPanel($id, $column, $innerClass, $includeId);
     }
 }
 

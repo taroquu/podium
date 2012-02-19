@@ -29,7 +29,58 @@ use picon\WebPage;
  */
 class FrontPage extends WebPage
 {
+    /**
+     * @Resource
+     */
+    private $pageService;
     
+    public function __construct()
+    {
+        parent::__construct();
+        $path = substr(urldecode(str_replace($this->getRequest()->getRootPath(), '', $this->getRequest()->getPath())), 1);
+        $pageId = null;
+        if(empty($path))
+        {
+            $pageId = $this->pageService->getHomePageId();
+        }
+        else
+        {
+            $pageId = $this->pageService->getPageIdForPath($path);
+        }
+        $page = $this->pageService->getPage($pageId);
+        
+        $title = $page->seoTitle==null?$page->name:$page->seoTitle;
+        $this->add(new \picon\Label('title', new picon\BasicModel($title)));
+        
+        $keywords = new \picon\MarkupContainer('keywords');
+        $keywords->add(new picon\AttributeModifier('content', new picon\BasicModel($page->metaKeys)));
+        $keywords->setVisible($page->metaKeys!=null);
+        $this->add($keywords);
+        
+        $description = new \picon\MarkupContainer('description');
+        $description->add(new picon\AttributeModifier('content', new picon\BasicModel($page->metaDescription)));
+        $description->setVisible($page->metaDescription!=null);
+        $this->add($description);
+        
+        $title = new \picon\MarkupContainer('metaTitle');
+        $title->add(new picon\AttributeModifier('content', new picon\BasicModel($page->seoTitle)));
+        $title->setVisible($page->seoTitle!=null);
+        $this->add($title);
+        
+        $arrangement = $this->pageService->getArrangementForPage($pageId);
+        $view = new picon\RepeatingView('layoutBlock');
+        $this->add($view);
+        foreach($arrangement->layout->getBlocks() as $block)
+        {
+            $view->add(LayoutFactory::newPageLayoutBlockPanel($view->getNextChildId(), $block, $page));
+        }
+    }
+    
+    public function renderHead(HeaderResponse $headerResponse)
+    {
+        parent::renderHead($headerResponse);
+        $headerResponse->renderCSSFile('css/style.css');
+    }
 }
 
 ?>

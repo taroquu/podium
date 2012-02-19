@@ -21,37 +21,23 @@
  * */
 
 /**
- * Description of PopulatedContentType
+ * Description of ContentWidget
  * 
  * @author Martin Cassidy
  */
-class PopulatedContentType extends ContentType
+class ContentWidget extends Widget
 {
-    private $attributes = array();
-    private $arrangement;
-    
-    public function addAttribute(ContentTypeAttribute $attribute, $index = null)
+    public function __construct($id, WidgetItem $item, $page = null) 
     {
-        if($index==null)
+        parent::__construct($id, $item, $page);
+        $elements = new picon\RepeatingView('elements');
+        $this->add($elements);
+        foreach($this->getContent() as $element)
         {
-            array_push($this->attributes, $attribute);
-        }
-        else
-        {
-            array_splice($this->attributes, $index, count($this->attributes), array_merge(array($attribute), array_slice($this->attributes, $index))); 
+            $elements->add(WidgetFactory::getWidget($elements->getNextChildId(), $element->widget, $page));
         }
     }
-    
-    public function removeAttribute(ContentTypeAttribute $attribute)
-    {
-        foreach($this->attributes as $index => $sattribute)
-        {
-            if($sattribute==$attribute)
-            {
-                unset($this->attributes[$index]);
-            }
-        }
-    }
+
 }
 
 ?>

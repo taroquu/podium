@@ -32,6 +32,11 @@ class PageSetupPanel extends \picon\Panel
      */
     private $pageService;
     
+    /**
+     * @Resource
+     */
+    private $layoutService;
+    
     public function __construct($id, $page)
     {
         parent::__construct($id);
@@ -43,7 +48,10 @@ class PageSetupPanel extends \picon\Panel
         }, function($choice, $index)
         {
             return $choice->name;
-        })));
+        }), null, function($choice, $index) use ($page)
+        {
+            return $choice->id==$page->id;
+        }));
         
         if($page->contentType==null)
         {
@@ -54,7 +62,22 @@ class PageSetupPanel extends \picon\Panel
             $this->add(new picon\EmptyPanel('contentType'));
         }
         
-        $this->add(new picon\DropDown('arrangement', array()));
+        $arrangements = $this->layoutService->getLayoutsAndArrangement();
+
+        foreach($arrangements as $name => $arranement)
+        {
+            $arrangements[ucwords($name)] = $arranement;
+            unset($arrangements[$name]);
+        }
+        
+        $this->add(new picon\DropDown('arrangement', $arrangements, new picon\ChoiceRenderer(function($choice, $index)
+        {
+            return $index;
+        },
+        function($choice, $index)
+        {
+            return ucwords($choice->name);
+        })));
         
         $this->add(new picon\TextField('seoTitle'));
         $this->add(new picon\TextField('metaKeys'));

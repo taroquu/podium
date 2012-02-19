@@ -182,6 +182,17 @@ class LayoutService
         $this->layoutDao->deleteBlockAttributes($blockId);
         $this->layoutDao->deleteBlock($blockId);
     }
+    
+    public function getLayoutsAndArrangement()
+    {
+        $layouts = $this->getLayouts(0, $this->getLayoutsSize());
+        $arrangementGroup = array();
+        foreach($layouts as $layout)
+        {
+            $arrangementGroup[$layout->name] = $this->arrangementService->getArrangementsForLayout($layout, 0, $this->arrangementService->getArrangementCount($layout->id));
+        }
+        return $arrangementGroup;
+    }
 }
 
 ?>

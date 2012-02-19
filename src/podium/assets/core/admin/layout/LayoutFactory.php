@@ -27,38 +27,41 @@
  */
 class LayoutFactory
 {
-    public static function newLayoutBlockPanel($id, LayoutBlock $block)
+    public static function newPageLayoutBlockPanel($id, PopulatedLayoutBlock $block, PopulatedPage $page)
     {
         $panel = null;
-        
-        if($block instanceof PopulatedLayoutBlock)
+        if($block->type==Layout::ROW_BLOCK)
         {
-            if($editable)
-            {
-
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
+            $panel = new PopulatedLayoutBlockPanel($id, $block, 'rowBlock', false, $page);
         }
-        else
+        else if($block->type==Layout::COLUMN_BLOCK)
         {
-            if($block->type==Layout::ROW_BLOCK)
-            {
-                $class = $editable?' s':'';
-                $panel = new LayoutBlockPanel($id, $block, 'rowBlock'.$class);
-            }
-            else if($block->type==Layout::COLUMN_BLOCK)
-            {
-                $class = $editable?' s e se':'';
-                $panel = new ColumnBlockPanel($id, $block, '', 'columnElement'.$class);
-            }
-            else if($block->type==Layout::FLOATING_BLOCK)
-            {
-                $class = $editable?' n e s w ne nw se sw':'';
-                $panel = new LayoutBlockPanel($id, $block, 'floating'.$class);
-            }
+            $panel = new PopulatedColumnBlockPanel($id, $block, 'columnBlock', 'columnElement', false, $page);
+        }
+        else if($block->type==Layout::FLOATING_BLOCK)
+        {
+            $panel = new PopulatedLayoutBlockPanel($id, $block, 'floating', false, $page);
+        }
+        return $panel;
+    }
+    
+    public static function newLayoutBlockPanel($id, LayoutBlock $block, $editable)
+    {
+        $panel = null;
+        if($block->type==Layout::ROW_BLOCK)
+        {
+            $class = $editable?' s':'';
+            $panel = new LayoutBlockPanel($id, $block, 'rowBlock'.$class, $editable);
+        }
+        else if($block->type==Layout::COLUMN_BLOCK)
+        {
+            $class = $editable?' s e se':'';
+            $panel = new ColumnBlockPanel($id, $block, '', 'columnElement'.$class, $editable);
+        }
+        else if($block->type==Layout::FLOATING_BLOCK)
+        {
+            $class = $editable?' n e s w ne nw se sw':'';
+            $panel = new LayoutBlockPanel($id, $block, 'floating'.$class, $editable);
         }
         return $panel;
     }

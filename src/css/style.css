@@ -1,0 +1,15 @@
+.layoutBlock {
+}
+
+.layoutBlock li {
+    position:relative;
+}
+
+.columnElement {
+    float:left;
+}
+
+.floating {
+    position:absolute;
+    z-index:1;
+}

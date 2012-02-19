@@ -38,6 +38,11 @@ class ContentTypeService
      */
     private $widgetService;
     
+    /**
+     * @Resource
+     */
+    private $arrangementService;
+    
     public function getContentTypes($start, $count)
     {
         return $this->contentTypeDao->getContentTypes($start, $count);
@@ -63,6 +68,7 @@ class ContentTypeService
     {
         $type = $this->contentTypeDao->getContentType($typeId);
         $type->attributes = $this->getContentTypeAttributes($type->id);
+        $type->arrangement = $this->arrangementService->getArrangement($this->contentTypeDao->getContentTypeArrangementId($typeId));
         return $type;
     }
     

@@ -96,6 +96,16 @@ class PageDao extends AbstractDao
         }
         return $pages[0];
     }
+    
+    public function getHomePageId()
+    {
+        return $this->getTemplate()->queryForInt("SELECT id FROM page WHERE homepage = 1;");
+    }
+    
+    public function getArrangementIdForPage($pageId)
+    {
+        return $this->getTemplate()->queryForInt("SELECT arrangement_id FROM page WHERE id = %d;", array($pageId));
+    }
 }
 
 ?>

@@ -25,7 +25,7 @@
  * 
  * @author Martin Cassidy
  */
-class Arrangement extends picon\ComonDomainBase
+class Arrangement extends picon\ComonDomainBase implements \picon\Equalable
 {
     private $id;
     private $layout;
@@ -36,6 +36,19 @@ class Arrangement extends picon\ComonDomainBase
         $this->name = $name;
         $this->layout = $layout;
         $this->id = $id;
+    }
+    
+    public function equals($object)
+    {
+        if($object==null)
+        {
+            return false;
+        }
+        if($object instanceof Arrangement)
+        {
+           return $object->id==$this->id; 
+        }
+        return false;
     }
 }
 

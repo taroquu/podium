@@ -27,20 +27,20 @@
  */
 class PopulatedLayoutBlockPanel extends LayoutBlockPanel
 {
-    public function __construct($id, AbstractPopulatabaleLayoutBlock $block, $cssClass = '')
+    public function __construct($id, PopulatedLayoutBlock $block, $cssClass = '', $includeId = false, $page = null)
     {
-        parent::__construct($id, $block, $cssClass);
+        parent::__construct($id, $block, $cssClass, $includeId);
         $widgets = new picon\RepeatingView('widget');
         $this->add($widgets);
         foreach($block->widgets as $widgetItem)
         {
-            $widgets->add($this->getWidget($widgetItem, $widgets->getNextChildId()));
+            $widgets->add($this->getWidget($widgetItem, $widgets->getNextChildId(), $page));
         }
     }
     
-    protected function getWidget(WidgetItem $item, $id)
+    protected function getWidget(WidgetItem $item, $id, $page)
     {
-        return WidgetFactory::getWidget($id, $item);
+        return WidgetFactory::getWidget($id, $item, $page);
     }
 }
 

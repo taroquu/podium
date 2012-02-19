@@ -34,10 +34,10 @@ class EditablePopulatedLayoutBlockPanel extends PopulatedLayoutBlockPanel
     {
         $this->editCallback = $editCallback;
         $this->deleteCallback = $deleteCallback;
-        parent::__construct($id, $block, $cssClass);
+        parent::__construct($id, $block, $cssClass, true);
     }
     
-    protected function getWidget(WidgetItem $item, $id)
+    protected function getWidget(WidgetItem $item, $id, $page)
     {
         return WidgetFactory::getEditableWidget($id, $item, $this->editCallback, $this->deleteCallback);
     }

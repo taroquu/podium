@@ -30,11 +30,23 @@ use picon\Panel;
 abstract class Widget extends Panel
 {
     private $item;
+    private $page;
     
-    public function __construct($id, WidgetItem $item)
+    public function __construct($id, WidgetItem $item, $page = null)
     {
         parent::__construct($id);
         $this->item = $item;
+        $this->page = $page;
+    }
+    
+    protected function getConfig()
+    {
+        return $this->item->config;
+    }
+    
+    protected function getContent()
+    {
+        return $this->page->contentType->attributes;
     }
 }
 

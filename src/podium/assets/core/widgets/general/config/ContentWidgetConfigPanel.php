@@ -21,37 +21,13 @@
  * */
 
 /**
- * Description of PopulatedContentType
+ * Description of ContentWidgetConfigPanel
  * 
  * @author Martin Cassidy
  */
-class PopulatedContentType extends ContentType
+class ContentWidgetConfigPanel extends AbstractWidgetSetupPanel
 {
-    private $attributes = array();
-    private $arrangement;
     
-    public function addAttribute(ContentTypeAttribute $attribute, $index = null)
-    {
-        if($index==null)
-        {
-            array_push($this->attributes, $attribute);
-        }
-        else
-        {
-            array_splice($this->attributes, $index, count($this->attributes), array_merge(array($attribute), array_slice($this->attributes, $index))); 
-        }
-    }
-    
-    public function removeAttribute(ContentTypeAttribute $attribute)
-    {
-        foreach($this->attributes as $index => $sattribute)
-        {
-            if($sattribute==$attribute)
-            {
-                unset($this->attributes[$index]);
-            }
-        }
-    }
 }
 
 ?>

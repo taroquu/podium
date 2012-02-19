@@ -48,6 +48,11 @@ class PageService
      */
     private $widgetService;
     
+    /**
+     * @Resource
+     */
+    private $arrangementService;
+    
     public function getPages()
     {
         return $this->internalGetPages();
@@ -121,6 +126,9 @@ class PageService
             $attribute->widget = new ConfigurableWidgetItem($item->id, $item->name, $item->class, $item->setupClass, $item->configClass, $item->widgetTargetTable, $config);
         }
         
+        $arrangementId = $this->pageDao->getArrangementIdForPage($pageId);
+        $page->arrangement = $arrangementId==null?null:$this->arrangementService->getArrangement($arrangementId);
+        
         return $page;
     }
     
@@ -167,6 +175,50 @@ class PageService
         $this->pageDao->deleteChildPage($page->id);
         $this->pageDao->deletePage($page->id);
         $this->contentDao->deleteContent($page->contentId);
+    }
+    
+    public function getHomePageId()
+    {
+        return $this->pageDao->getHomePageId();
+    }
+    
+    public function getPageIdForPath($path)
+    {
+        $pages = $this->getPages();
+        $paths = $this->getPagePaths($pages);
+        
+        if(array_key_exists($path, $paths))
+        {
+            return $paths[$path]->id;
+        }
+        return null;
+    }
+    
+    private function getPagePaths($pages, $parent = '')
+    {
+        $paths = array();
+        foreach($pages as $page)
+        {
+            $path = $parent.$page->name;
+            $paths[$path] = $page;
+            $paths = array_merge($paths, $this->getPagePaths($page->nestedPages, $path.'/'));
+        }
+        return $paths;
+    }
+    
+    public function getArrangementForPage($pageId)
+    {
+        $page = $this->getPage($pageId);
+        
+        if($page->arrangement==null)
+        {
+            return $page->contentType->arrangement;
+        }
+        else
+        {
+            return $page->arrangement;
+
+        }
     }
 }
 

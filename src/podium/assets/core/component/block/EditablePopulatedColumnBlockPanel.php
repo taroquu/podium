@@ -40,7 +40,7 @@ class EditablePopulatedColumnBlockPanel extends PopulatedColumnBlockPanel
     
     protected function newColumnElement($id, $column, $innerClass)
     {
-        return new EditablePopulatedLayoutBlockPanel($id, $column, $innerClass, $this->editCallback, $this->deleteCallback);
+        return new EditablePopulatedLayoutBlockPanel($id, $column, $innerClass, true, $this->editCallback, $this->deleteCallback);
     }
 }
 

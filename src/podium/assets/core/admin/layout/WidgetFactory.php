@@ -27,14 +27,14 @@
  */
 class WidgetFactory
 {
-    public static function getWidget($id, WidgetItem $item)
+    public static function getWidget($id, ConfigurableWidgetItem $item, $page)
     {
         $className = $item->class;
         $reflection = new ReflectionClass($className);
-        return $reflection->newInstanceArgs(array($id, $item));
+        return $reflection->newInstanceArgs(array($id, $item, $page));
     }
     
-    public static function getEditableWidget($id, WidgetItem $item, $editCallback, $deleteCallback)
+    public static function getEditableWidget($id, ConfigurableWidgetItem $item, $editCallback, $deleteCallback)
     {
         return new EditableWidgetWrappingPanel($id, self::getWidget(EditableWidgetWrappingPanel::INNER_PANEL_ID, $item), $item, $editCallback, $deleteCallback);
     }

@@ -27,9 +27,9 @@
  */
 class LayoutBlockPanel extends AbstractLayoutBlockPanel
 {
-    public function __construct($id, AbstractLayoutBlock $block, $cssClass)
+    public function __construct($id, AbstractLayoutBlock $block, $cssClass, $includeId = false)
     {
-        parent::__construct($id, $block);
+        parent::__construct($id, $block, $includeId);
         $this->addClass($cssClass);
     }
 }

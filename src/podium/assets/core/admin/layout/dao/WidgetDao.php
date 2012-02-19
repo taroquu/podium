@@ -84,7 +84,7 @@ class WidgetDao extends AbstractDao
         }
         $fields = implode(', ', $fields);
         $values = implode(', ', $values);
-        $this->getTemplate()->insert("INSERT INTO %s (config_id, %s) VALUES (%d, %s);", array($widgetTableTarget, $fields, $configId, $values));
+        $this->getTemplate()->insert("INSERT INTO %s (config_id%s %s) VALUES (%d%s %s);", array($widgetTableTarget, strlen($fields)==0?'':',', $fields, $configId, strlen($values)==0?'':',', $values));
     }
     
     public function getWidgetConfig($item, $targetTable, $configId)

@@ -32,10 +32,11 @@ use picon\AttributeAppender;
  */
 abstract class AbstractLayoutBlockPanel extends Panel
 {
-    public function __construct($id, AbstractLayoutBlock $block)
+    public function __construct($id, AbstractLayoutBlock $block, $includeId = false)
     {
         parent::__construct($id);
         $idField = new picon\MarkupContainer('id');
+        $idField->setVisible($includeId);
         $this->add($idField);
         $idField->add(new AttributeModifier('value', new BasicModel($block->id)));
         $this->addClass('layoutBlock');

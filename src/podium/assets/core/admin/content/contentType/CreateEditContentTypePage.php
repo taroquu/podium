@@ -32,6 +32,11 @@ class CreateEditContentTypePage extends AbstractAdminTitlePage
      */
     private $contentTypeService;
     
+    /**
+     * @Resource
+     */
+    private $layoutService;
+    
     private $contentType;
     
     private $attributes;
@@ -62,6 +67,25 @@ class CreateEditContentTypePage extends AbstractAdminTitlePage
         $typeDrop->setDisabled($type->id!=null);
         $typeDrop->setRequired(true);
         $form->add($typeDrop);
+        
+        $arrangements = $this->layoutService->getLayoutsAndArrangement();
+        
+        foreach($arrangements as $name => $arranement)
+        {
+            $arrangements[ucwords($name)] = $arranement;
+            unset($arrangements[$name]);
+        }
+        
+        $arrangementDrop = new picon\DropDown('arrangement', $arrangements, new picon\ChoiceRenderer(function($choice, $index)
+        {
+            return $index;
+        },
+        function($choice, $index)
+        {
+            return ucwords($choice->name);
+        }));
+        $arrangementDrop->setRequired(true);
+        $form->add($arrangementDrop);
         
         $mw = new \picon\ModalWindow('mw');
         $this->add($mw);

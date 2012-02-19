@@ -3,18 +3,12 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Feb 05, 2012 at 05:34 PM
+-- Generation Time: Feb 19, 2012 at 02:09 PM
 -- Server version: 5.5.15
 -- PHP Version: 5.3.8
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `podium`
@@ -32,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `arrangement` (
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `layout_id` (`layout_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -52,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `arrangement_elements` (
   KEY `block_id` (`block_id`),
   KEY `arrangement_id` (`arrangement_id`),
   KEY `widget_id_2` (`widget_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=46 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=34 ;
 
 -- --------------------------------------------------------
 
@@ -66,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `content` (
   `content_type_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `content_type_id` (`content_type_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=38 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=43 ;
 
 -- --------------------------------------------------------
 
@@ -97,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `content_entries` (
   UNIQUE KEY `widget_config_id` (`widget_config_id`),
   KEY `content_id` (`content_id`),
   KEY `content_type_attribute_id` (`content_type_attribute_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 -- --------------------------------------------------------
 
@@ -112,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `content_type` (
   `arrangement_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `arrangement_id` (`arrangement_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
@@ -129,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `content_type_attributes` (
   PRIMARY KEY (`id`),
   KEY `content_type_id` (`content_type_id`),
   KEY `attribute_id` (`attribute_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 -- --------------------------------------------------------
 
@@ -143,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `form` (
   `action` int(11) NOT NULL,
   `action_value` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -162,7 +156,7 @@ CREATE TABLE IF NOT EXISTS `form_elements` (
   `function` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `form_id` (`form_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=32 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
 
 -- --------------------------------------------------------
 
@@ -176,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `form_element_options` (
   `option` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `form_element_id` (`form_element_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=80 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=75 ;
 
 -- --------------------------------------------------------
 
@@ -190,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `form_validation` (
   `type` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `form_element_id` (`form_element_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -205,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `form_validation_options` (
   `value` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `form_validation_id` (`form_validation_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -217,7 +211,7 @@ CREATE TABLE IF NOT EXISTS `layout` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
 
 -- --------------------------------------------------------
 
@@ -234,7 +228,7 @@ CREATE TABLE IF NOT EXISTS `layout_blocks` (
   PRIMARY KEY (`id`),
   KEY `layout_id` (`layout_id`),
   KEY `parent_block_id` (`parent_block_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=40 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
 -- --------------------------------------------------------
 
@@ -249,7 +243,7 @@ CREATE TABLE IF NOT EXISTS `layout_block_attributes` (
   `value` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `block_id` (`block_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=127 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=83 ;
 
 -- --------------------------------------------------------
 
@@ -266,11 +260,12 @@ CREATE TABLE IF NOT EXISTS `page` (
   `seo_title` varchar(255) NOT NULL,
   `meta_keys` varchar(255) NOT NULL,
   `meta_desc` varchar(255) NOT NULL,
+  `homepage` tinyint(1) NOT NULL DEFAULT '0',
   UNIQUE KEY `id` (`id`),
   UNIQUE KEY `content_id` (`content_id`),
   KEY `parent_id` (`parent_id`),
   KEY `arrangement_id` (`arrangement_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=40 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=41 ;
 
 -- --------------------------------------------------------
 
@@ -279,11 +274,11 @@ CREATE TABLE IF NOT EXISTS `page` (
 --
 
 CREATE TABLE IF NOT EXISTS `post` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `content_id` int(11) NOT NULL,
-  UNIQUE KEY `id` (`id`),
+  PRIMARY KEY (`id`),
   KEY `content_id` (`content_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -341,7 +336,7 @@ CREATE TABLE IF NOT EXISTS `widgets` (
   `target_table` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `category_id` (`category_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 -- --------------------------------------------------------
 
@@ -366,7 +361,20 @@ CREATE TABLE IF NOT EXISTS `widget_config` (
   `widget_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `widget_id` (`widget_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=41 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=48 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `widget_config_content`
+--
+
+CREATE TABLE IF NOT EXISTS `widget_config_content` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `config_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `config_id` (`config_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -396,7 +404,7 @@ CREATE TABLE IF NOT EXISTS `widget_config_heading` (
   `text` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `attribute_id` (`config_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=38 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=43 ;
 
 -- --------------------------------------------------------
 
@@ -424,7 +432,7 @@ CREATE TABLE IF NOT EXISTS `widget_config_textbox` (
   `text` longtext NOT NULL,
   PRIMARY KEY (`id`),
   KEY `attribute_id` (`config_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=38 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=43 ;
 
 --
 -- Constraints for dumped tables
@@ -548,11 +556,17 @@ ALTER TABLE `widget_config`
   ADD CONSTRAINT `widget_config_ibfk_1` FOREIGN KEY (`widget_id`) REFERENCES `widgets` (`id`) ON UPDATE CASCADE;
 
 --
+-- Constraints for table `widget_config_content`
+--
+ALTER TABLE `widget_config_content`
+  ADD CONSTRAINT `widget_config_content_ibfk_1` FOREIGN KEY (`config_id`) REFERENCES `widget_config` (`id`) ON UPDATE CASCADE;
+
+--
 -- Constraints for table `widget_config_form`
 --
 ALTER TABLE `widget_config_form`
-  ADD CONSTRAINT `widget_config_form_ibfk_2` FOREIGN KEY (`form`) REFERENCES `form` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `widget_config_form_ibfk_1` FOREIGN KEY (`config_id`) REFERENCES `widget_config` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `widget_config_form_ibfk_1` FOREIGN KEY (`config_id`) REFERENCES `widget_config` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `widget_config_form_ibfk_2` FOREIGN KEY (`form`) REFERENCES `form` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `widget_config_heading`
@@ -571,7 +585,3 @@ ALTER TABLE `widget_config_image`
 --
 ALTER TABLE `widget_config_textbox`
   ADD CONSTRAINT `widget_config_textbox_ibfk_1` FOREIGN KEY (`config_id`) REFERENCES `widget_config` (`id`) ON UPDATE CASCADE;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -27,9 +27,17 @@
  */
 class PopulatedColumnBlockPanel extends ColumnBlockPanel
 {    
-    protected function newColumnElement($id, $column, $innerClass)
+    private $page;
+    
+    public function __construct($id, ColumnBlock $block, $cssClass, $innerClass, $includeId = false, $page = null)
     {
-        return new PopulatedLayoutBlockPanel($id, $column, $innerClass);
+        $this->page = $page;
+        parent::__construct($id, $block, $cssClass, $innerClass, $includeId);
+    }
+    
+    protected function newColumnElement($id, $column, $innerClass, $includeId)
+    {
+        return new PopulatedLayoutBlockPanel($id, $column, $innerClass, $includeId, $this->page);
     }
 }
 

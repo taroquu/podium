@@ -34,6 +34,7 @@ class PodiumApplication extends PiconApplication
     public function init()
     {
         $this->getSecuritySettings()->setAuthorisationStrategy(new PodiumAuthorisationStrategory());
+        $this->addPageMapInitializationListenerCollection(new PageMapMountingListener());
     }
 }
 
