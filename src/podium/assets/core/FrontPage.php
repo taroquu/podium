@@ -76,7 +76,7 @@ class FrontPage extends WebPage
         }
     }
     
-    public function renderHead(HeaderResponse $headerResponse)
+    public function renderHead(picon\HeaderResponse $headerResponse)
     {
         parent::renderHead($headerResponse);
         $headerResponse->renderCSSFile('css/style.css');

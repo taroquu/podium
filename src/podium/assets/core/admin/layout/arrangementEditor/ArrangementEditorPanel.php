@@ -186,7 +186,7 @@ class ArrangementEditorPanel extends picon\Panel implements ToolbarContributor
         }));
     }
     
-    public function renderHead(HeaderResponse $headerResponse)
+    public function renderHead(picon\HeaderResponse $headerResponse)
     {
         parent::renderHead($headerResponse);
         $headerResponse->renderCSSFile('css/arrangement.css');

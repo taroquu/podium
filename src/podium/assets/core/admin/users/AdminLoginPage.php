@@ -67,7 +67,7 @@ class AdminLoginPage extends \picon\WebPage
         return $this->userService;
     }
     
-    public function renderHead(HeaderResponse $headerResponse)
+    public function renderHead(picon\HeaderResponse $headerResponse)
     {
         parent::renderHead($headerResponse);
         $headerResponse->renderCSSFile('css/main.css');
