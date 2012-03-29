@@ -35,14 +35,13 @@ class LayoutFormPanel extends Panel
     public function __construct($id, Model $model, $onSubmit)
     {
         parent::__construct($id, $model);
-        $this->add(new picon\FeedbackPanel('feedback'));
+        $this->add(new PodiumFeedbackPanel('feedback'));
         $this->layout = $model->getModelObject();
         $form = new Form('form', new picon\CompoundPropertyModel($this, 'layout'));
         $this->add($form);
         $name = new picon\TextField('name');
         $name->setRequired(true);
         $form->add($name);
-        $form->add(new \picon\FormComponentLabel('nameLabel', $name));
         $self = $this;
         $form->add(new \picon\Button('submit', function() use ($onSubmit, $self)
         {

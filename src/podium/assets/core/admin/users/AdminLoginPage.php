@@ -38,7 +38,7 @@ class AdminLoginPage extends \picon\WebPage
     public function __construct()
     {
         parent::__construct();
-        $this->add(new picon\FeedbackPanel('feedback'));
+        $this->add(new PodiumFeedbackPanel('feedback'));
         
         $form = new picon\Form('form');
         $this->add($form);

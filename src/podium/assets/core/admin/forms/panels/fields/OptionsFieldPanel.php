@@ -52,7 +52,7 @@ class OptionsFieldPanel extends RequireableFieldPanel
         }, new \picon\ArrayModel($model->getModelObject()->options));
         $options->add($this->optionList);
         
-        $feedback = new \picon\FeedbackPanel('feedback');
+        $feedback = new PodiumFeedbackPanel('feedback');
         $options->add($feedback);
         $options->add(new picon\RequiredTextField('newOption', new picon\PropertyModel($this, 'newOption')));
         

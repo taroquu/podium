@@ -38,7 +38,7 @@ class ArrangementFormPanel extends picon\Panel
     {
         parent::__construct($id, $model);
         $this->arrangement = $model->getModelObject();
-        $this->add(new picon\FeedbackPanel('feedback'));
+        $this->add(new PodiumFeedbackPanel('feedback'));
         $form = new picon\Form('form', new picon\CompoundPropertyModel($this, 'arrangement'));
         $this->add($form);
         $form->add(new \picon\RequiredTextField('name'));

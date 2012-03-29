@@ -16,6 +16,8 @@ class UserPage extends AbstractAdminTitlePage
     {
         parent::__construct();
         
+        $this->add(new PodiumFeedbackPanel('feedback'));
+        
         $self = $this;
         
         $editCallback = function($id, $userModel) use ($self)
@@ -30,7 +32,15 @@ class UserPage extends AbstractAdminTitlePage
         {
             return new LinkPanel($id, 'Delete', function() use ($self, $userModel)
             {
-                $self->getUserService()->deleteUser($userModel->getModelObject()->id);
+                if($_SESSION['user']->id==$userModel->getModelObject()->id)
+                {
+                    $self->error('You cannot delete your own user whilst you are logged in');
+                }
+                else
+                {
+                    $self->getUserService()->deleteUser($userModel->getModelObject()->id);
+                    $self->success('User delete successfully');
+                }
             });
         };
         

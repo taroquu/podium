@@ -36,7 +36,7 @@ class ContentTypeSetupPanel extends \picon\Panel
         $form = new \picon\Form('form', new picon\CompoundPropertyModel($this, 'attribute'));
         $this->add($form);
         $form->add(new \picon\RequiredTextField('name'));
-        $feedback = new picon\FeedbackPanel('feedback');
+        $feedback = new PodiumFeedbackPanel('feedback');
         $form->add($feedback);
         $feedback->setOutputMarkupId(true);
         $form->add(new picon\AjaxButton('button', function(\picon\AjaxRequestTarget $target) use ($saveCallback, $attribute)

@@ -122,7 +122,12 @@ class LayoutEditorPanel extends Panel implements ToolbarContributor
         {
             $self->getLayoutService()->createOrUpdateLayout($self->getModelObject());
             $self->setPage(LayoutPage::getIdentifier());
-        }));
+        }, true));
+        
+        $toolbar->add(new ToolbarLink($toolbar->getNextChildId(), 'Cancel', function() use ($self)
+        {
+            $self->setPage(LayoutPage::getIdentifier());
+        }, true, 'grey'));
     }
     
     public function getLayoutService()

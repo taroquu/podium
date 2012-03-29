@@ -69,6 +69,11 @@ class LayoutPage extends AbstractAdminTitlePage
         
         $proivder = new LayoutDataProvider();
         $this->add(new \picon\DefaultDataTable('layouts',$proivder, $columns));
+        
+        $this->add(new ButtonLink('newLayout', function() use ($self)
+        {
+            $self->setPage(CreateLayoutPage::getIdentifier());
+        }));
     }
     
     protected function getTitle()

@@ -38,15 +38,15 @@ class CreateEditUserPage extends AbstractAdminTitlePage
     public function __construct(User $user)
     {
         parent::__construct();
-        $user->password = '';
+        
         if($user==null)
         {
             $user = new User();
         }
-        
+        $user->password = '';
         $this->user = $user;
         
-        $this->add(new \picon\FeedbackPanel('feedback'));
+        $this->add(new PodiumFeedbackPanel('feedback'));
         $form = new picon\Form('form', new \picon\CompoundPropertyModel($this, 'user'));
         $this->add($form);
         

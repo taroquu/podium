@@ -49,7 +49,7 @@ class ArrayModel implements Model
     
     public function setModelObject(&$object)
     {
-        $this->object = $object;
+        $this->object = &$object;
     }
 }
 

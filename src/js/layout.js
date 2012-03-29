@@ -296,8 +296,8 @@ var serialize = function(block)
                         }
                     });
                 }
-                $(this).append('<div class="dragHandle blockControl" />');
-                $(this).append('<div class="remove blockControl" />');
+                $(this).append('<div class="dragHandle blockControl"><img src="images/move.png" class="dragger" /></div>');
+                $(this).append('<div class="remove blockControl"><img src="images/delete.png" /></div>');
                 $('.remove', $(this)).click(function()
                 {
                     var parent = $(this).parents('ul.vertical');

@@ -36,7 +36,14 @@ class UserService
     public function userLogin($username, $password)
     {
         $encrypted = $this->encryptPassword($password);
-        $user = $this->userDao->getUserByName($username);
+        try
+        {
+            $user = $this->userDao->getUserByName($username);
+        }
+        catch(IllegalStateException $ex)
+        {
+            return false;
+        }
 
         if($user->password==$encrypted)
         {

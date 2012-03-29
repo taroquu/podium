@@ -35,7 +35,7 @@ class ModalWidgetSetupPanel extends \picon\Panel
     {
         parent::__construct($id);
         $this->config = $model->getModelObject();
-        $feedback = new \picon\FeedbackPanel('feedback');
+        $feedback = new PodiumFeedbackPanel('feedback');
         $feedback->setOutputMarkupId(true);
         $this->add($feedback);
         $this->config = $model->getModelObject();

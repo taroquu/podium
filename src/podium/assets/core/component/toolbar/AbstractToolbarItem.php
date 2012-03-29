@@ -27,7 +27,7 @@ use picon\Panel;
  *
  * @author Martin
  */
-class AbstractToolbarItem extends Panel
+abstract class AbstractToolbarItem extends Panel
 {
     
 }

@@ -37,7 +37,7 @@ class EditPage extends AbstractAdminTitlePage
     {
         parent::__construct();
         $this->page = $page;
-        $this->add(new \picon\FeedbackPanel('feedback'));
+        $this->add(new PodiumFeedbackPanel('feedback'));
         $form = new picon\Form('form', new picon\CompoundPropertyModel($this, 'page'));
         $this->add($form);
         

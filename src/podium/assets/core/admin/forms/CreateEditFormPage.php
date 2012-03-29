@@ -38,7 +38,7 @@ class CreateEditFormPage extends AbstractAdminTitlePage
     {
         parent::__construct();
         
-        $this->add(new \picon\FeedbackPanel('feedback'));
+        $this->add(new PodiumFeedbackPanel('feedback'));
         
         if($form==null)
         {

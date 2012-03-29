@@ -20,32 +20,17 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
-use picon\Link;
-use picon\Label;
-use picon\BasicModel;
-
 /**
- * Description of ToolbarLink
- *
+ * Description of PodiumFeedbackPanel
+ * 
  * @author Martin Cassidy
  */
-class ToolbarLink extends AbstractToolbarItem
+class PodiumFeedbackPanel extends picon\FeedbackPanel
 {
-    public function __construct($id, $title, $callback, $right = false, $class = '')
+    public function __construct($id)
     {
         parent::__construct($id);
-        $link = new Link('link', $callback);
-        $link->add(new Label('label', new BasicModel($title)));
-        $this->add($link);
-        
-        if($right)
-        {
-            $this->add(new \picon\AttributeAppender('class', new BasicModel('right'), ' '));
-        }
-        if(!empty($class))
-        {
-            $link->add(new \picon\AttributeAppender('class', new BasicModel($class), ' '));
-        }
+        $this->add(new picon\AttributeModifier('class', new \picon\BasicModel('feedbackMessage')));
     }
 }
 

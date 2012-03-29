@@ -32,24 +32,31 @@
     position:absolute;
     top:10px;
     right:10px;
-    height:25px;
-    width:25px;
-    cursor:pointer;
-    background-color:darkblue;
+    height:20px;
+    width:20px;
 }
 
 .dragHandle {
     position:absolute;
     top:10px;
     left:10px;
-    height:25px;
-    width:25px;
-    cursor:move;
-    background-color:#1c94c4;
+    height:20px;
+    width:20px;
 }
 
 .blockControl {
+    background:#ccffcc;
+    border:#030 1px solid;
+    border-radius:3px;
     display:none;
+}
+
+.blockControl img {
+    width:18px;
+    height:18px;
+    float:left;
+    margin:1px;
+    cursor: pointer;
 }
 
 .columnBlock .blockControl {
@@ -61,7 +68,11 @@
 }
 
 .columnBlock ul .dragHandle {
-    background-color: #b81900;
+    background-color: #0c0
+}
+
+img.dragger {
+    cursor:move;
 }
 
 li:hover .blockControl {

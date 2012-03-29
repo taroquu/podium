@@ -39,7 +39,7 @@ class CreatePost extends AbstractAdminTitlePage
     {
         parent::__construct();
         $this->post = new PopulatedPost();
-        $this->add(new \picon\FeedbackPanel('feedback'));
+        $this->add(new PodiumFeedbackPanel('feedback'));
         $form = new picon\Form('form', new picon\CompoundPropertyModel($this, 'post'));
         $this->add($form);
         
