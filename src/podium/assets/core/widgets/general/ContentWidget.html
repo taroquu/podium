@@ -4,10 +4,27 @@
       xml:lang="en"  
       lang="en"> 
     <head>
+        <picon:head>
+            <style>
+                .contentPlaceHolderText {
+                    margin:0 auto;
+                    position:relative;
+                    top:40px;
+                    border:1px solid #030;
+                    background:#99ff66;
+                    border-radius:4px;
+                    height:35px;
+                    width:100px;
+                    text-align:center;
+                    padding:3px;
+                }
+            </style>
+        </picon:head>
     </head>
     <body>
         <picon:panel>
             <div picon:id="elements"></div>
+            <div picon:id="placeHolder" class="contentPlaceHolderText">Your content will appear here</div>
         </picon:panel>
     </body>
 </html>

@@ -32,9 +32,21 @@ class ContentWidget extends Widget
         parent::__construct($id, $item, $page);
         $elements = new picon\RepeatingView('elements');
         $this->add($elements);
-        foreach($this->getContent() as $element)
+        
+        $placeHolder = new picon\MarkupContainer('placeHolder');
+        $this->add($placeHolder);
+        $placeHolder->setVisible($page->contentType==null);
+        
+        if($page->contentType==null)
         {
-            $elements->add(WidgetFactory::getWidget($elements->getNextChildId(), $element->widget, $page));
+            $this->add(new picon\AttributeModifier('class', new \picon\BasicModel('contentPlaceholder')));
+        }
+        else
+        {
+            foreach($this->getContent() as $element)
+            {
+                $elements->add(WidgetFactory::getWidget($elements->getNextChildId(), $element->widget, $page));
+            }
         }
     }
 

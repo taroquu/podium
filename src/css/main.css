@@ -187,6 +187,11 @@ body {
     background-image:url('../images/buttonBackGrey.png');
 }
 
+.toolbar img {
+    vertical-align: top;
+    margin-left:3px;
+}
+
 .toolbar .right {
     float:right;
 }
@@ -194,7 +199,25 @@ body {
 .toolbar ul ul {
     display:none;
     position:absolute;
-    background:#336600;
+    background:#C2E07D;
+    z-index:50000;
+}
+
+.toolbar ul ul li {
+    float:none;
+    display:block;
+    border:0px solid #030;
+    border-width:0 0 1px 0;
+}
+
+.toolbar ul ul li a {
+    background:none;
+    border:0px;
+    color:#030;
+}
+
+.toolbar ul ul li:hover {
+    background-color:#96AD61;
 }
 
 .toolbar ul li:hover ul {

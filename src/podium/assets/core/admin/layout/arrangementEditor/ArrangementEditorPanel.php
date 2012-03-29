@@ -183,7 +183,13 @@ class ArrangementEditorPanel extends picon\Panel implements ToolbarContributor
             $arrangement = $self->getModelObject();
             $self->getArrangementService()->createOrUpdateArrangement($arrangement);
             $self->setPage(new ArrangementPage($arrangement->layout));
-        }));
+        }, true));
+        
+        $toolbar->add(new ToolbarLink($toolbar->getNextChildId(), 'Cancel', function() use ($self)
+        {
+            $arrangement = $self->getModelObject();
+            $self->setPage(new ArrangementPage($arrangement->layout));
+        }, true, 'grey'));
     }
     
     public function renderHead(picon\HeaderResponse $headerResponse)
