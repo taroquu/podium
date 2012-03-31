@@ -49,6 +49,10 @@ class ArrangementEditorPanel extends picon\Panel implements ToolbarContributor
     {
         parent::__construct($id);
         
+        $feedback = new PodiumFeedbackPanel('feedback');
+        $feedback->setOutputMarkupId(true);
+        $this->add($feedback);
+        
         $self = $this;
         $this->onEdit = function(\picon\AjaxRequestTarget $target, WidgetElementItem $item) use($mw, $self)
         {
@@ -180,7 +184,36 @@ class ArrangementEditorPanel extends picon\Panel implements ToolbarContributor
         $self = $this;
         $toolbar->add(new ToolbarLink($toolbar->getNextChildId(), 'Save', function() use ($self)
         {
+            //@todo tidy this logic up a LOT
             $arrangement = $self->getModelObject();
+            $content = 0;print_r($arrangement);
+            foreach($arrangement->layout->blocks as $block)
+            {
+                foreach($block->getWidgets() as $widget)
+                {
+                    if($widget->name=='Content Block')
+                    {
+                        $content++;
+                    }
+                }
+                foreach ($block->getNestedBlocks() as $nested)
+                {
+                    foreach($nested->getWidgets() as $widget)
+                    {
+                        if($widget->name=='Content Block')
+                        {
+                            $content++;
+                        }
+                    }
+                }
+            }
+            
+            if($content!=1)
+            {
+                $self->error('An arrangement must have a one content widget.');
+                return;
+            }
+            
             $self->getArrangementService()->createOrUpdateArrangement($arrangement);
             $self->setPage(new ArrangementPage($arrangement->layout));
         }, true));

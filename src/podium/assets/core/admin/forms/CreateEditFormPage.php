@@ -67,6 +67,28 @@ class CreateEditFormPage extends AbstractAdminTitlePage
         $self = $this;
         $pageForm->add(new picon\Button('save', function() use ($self, $pageForm)
         {
+            $buttoncount = 0;
+            $fieldcount = 0;
+            
+            foreach($self->form->fields as $field)
+            {
+                if($field instanceof ButtonField)
+                {
+                    if($field->type=='Submit')
+                    {
+                        $buttoncount++;
+                    }
+                }
+                else
+                {
+                    $fieldcount++;
+                }
+            }
+            if($fieldcount==0 || $buttoncount==0)
+            {
+                $self->error('A form must have at least one field and at least one submit button');
+                return;
+            }
             $self->formService->createOrUpdate($self->form);
             $self->setPage(FormPage::getIdentifier());
         }));

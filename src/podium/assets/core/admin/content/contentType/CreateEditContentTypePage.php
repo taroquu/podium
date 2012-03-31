@@ -184,6 +184,11 @@ class CreateEditContentTypePage extends AbstractAdminTitlePage
         
         $form->add(new picon\Button('save', function() use($self, $type)
         {
+            if(count($type->attributes)<1)
+            {
+                $self->error('A content type must have at least one attribute');
+                return;
+            }
             $self->getContentTypeService()->createOrUpdate($type);
             $self->setpage(ContentTypeListPage::getIdentifier());
         }));

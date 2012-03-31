@@ -33,6 +33,9 @@ abstract class AbstractFieldSetupPanel extends picon\Panel
     public function __construct($id, \picon\ModalWindow $mw, $update, Model $model = null)
     {
         parent::__construct($id, $model);
+        $feedback = new PodiumFeedbackPanel('feedback');
+        $feedback->setOutputMarkupId(true);
+        $this->add($feedback);
         $this->field = $model->getModelObject();
         $this->form = new picon\Form('form', new \picon\CompoundPropertyModel($this, 'field'));
         $this->add($this->form);
@@ -43,6 +46,9 @@ abstract class AbstractFieldSetupPanel extends picon\Panel
         {
             $target->add($update);
             $mw->hide($target);
+        }, function(picon\AjaxRequestTarget $target) use ($feedback)
+        {
+            $target->add($feedback);
         }));
     }
     
