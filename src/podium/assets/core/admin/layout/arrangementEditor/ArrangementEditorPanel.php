@@ -186,7 +186,7 @@ class ArrangementEditorPanel extends picon\Panel implements ToolbarContributor
         {
             //@todo tidy this logic up a LOT
             $arrangement = $self->getModelObject();
-            $content = 0;print_r($arrangement);
+            $content = 0;
             foreach($arrangement->layout->blocks as $block)
             {
                 foreach($block->getWidgets() as $widget)

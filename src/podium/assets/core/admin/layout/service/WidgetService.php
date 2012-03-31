@@ -75,6 +75,12 @@ class WidgetService
     {
         return $this->widgetDao->getWidgetConfig($item, $item->widgetTargetTable, $configId);
     }
+    
+    public function deleteWidgetConfig(WidgetItem $item, $configId)
+    {
+        $this->widgetDao->clearWidgetConfigDetail($configId, $item->widgetTargetTable);
+        $this->widgetDao->deleteWidgetConfig($configId);
+    }
 }
 
 ?>

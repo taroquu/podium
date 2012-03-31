@@ -110,6 +110,11 @@ class WidgetDao extends AbstractDao
         }
         return $configs[0];
     }
+    
+    public function deleteWidgetConfig($configId)
+    {
+        $this->getTemplate()->update('DELETE FROM widget_config WHERE id = %d', array($configId));
+    }
 }
 
 ?>

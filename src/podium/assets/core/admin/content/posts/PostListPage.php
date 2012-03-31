@@ -50,7 +50,7 @@ class PostListPage extends AbstractAdminTitlePage
         {
             return new LinkPanel($id, 'Delete', function() use ($self, $postModel)
             {
-                $self->getPostService()->deletePost($postModel->getModelObject()->id);
+                $self->getPostService()->deletePost($postModel->getModelObject());
             });
         };
         

@@ -132,9 +132,15 @@ class ArrangementService
         {
             if($current->locateWidget($widget->elementId)==null)
             {
-                $this->arrangementDao->deleteElement($widget->elementId);
+                $this->deleteWidget($widget);
             }
         }
+    }
+    
+    private function deleteWidget($widget)
+    {
+        $this->arrangementDao->deleteElement($widget->elementId);
+        $this->widgetService->deleteWidgetConfig($widget, $widget->config->widgetConfigId);
     }
     
     private function processElements(PopulatedLayoutBlock $block, $arrangementId)
@@ -194,7 +200,7 @@ class ArrangementService
 
         foreach($currentWidgets as $widget)
         {
-            $this->arrangementDao->deleteElement($widget->elementId);
+            $this->deleteWidget($widget);
         }
         $this->arrangementDao->deleteArrangement($arrangement->id);
     }

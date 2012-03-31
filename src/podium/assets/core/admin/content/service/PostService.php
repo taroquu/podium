@@ -119,10 +119,19 @@ class PostService
         }
     }
     
-    public function deletePost($postId)
+    public function deletePost($post)
     {
-        $this->contentDao->deleteContentEntry($page->contentId);
-        $this->postDao->deletePost($postId);
+        foreach($post->contentType->attributes as $attribute)
+        {
+            $configs[$attribute->attributeId] = $this->contentDao->getConfigId($post->contentId, $attribute->attributeId);
+        }
+        $this->contentDao->deleteContentEntry($post->contentId);
+        $this->postDao->deletePost($post->id);
+        
+        foreach($post->contentType->attributes as $attribute)
+        {
+            $this->widgetService->deleteWidgetConfig($attribute->widget, $configs[$attribute->attributeId]);
+        }
     }
 }
 

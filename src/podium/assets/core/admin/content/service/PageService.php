@@ -69,6 +69,8 @@ class PageService
         foreach($pages as $page)
         {
             $page->nestedPages = $this->internalGetPages($page->id);
+            $contentTypeId = $this->contentDao->getContentTypeId($page->contentId);
+            $page->contentType = $this->contentTypeService->getContentType($contentTypeId);
         }
         return $pages;
     }
@@ -179,10 +181,22 @@ class PageService
     
     public function deletePage(Page $page)
     {
+        $configs = array();
+        
+        foreach($page->contentType->attributes as $attribute)
+        {
+            $configs[$attribute->attributeId] = $this->contentDao->getConfigId($page->contentId, $attribute->attributeId);
+        }
+        
         $this->contentDao->deleteContentEntry($page->contentId);
         $this->pageDao->deleteChildPage($page->id);
         $this->pageDao->deletePage($page->id);
         $this->contentDao->deleteContent($page->contentId);
+        
+        foreach($page->contentType->attributes as $attribute)
+        {
+            $this->widgetService->deleteWidgetConfig($attribute->widget, $configs[$attribute->attributeId]);
+        }
     }
     
     public function getHomePageId()
