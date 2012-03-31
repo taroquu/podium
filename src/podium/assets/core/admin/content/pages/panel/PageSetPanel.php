@@ -33,14 +33,14 @@ class PageSetPanel extends \picon\Panel
     private $pageService;
     
     private $container;
-    public function __construct($id, $pages)
+    public function __construct($id, $pages, $homeId)
     {
         parent::__construct($id);
         
         $this->container = new \picon\MarkupContainer('container');
         $this->add($this->container);
         $self = $this;
-        $this->container->add(new \picon\ListView('page', function(picon\ListItem $item) use ($self)
+        $this->container->add(new \picon\ListView('page', function(picon\ListItem $item) use ($self, $homeId)
         {
             $page = $item->getModelObject();
             $item->setMarkupId('page_'.$page->id);
@@ -58,7 +58,11 @@ class PageSetPanel extends \picon\Panel
                 $self->setPage(PagesListPage::getIdentifier());
             }));
             
-            $item->add(new PageSetPanel('nested', $page->nestedPages));
+            $item->add(new PageSetPanel('nested', $page->nestedPages, $homeId));
+            
+            $homeImage = new \picon\MarkupContainer('home');
+            $homeImage->setVisible($homeId==$page->id);
+            $item->add($homeImage);
         }, new picon\ArrayModel($pages)));
     }
     

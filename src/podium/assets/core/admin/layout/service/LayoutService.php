@@ -193,6 +193,11 @@ class LayoutService
         }
         return $arrangementGroup;
     }
+    
+    public function inUse($layoutId)
+    {
+        return $this->layoutDao->getLayoutUseageCount($layoutId)>0;
+    }
 }
 
 ?>

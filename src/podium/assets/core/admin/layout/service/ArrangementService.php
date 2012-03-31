@@ -204,6 +204,11 @@ class ArrangementService
         }
         $this->arrangementDao->deleteArrangement($arrangement->id);
     }
+    
+    public function inUse($arrangementId)
+    {
+        return $this->arrangementDao->getArrangementUseageCount($arrangementId)>0;
+    }
 }
 
 ?>

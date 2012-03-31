@@ -112,6 +112,11 @@ class ThemeDao extends AbstractDao
     {
         return $this->getTemplate()->update("DELETE FROM theme_elements WHERE id = %d;", array($elementId));
     }
+    
+    public function getThemeUseageCount($themeId)
+    {
+        return $this->getTemplate()->queryForInt("SELECT count(*) FROM theme WHERE id = %d AND (id IN (SELECT theme_id FROM content_type) OR id IN (SELECT theme_id FROM page))", array($themeId));
+    }
 }
 
 ?>

@@ -61,9 +61,15 @@ class LayoutPage extends AbstractAdminTitlePage
             });
         };
         
+        $inUseCallback = function($id, $layoutModel) use ($self)
+        {
+            return new InUsePanel($id, $self->getLayoutService()->inUse($layoutModel->getModelObject()->id));
+        };
+        
         $columns = array();
         $columns[] = new picon\PropertyColumn('Layout Name', 'name');
         $columns[] = new PanelColumn('', $arranagementPanelCallback);
+        $columns[] = new PanelColumn('In Use', $inUseCallback);
         $columns[] = new PanelColumn('', $panelCallback);
         $columns[] = new PanelColumn('', $deletePanelCallback);
         

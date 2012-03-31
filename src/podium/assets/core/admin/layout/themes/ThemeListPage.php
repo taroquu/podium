@@ -53,8 +53,14 @@ class ThemeListPage extends AbstractAdminTitlePage
             });
         };
         
+        $inUseCallback = function($id, $themeModel) use ($self)
+        {
+            return new InUsePanel($id, $self->getThemeService()->inUse($themeModel->getModelObject()->id));
+        };
+        
         $columns = array();
         $columns[] = new picon\PropertyColumn('Theme Name', 'name');
+        $columns[] = new PanelColumn('In Use', $inUseCallback);
         $columns[] = new PanelColumn('', $editCallback);
         $columns[] = new PanelColumn('', $deletePanelCallback);
         

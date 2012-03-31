@@ -210,6 +210,11 @@ class FormService
         $this->formDao->deleteOptions($field->id);
         $this->formDao->deleteField($field->id);
     }
+    
+    public function inUse($formId)
+    {
+        return $this->formDao->getFormUseageCount($formId)>0;
+    }
 }
 
 ?>

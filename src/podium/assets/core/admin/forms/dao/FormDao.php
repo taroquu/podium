@@ -193,6 +193,11 @@ class FormDao extends AbstractDao
         
         return $option;
     }
+    
+    public function getFormUseageCount($formId)
+    {
+        return $this->getTemplate()->queryForInt("SELECT count(*) FROM form WHERE id = %d AND id IN (SELECT form FROM widget_config_form)", array($formId));
+    }
 }
 
 ?>

@@ -55,8 +55,14 @@ class FormPage extends AbstractAdminTitlePage
             });
         };
         
+        $inUseCallback = function($id, $formModel) use ($self)
+        {
+            return new InUsePanel($id, $self->getFormService()->inUse($formModel->getModelObject()->id));
+        };
+        
         $columns = array();
         $columns[] = new \picon\PropertyColumn('Form Name', 'name');
+        $columns[] = new PanelColumn('In Use', $inUseCallback);
         $columns[] = new PanelColumn('', $editCallback);
         $columns[] = new PanelColumn('', $deleteCallback);
         

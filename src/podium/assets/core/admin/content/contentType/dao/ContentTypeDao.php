@@ -116,6 +116,11 @@ class ContentTypeDao extends AbstractDao
     {
         return $this->getTemplate()->queryForInt("SELECT theme_id FROM content_type WHERE id = %d;", array($contentTypeId));
     }
+    
+    public function getUsingEntryCount($contentTypeId)
+    {
+        return $this->getTemplate()->queryForInt("SELECT count(*) FROM content WHERE content_type_id = %d;", array($contentTypeId));
+    }
 }
 
 ?>

@@ -174,6 +174,11 @@ class ThemeService
         $this->themeDao->deleteElements($theme->id);
         $this->themeDao->delete($theme->id);
     }
+    
+    public function inUse($themeId)
+    {
+        return $this->themeDao->getThemeUseageCount($themeId)>0;
+    }
 }
 
 ?>

@@ -100,6 +100,11 @@ class ArrangementDao extends AbstractDao
     {
         $this->getTemplate()->update('DELETE FROM arrangement WHERE id = %d;', array($arrangementId));
     }
+    
+    public function getArrangementUseageCount($arrangementId)
+    {
+        return $this->getTemplate()->queryForInt("SELECT count(*) FROM arrangement WHERE id = %d AND (id IN (SELECT arrangement_id FROM content_type) OR id IN (SELECT arrangement_id FROM page))", array($arrangementId));
+    }
 }
 
 ?>

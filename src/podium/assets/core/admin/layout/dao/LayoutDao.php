@@ -124,6 +124,11 @@ class LayoutDao extends AbstractDao
     {
         $this->getTemplate()->update("DELETE FROM layout WHERE id = %d", array($layoutId));
     }
+    
+    public function getLayoutUseageCount($layoutId)
+    {
+        return $this->getTemplate()->queryForInt("SELECT count(*) FROM arrangement WHERE layout_id = %d AND (id IN (SELECT arrangement_id FROM content_type) OR id IN (SELECT arrangement_id FROM page))", array($layoutId));
+    }
 }
 
 ?>

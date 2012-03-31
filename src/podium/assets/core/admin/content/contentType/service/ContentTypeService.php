@@ -150,6 +150,11 @@ class ContentTypeService
             }
         }
     }
+    
+    public function inUse($contentTypeId)
+    {
+        return $this->contentTypeDao->getUsingEntryCount($contentTypeId)>0;
+    }
 }
 
 ?>

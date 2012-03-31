@@ -36,7 +36,8 @@ class PagesListPage extends AbstractAdminTitlePage
     {
         parent::__construct();
         $pages = $this->pageService->getPages();
-        $pagePanel = new PageSetPanel('pages', $pages);
+        $homeId = $this->pageService->getHomePageId();
+        $pagePanel = new PageSetPanel('pages', $pages, $homeId);
         $this->add($pagePanel);
         
         $firstContainer = $pagePanel->getContainer();

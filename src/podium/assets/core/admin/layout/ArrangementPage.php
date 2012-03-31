@@ -59,8 +59,14 @@ class ArrangementPage extends AbstractAdminTitlePage
             });
         };
         
+        $inUseCallback = function($id, $arrangementModel) use ($self)
+        {
+            return new InUsePanel($id, $self->arrangementService->inUse($arrangementModel->getModelObject()->id));
+        };
+        
         $columns = array();
         $columns[] = new \picon\PropertyColumn('Arrangement Name', 'name');
+        $columns[] = new PanelColumn('In Use', $inUseCallback);
         $columns[] = new PanelColumn('', $editCallback);
         $columns[] = new PanelColumn('', $deleteCallback);
         

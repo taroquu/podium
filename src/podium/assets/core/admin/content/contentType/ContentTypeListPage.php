@@ -55,8 +55,14 @@ class ContentTypeListPage extends AbstractAdminTitlePage
             });
         };
         
+        $inUseCallback = function($id, $contentTypeModel) use ($self)
+        {
+            return new InUsePanel($id, $self->getContentTypeService()->inUse($contentTypeModel->getModelObject()->id));
+        };
+        
         $columns[] = new \picon\PropertyColumn('Name', 'name');
         $columns[] = new \picon\PropertyColumn('Type', 'type');
+        $columns[] = new PanelColumn('In Use', $inUseCallback);
         $columns[] = new PanelColumn('', $editCallback);
         $columns[] = new PanelColumn('', $deleteCallback);
         
