@@ -27,10 +27,10 @@
  */
 class ButtonLink extends picon\Link
 {
-    public function __construct($id, $callback)
+    public function __construct($id, $callback, $class = '')
     {
         parent::__construct($id, $callback);
-        $this->add(new picon\AttributeModifier('class', new \picon\BasicModel('buttonLink')));
+        $this->add(new picon\AttributeModifier('class', new \picon\BasicModel('buttonLink '.$class)));
     }
 }
 

@@ -28,6 +28,7 @@
 class PopulatedPage extends Page
 {
     private $arrangement;
+    private $theme;
     private $seoTitle;
     private $metaKeys;
     private $metaDescription;

@@ -29,6 +29,7 @@ class PopulatedContentType extends ContentType
 {
     private $attributes = array();
     private $arrangement;
+    private $theme;
     
     public function addAttribute(ContentTypeAttribute $attribute, $index = null)
     {

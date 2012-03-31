@@ -53,6 +53,11 @@ class PageService
      */
     private $arrangementService;
     
+    /**
+     * @Resource
+     */
+    private $themeService;
+    
     public function getPages()
     {
         return $this->internalGetPages();
@@ -128,6 +133,9 @@ class PageService
         
         $arrangementId = $this->pageDao->getArrangementIdForPage($pageId);
         $page->arrangement = $arrangementId==null?null:$this->arrangementService->getArrangement($arrangementId);
+        
+        $themeId = $this->pageDao->getThemeIdForPage($pageId);
+        $page->theme = $themeId==null?null:$this->themeService->getTheme($themeId);
         
         return $page;
     }

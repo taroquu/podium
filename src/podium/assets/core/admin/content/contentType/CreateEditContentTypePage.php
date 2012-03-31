@@ -37,6 +37,11 @@ class CreateEditContentTypePage extends AbstractAdminTitlePage
      */
     private $layoutService;
     
+    /**
+     * @Resource
+     */
+    private $themeService;
+    
     private $contentType;
     
     private $attributes;
@@ -86,6 +91,17 @@ class CreateEditContentTypePage extends AbstractAdminTitlePage
         }));
         $arrangementDrop->setRequired(true);
         $form->add($arrangementDrop);
+        
+        $themeDrop = new picon\DropDown('theme', $this->themeService->getThemes(0, $this->themeService->getThemeSize()), new picon\ChoiceRenderer(function($choice, $index)
+        {
+            return $index;
+        },
+        function($choice, $index)
+        {
+            return ucwords($choice->name);
+        }));
+        $themeDrop->setRequired(true);
+        $form->add($themeDrop);
         
         $mw = new \picon\ModalWindow('mw');
         $this->add($mw);
@@ -171,6 +187,11 @@ class CreateEditContentTypePage extends AbstractAdminTitlePage
             $self->getContentTypeService()->createOrUpdate($type);
             $self->setpage(ContentTypeListPage::getIdentifier());
         }));
+        
+        $form->add(new ButtonLink('cancel', function() use($self)
+        {
+            $self->setpage(ContentTypeListPage::getIdentifier());
+        },'grey'));
     }
     
     protected function getTitle()

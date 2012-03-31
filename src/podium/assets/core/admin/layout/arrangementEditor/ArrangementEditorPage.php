@@ -64,7 +64,7 @@ class ArrangementEditorPage extends AbstractAdminToolbarPage
     
     protected function getTitle()
     {
-        return "Arrangement";
+        return ($this->arrangment->id==null?'Create':'Edit')." Arrangement";
     }
     
     public function __get($name)

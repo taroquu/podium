@@ -54,14 +54,16 @@ class PageDao extends AbstractDao
     {
         $parent = $page->parent_page==null?'NULL':$page->parent_page->id;
         $arrangement = $page->arrangement==null?'NULL':$page->arrangement->id;
+        $theme = $page->theme==null?'NULL':$page->theme->id;
 
-        return $this->getTemplate()->insert("INSERT INTO page (content_id, parent_id, `index`, arrangement_id, seo_title, meta_keys, meta_desc) VALUES (%d, %s, %d, %s, '%s', '%s', '%s');", array($page->contentId, $parent, $index, $arrangement, $page->seoTitle, $page->metaKeys, $page->metaDescription));
+        return $this->getTemplate()->insert("INSERT INTO page (content_id, parent_id, `index`, arrangement_id, theme_id, seo_title, meta_keys, meta_desc) VALUES (%d, %s, %d, %s, %s, '%s', '%s', '%s');", array($page->contentId, $parent, $index, $arrangement, $theme, $page->seoTitle, $page->metaKeys, $page->metaDescription));
     }
     
     public function updatePage(PopulatedPage $page)
     {
         $parent = $page->parent_page==null?'NULL':$page->parent_page->id;
-        return $this->getTemplate()->update("UPDATE page SET parent_id = %s, seo_title = '%s', meta_keys = '%s', meta_desc = '%s' WHERE id = %d;", array($parent, $page->seoTitle, $page->metaKeys, $page->metaDescription, $page->id));
+        $theme = $page->theme==null?'NULL':$page->theme->id;
+        return $this->getTemplate()->update("UPDATE page SET parent_id = %s, theme_id = %s, seo_title = '%s', meta_keys = '%s', meta_desc = '%s' WHERE id = %d;", array($parent, $theme, $page->seoTitle, $page->metaKeys, $page->metaDescription, $page->id));
     }
     
     public function getLastIndex($parentId)
@@ -105,6 +107,11 @@ class PageDao extends AbstractDao
     public function getArrangementIdForPage($pageId)
     {
         return $this->getTemplate()->queryForInt("SELECT arrangement_id FROM page WHERE id = %d;", array($pageId));
+    }
+    
+    public function getThemeIdForPage($pageId)
+    {
+        return $this->getTemplate()->queryForInt("SELECT theme_id FROM page WHERE id = %d;", array($pageId));
     }
 }
 

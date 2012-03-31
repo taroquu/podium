@@ -30,6 +30,11 @@ class PageSetupPanel extends \picon\Panel
     /**
      * @Resource
      */
+    private $themeService;
+    
+    /**
+     * @Resource
+     */
     private $pageService;
     
     /**
@@ -78,6 +83,16 @@ class PageSetupPanel extends \picon\Panel
         {
             return ucwords($choice->name);
         })));
+        
+        $themeDrop = new picon\DropDown('theme', $this->themeService->getThemes(0, $this->themeService->getThemeSize()), new picon\ChoiceRenderer(function($choice, $index)
+        {
+            return $index;
+        },
+        function($choice, $index)
+        {
+            return ucwords($choice->name);
+        }));
+        $this->add($themeDrop);
         
         $this->add(new picon\TextField('seoTitle'));
         $this->add(new picon\TextField('metaKeys'));

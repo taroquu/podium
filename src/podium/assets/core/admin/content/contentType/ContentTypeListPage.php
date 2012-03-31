@@ -65,7 +65,7 @@ class ContentTypeListPage extends AbstractAdminTitlePage
         $this->add(new picon\DefaultDataTable('types', $provider, $columns));
         
         $self = $this;
-        $this->add(new picon\Link('create', function() use($self)
+        $this->add(new ButtonLink('create', function() use($self)
         {
             $self->setPage(CreateEditContentTypePage::getIdentifier());
         }));

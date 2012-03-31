@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 31, 2012 at 04:01 PM
+-- Generation Time: Mar 31, 2012 at 05:32 PM
 -- Server version: 5.5.15
 -- PHP Version: 5.3.8
 
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `content` (
   `content_type_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `content_type_id` (`content_type_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=43 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=45 ;
 
 --
 -- Dumping data for table `content`
@@ -87,7 +87,9 @@ INSERT INTO `content` (`id`, `name`, `content_type_id`) VALUES
 (39, 'test post create 1', 2),
 (40, 'test create 2dddd', 2),
 (41, 'test with arrangmenet', 1),
-(42, 'test with arrangmenet', 1);
+(42, 'test with arrangmenet', 1),
+(43, 'test with theme', 5),
+(44, 'test with theme', 5);
 
 -- --------------------------------------------------------
 
@@ -157,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `content_type` (
   PRIMARY KEY (`id`),
   KEY `arrangement_id` (`arrangement_id`),
   KEY `theme_id` (`theme_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `content_type`
@@ -166,7 +168,9 @@ CREATE TABLE IF NOT EXISTS `content_type` (
 INSERT INTO `content_type` (`id`, `name`, `type`, `arrangement_id`, `theme_id`) VALUES
 (1, 'web pageddd', 'page', 1, 2),
 (2, 'blog post', 'post', 1, 2),
-(3, 'test with arrangement', 'post', 1, 2);
+(3, 'test with arrangement', 'post', 1, 2),
+(4, 'testtest', 'page', 1, 6),
+(5, 'test with theme', 'page', 1, 5);
 
 -- --------------------------------------------------------
 
@@ -414,7 +418,7 @@ CREATE TABLE IF NOT EXISTS `page` (
   KEY `parent_id` (`parent_id`),
   KEY `arrangement_id` (`arrangement_id`),
   KEY `theme_id` (`theme_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=41 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=43 ;
 
 --
 -- Dumping data for table `page`
@@ -422,7 +426,8 @@ CREATE TABLE IF NOT EXISTS `page` (
 
 INSERT INTO `page` (`id`, `content_id`, `parent_id`, `index`, `arrangement_id`, `seo_title`, `meta_keys`, `meta_desc`, `homepage`, `theme_id`) VALUES
 (39, 37, NULL, 1, NULL, 'titleddd', 'keysdd', 'descdd', 1, NULL),
-(40, 42, NULL, 2, 1, '', '', '', 0, NULL);
+(40, 42, NULL, 2, 1, '', '', '', 0, NULL),
+(42, 44, NULL, 3, NULL, '', '', '', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -1094,10 +1099,10 @@ ALTER TABLE `layout_block_attributes`
 -- Constraints for table `page`
 --
 ALTER TABLE `page`
-  ADD CONSTRAINT `page_ibfk_6` FOREIGN KEY (`content_id`) REFERENCES `content` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `page_ibfk_7` FOREIGN KEY (`parent_id`) REFERENCES `page` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `page_ibfk_8` FOREIGN KEY (`arrangement_id`) REFERENCES `arrangement` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `page_ibfk_9` FOREIGN KEY (`theme_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `page_ibfk_13` FOREIGN KEY (`theme_id`) REFERENCES `theme` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `page_ibfk_10` FOREIGN KEY (`content_id`) REFERENCES `content` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `page_ibfk_11` FOREIGN KEY (`parent_id`) REFERENCES `page` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `page_ibfk_12` FOREIGN KEY (`arrangement_id`) REFERENCES `arrangement` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `post`

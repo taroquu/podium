@@ -54,12 +54,12 @@ class ContentTypeDao extends AbstractDao
     
     public function createContentType(PopulatedContentType $contentType)
     {
-        return $this->getTemplate()->insert("INSERT INTO content_type (name, type, arrangement_id) VALUES('%s', '%s', %d);", array($contentType->name, $contentType->type, $contentType->arrangement->id));
+        return $this->getTemplate()->insert("INSERT INTO content_type (name, type, arrangement_id, theme_id) VALUES('%s', '%s', %d, %d);", array($contentType->name, $contentType->type, $contentType->arrangement->id, $contentType->theme->id));
     }
     
     public function updateContentType(PopulatedContentType $contentType)
     {
-        $this->getTemplate()->update("UPDATE content_type SET name= '%s', arrangement_id = %d WHERE id = %d;", array($contentType->name, $contentType->arrangement->id, $contentType->id));
+        $this->getTemplate()->update("UPDATE content_type SET name= '%s', arrangement_id = %d, theme_id = %d WHERE id = %d;", array($contentType->name, $contentType->arrangement->id, $contentType->theme->id, $contentType->id));
     }
     
     public function getContentType($typeId)
@@ -110,6 +110,11 @@ class ContentTypeDao extends AbstractDao
     public function getContentTypeArrangementId($contentTypeId)
     {
         return $this->getTemplate()->queryForInt("SELECT arrangement_id FROM content_type WHERE id = %d;", array($contentTypeId));
+    }
+    
+    public function getContentTypeThemeId($contentTypeId)
+    {
+        return $this->getTemplate()->queryForInt("SELECT theme_id FROM content_type WHERE id = %d;", array($contentTypeId));
     }
 }
 

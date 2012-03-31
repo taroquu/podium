@@ -26,7 +26,7 @@
  * @author Martin Cassidy
  * @todo normalize the theme domains
  */
-class Theme extends picon\ComonDomainBase
+class Theme extends picon\ComonDomainBase implements picon\Equalable
 {
     private $name;
     private $id;
@@ -35,6 +35,19 @@ class Theme extends picon\ComonDomainBase
     {
         $this->name = $name;
         $this->id = $id;
+    }
+    
+    public function equals($object)
+    {
+        if($object==null)
+        {
+            return false;
+        }
+        if($object instanceof Theme)
+        {
+           return $object->id==$this->id; 
+        }
+        return false;
     }
 }
 

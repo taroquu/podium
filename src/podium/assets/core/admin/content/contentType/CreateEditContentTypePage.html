@@ -39,6 +39,7 @@
             <div class="singleFieldBlock"><label>Content Type Name: </label><input type="text" picon:id="name" /></div>
             <div class="singleFieldBlock"><label>Type: </label><select picon:id="type" ></select></div>
             <div class="singleFieldBlock"><label>Arrangement: </label><select picon:id="arrangement" ></select></div>
+            <div class="singleFieldBlock"><label>Theme: </label><select picon:id="theme" ></select></div>
             <hr />
             <div class="borderBox"><ul class="fieldBlock"><li picon:id="attributes" class="newItem"><input type="hidden" picon:id="attributeId" /><span picon:id="attributeName"></span></li></ul></div>
             <div class="borderBox"><ul class="selectedFields" picon:id="attributeList"><li picon:id="attribute"><input type="hidden" picon:id="index" /><span picon:id="attributeName"></span>
@@ -46,7 +47,7 @@
             <a picon:id="delete"><img src="images/delete.png" width="15" height="15"/></a></div>
                     </li></ul></div>
             <hr />
-            <input type="submit" picon:id="save" value="Save" />
+            <a picon:id="cancel">Cancel</a>&nbsp;&nbsp;<input type="submit" picon:id="save" value="Save" />
             </form>
             <div picon:id="mw"></div>
         </picon:extend>

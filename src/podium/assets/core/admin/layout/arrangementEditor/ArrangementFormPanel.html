@@ -9,8 +9,12 @@
         <picon:panel>
             <div picon:id="feedback" />
             <form picon:id="form">
-                <input type="text" picon:id="name" /><br />
-                <select picon:id="layout"/><br />
+                <div class="singleFieldBlock"><label>Arrangement Name: </label>
+                <input type="text" picon:id="name" />
+                </div>
+                <div class="singleFieldBlock"><label>Layout: </label>
+                <select picon:id="layout"/>
+                </div>
                 <input type="submit" picon:id="submit" value="Continue"/>
             </form>
         </picon:panel>
