@@ -51,9 +51,9 @@ class CreateEditUserPage extends AbstractAdminTitlePage
         $this->add($form);
         
         $username = new picon\RequiredTextField('username');
-        $password = new picon\TextField('password');
+        $password = new picon\PasswordField('password');
         $form->add($password);
-        $again = new picon\TextField('retypepassword', new picon\PropertyModel($this, 'retype'));
+        $again = new picon\PasswordField('retypepassword', new picon\PropertyModel($this, 'retype'));
         $password->add(new \picon\IdenticalValueValidator($again));
         $form->add($again);
         $form->add($username);
@@ -81,6 +81,11 @@ class CreateEditUserPage extends AbstractAdminTitlePage
                 $self->setPage(UserPage::getIdentifier());
             }
         }));
+        
+        $form->add(new ButtonLink('cancel', function() use($self)
+        {
+            $self->setPage(UserPage::getIdentifier());
+        }, 'grey'));
     }
     
     protected function getTitle()

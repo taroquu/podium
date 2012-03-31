@@ -50,7 +50,15 @@ class PostService
     
     public function getRecords($start, $count)
     {
-        return $this->postDao->getRecords($start, $count);
+        $posts = $this->postDao->getRecords($start, $count);
+        
+        foreach($posts as $post)
+        {
+            $contentTypeId = $this->contentDao->getContentTypeId($post->contentId);
+            $post->contentType = $this->contentTypeService->getContentType($contentTypeId);
+        }
+        
+        return $posts;
     }
     
     public function getPostSize()

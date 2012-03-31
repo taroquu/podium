@@ -70,6 +70,11 @@ class CreateEditThemePage extends AbstractAdminTitlePage
             $self->getThemeService()->createOrUpdateTheme($self->getTheme());
             $self->setPage(ThemeListPage::getIdentifier());
         }));
+        
+        $form->add(new ButtonLink('cancel', function() use($self)
+        {
+            $self->setPage(ThemeListPage::getIdentifier());
+        }, 'grey'));
     }
     
     protected function getTitle()

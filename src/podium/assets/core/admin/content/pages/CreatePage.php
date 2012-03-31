@@ -60,6 +60,11 @@ class CreatePage extends AbstractAdminTitlePage
                 $self->setPage(PagesListPage::getIdentifier());
             }
         }));
+        
+        $form->add(new ButtonLink('cancel', function() use($self)
+        {
+            $self->setPage(PagesListPage::getIdentifier());
+        }, 'grey'));
     }
     
     public function getPageService()

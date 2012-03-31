@@ -69,7 +69,7 @@ class CreateEditFormPage extends AbstractAdminTitlePage
         {
             $buttoncount = 0;
             $fieldcount = 0;
-            
+            //@todo this logic is a mess
             foreach($self->form->fields as $field)
             {
                 if($field instanceof ButtonField)
@@ -92,6 +92,11 @@ class CreateEditFormPage extends AbstractAdminTitlePage
             $self->formService->createOrUpdate($self->form);
             $self->setPage(FormPage::getIdentifier());
         }));
+        
+        $pageForm->add(new ButtonLink('cancel', function() use($self)
+        {
+            $self->setPage(FormPage::getIdentifier());
+        }, 'grey'));
     }
     
     protected function getTitle()

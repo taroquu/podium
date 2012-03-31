@@ -56,11 +56,17 @@ class PostListPage extends AbstractAdminTitlePage
         
         $columns = array();
         $columns[] = new picon\PropertyColumn('Post Name', 'name');
+        $columns[] = new picon\PropertyColumn('Type', 'contentType.name');
         $columns[] = new PanelColumn('', $editCallback);
         $columns[] = new PanelColumn('', $deleteCallback);
         
         $provider = new PostDataProvider();
         $this->add(new picon\DefaultDataTable('posts', $provider, $columns));
+        
+        $this->add(new ButtonLink('create', function() use ($self)
+        {
+            $self->setPage(CreatePost::getIdentifier());
+        }));
     }
     
     protected function getTitle()

@@ -53,7 +53,7 @@ class UserPage extends AbstractAdminTitlePage
         
         $this->add(new picon\DefaultDataTable('users', $provider, $columns));
         
-        $this->add(new \picon\Link('create', function() use ($self)
+        $this->add(new ButtonLink('create', function() use ($self)
         {
             $self->setPage(new CreateEditUserPage(new User()));
         }));

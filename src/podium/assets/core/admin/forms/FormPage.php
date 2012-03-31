@@ -65,7 +65,7 @@ class FormPage extends AbstractAdminTitlePage
         $this->add(new picon\DefaultDataTable('forms', $provider, $columns));
         
         $self = $this;
-        $this->add(new \picon\Link('create', function() use ($self)
+        $this->add(new ButtonLink('create', function() use ($self)
         {
             $self->setPage(new CreateEditFormPage(new PopulatedForm()));
         }));

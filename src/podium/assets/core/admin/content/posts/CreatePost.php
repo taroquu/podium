@@ -60,6 +60,11 @@ class CreatePost extends AbstractAdminTitlePage
                 $self->setPage(PostListPage::getIdentifier());
             }
         }));
+        
+        $form->add(new ButtonLink('cancel', function() use($self)
+        {
+            $self->setPage(PostListPage::getIdentifier());
+        }, 'grey'));
     }
     
     protected function getTitle()

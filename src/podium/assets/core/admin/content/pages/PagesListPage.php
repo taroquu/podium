@@ -56,6 +56,11 @@ class PagesListPage extends AbstractAdminTitlePage
         {
             $self->getPageService()->updateHierarchy($self->getRequest()->getParameter('page'));
         }, 'callBackURL += \'&\'+$(\'#'.$nestedId.'\').nestedSortable(\'serialize\');'));
+        
+        $this->add(new ButtonLink('create', function() use ($self)
+        {
+            $self->setPage(CreatePage::getIdentifier());
+        }));
     }
 
     public function renderHead(picon\HeaderResponse $headerResponse)
