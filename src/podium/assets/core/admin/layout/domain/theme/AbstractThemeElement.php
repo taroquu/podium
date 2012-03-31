@@ -21,33 +21,13 @@
  * */
 
 /**
- * Description of PodiumFeedbackPanel
+ * Description of AbstractThemeElement
  * 
  * @author Martin Cassidy
  */
-class PodiumFeedbackPanel extends picon\FeedbackPanel
+class AbstractThemeElement extends picon\ComonDomainBase
 {
-    private $style;
-    public function __construct($id)
-    {
-        parent::__construct($id);
-        $this->add(new picon\AttributeModifier('class', new \picon\BasicModel('feedbackMessage')));
-        $this->add(new picon\AttributeModifier('style', new \picon\PropertyModel($this, 'style')));
-    }
-    
-    public function beforeComponentRender()
-    {
-        $messages = picon\FeedbackModel::get()->getModelObject();
-        if(count($messages)==0)
-        {
-            $this->style = 'display:none;';
-        }
-        else
-        {
-            $this->style = '';
-        }
-        parent::beforeComponentRender();
-    }
+
 }
 
 ?>

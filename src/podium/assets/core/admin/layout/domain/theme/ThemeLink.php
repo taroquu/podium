@@ -21,32 +21,21 @@
  * */
 
 /**
- * Description of PodiumFeedbackPanel
+ * Description of ThemeLink
  * 
  * @author Martin Cassidy
  */
-class PodiumFeedbackPanel extends picon\FeedbackPanel
+class ThemeLink extends AbstractThemeElement
 {
-    private $style;
-    public function __construct($id)
-    {
-        parent::__construct($id);
-        $this->add(new picon\AttributeModifier('class', new \picon\BasicModel('feedbackMessage')));
-        $this->add(new picon\AttributeModifier('style', new \picon\PropertyModel($this, 'style')));
-    }
+    private $normal;
+    private $hover;
+    private $active;
     
-    public function beforeComponentRender()
+    public function __construct()
     {
-        $messages = picon\FeedbackModel::get()->getModelObject();
-        if(count($messages)==0)
-        {
-            $this->style = 'display:none;';
-        }
-        else
-        {
-            $this->style = '';
-        }
-        parent::beforeComponentRender();
+        $this->normal = new LinkState();
+        $this->hover = new LinkState();
+        $this->active = new LinkState();
     }
 }
 

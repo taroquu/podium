@@ -21,32 +21,20 @@
  * */
 
 /**
- * Description of PodiumFeedbackPanel
+ * Description of Theme
  * 
  * @author Martin Cassidy
+ * @todo normalize the theme domains
  */
-class PodiumFeedbackPanel extends picon\FeedbackPanel
+class Theme extends picon\ComonDomainBase
 {
-    private $style;
-    public function __construct($id)
-    {
-        parent::__construct($id);
-        $this->add(new picon\AttributeModifier('class', new \picon\BasicModel('feedbackMessage')));
-        $this->add(new picon\AttributeModifier('style', new \picon\PropertyModel($this, 'style')));
-    }
+    private $name;
+    private $id;
     
-    public function beforeComponentRender()
+    public function __construct($name, $id = null)
     {
-        $messages = picon\FeedbackModel::get()->getModelObject();
-        if(count($messages)==0)
-        {
-            $this->style = 'display:none;';
-        }
-        else
-        {
-            $this->style = '';
-        }
-        parent::beforeComponentRender();
+        $this->name = $name;
+        $this->id = $id;
     }
 }
 

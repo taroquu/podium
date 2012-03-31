@@ -21,33 +21,15 @@
  * */
 
 /**
- * Description of PodiumFeedbackPanel
+ * Description of ThemePage
  * 
  * @author Martin Cassidy
  */
-class PodiumFeedbackPanel extends picon\FeedbackPanel
+class ThemePage extends AbstractThemeElement
 {
-    private $style;
-    public function __construct($id)
-    {
-        parent::__construct($id);
-        $this->add(new picon\AttributeModifier('class', new \picon\BasicModel('feedbackMessage')));
-        $this->add(new picon\AttributeModifier('style', new \picon\PropertyModel($this, 'style')));
-    }
-    
-    public function beforeComponentRender()
-    {
-        $messages = picon\FeedbackModel::get()->getModelObject();
-        if(count($messages)==0)
-        {
-            $this->style = 'display:none;';
-        }
-        else
-        {
-            $this->style = '';
-        }
-        parent::beforeComponentRender();
-    }
+    private $background = 'FFFFFF';
+    private $fontsize = 10;
+    private $fontcolour = '000000';
 }
 
 ?>

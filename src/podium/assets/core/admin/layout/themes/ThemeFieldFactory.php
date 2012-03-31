@@ -21,32 +21,34 @@
  * */
 
 /**
- * Description of PodiumFeedbackPanel
+ * Description of ThemeFieldFactory
  * 
  * @author Martin Cassidy
  */
-class PodiumFeedbackPanel extends picon\FeedbackPanel
+class ThemeFieldFactory
 {
-    private $style;
-    public function __construct($id)
+    public static function newFontSize($id)
     {
-        parent::__construct($id);
-        $this->add(new picon\AttributeModifier('class', new \picon\BasicModel('feedbackMessage')));
-        $this->add(new picon\AttributeModifier('style', new \picon\PropertyModel($this, 'style')));
+        $sizes = array(8,9,10,11,12,14,16,18,24,36,48,72);
+        $drop = new picon\DropDown($id, $sizes);
+        $drop->setRequired(true);
+        return $drop;
     }
     
-    public function beforeComponentRender()
+    public static function newFontWeight($id)
     {
-        $messages = picon\FeedbackModel::get()->getModelObject();
-        if(count($messages)==0)
-        {
-            $this->style = 'display:none;';
-        }
-        else
-        {
-            $this->style = '';
-        }
-        parent::beforeComponentRender();
+        $weights = array('normal', 'bold', 'bolder', 'lighter');
+        $field = new \picon\RadioChoice($id, $weights);
+        $field->setRequired(true);
+        return $field;
+    }
+    
+    public static function newTextDecoration($id)
+    {
+        $decorations = array('none', 'underline', 'overline', 'line-through');
+        $field = new \picon\RadioChoice($id, $decorations);
+        $field->setRequired(true);
+        return $field;
     }
 }
 

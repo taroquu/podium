@@ -21,32 +21,30 @@
  * */
 
 /**
- * Description of PodiumFeedbackPanel
+ * Description of ThemeDataProvider
  * 
  * @author Martin Cassidy
  */
-class PodiumFeedbackPanel extends picon\FeedbackPanel
+class ThemeDataProvider extends \picon\AbstractInjectedDataProvider
 {
-    private $style;
-    public function __construct($id)
+    /**
+     * @Resource
+     */
+    private $themeService;
+    
+    public function getRecords($start, $count)
     {
-        parent::__construct($id);
-        $this->add(new picon\AttributeModifier('class', new \picon\BasicModel('feedbackMessage')));
-        $this->add(new picon\AttributeModifier('style', new \picon\PropertyModel($this, 'style')));
+        return $this->themeService->getThemes($start, $count);
     }
     
-    public function beforeComponentRender()
+    public function getSize()
     {
-        $messages = picon\FeedbackModel::get()->getModelObject();
-        if(count($messages)==0)
-        {
-            $this->style = 'display:none;';
-        }
-        else
-        {
-            $this->style = '';
-        }
-        parent::beforeComponentRender();
+        return $this->themeService->getThemeSize();
+    }
+    
+    public function getModel($object)
+    {
+        return new \picon\BasicModel($object);
     }
 }
 

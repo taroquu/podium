@@ -21,32 +21,19 @@
  * */
 
 /**
- * Description of PodiumFeedbackPanel
+ * Description of GeneralPanel
  * 
  * @author Martin Cassidy
  */
-class PodiumFeedbackPanel extends picon\FeedbackPanel
+class ThemeGeneralPanel extends \picon\Panel
 {
-    private $style;
     public function __construct($id)
     {
         parent::__construct($id);
-        $this->add(new picon\AttributeModifier('class', new \picon\BasicModel('feedbackMessage')));
-        $this->add(new picon\AttributeModifier('style', new \picon\PropertyModel($this, 'style')));
-    }
-    
-    public function beforeComponentRender()
-    {
-        $messages = picon\FeedbackModel::get()->getModelObject();
-        if(count($messages)==0)
-        {
-            $this->style = 'display:none;';
-        }
-        else
-        {
-            $this->style = '';
-        }
-        parent::beforeComponentRender();
+        $this->add(new picon\RequiredTextField('name'));
+        $this->add(new ColourPicker('page.background'));
+        $this->add(new ColourPicker('page.fontcolour'));
+        $this->add(ThemeFieldFactory::newFontSize('page.fontsize'));
     }
 }
 

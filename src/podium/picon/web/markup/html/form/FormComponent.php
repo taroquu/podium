@@ -276,7 +276,7 @@ abstract class FormComponent extends LabeledMarkupContainer
         $this->emptyInput = false;
         
         $raw = $this->getRequest()->getPostedParameter(str_replace('[]', '', $this->getName()));
-        
+
         if($raw!=null && !empty($raw) || is_array($raw) && count($raw)>0)
         {
             $this->rawInput = $raw;

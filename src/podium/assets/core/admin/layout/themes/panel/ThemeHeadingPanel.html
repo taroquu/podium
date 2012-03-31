@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:picon="http://picon.webquub.com/dtds/picon-xhtml.dtd"  
+      xml:lang="en"  
+      lang="en"> 
+    <head>
+        <picon:head>
+            <style>
+                .choiceBlock div div {
+                    display:inline;
+                }
+                
+                .choiceBlock input {
+                    vertical-align: top;
+                }
+                
+                .choiceBlock label {
+                    line-height:normal;
+                    min-width:0px;
+                }
+            </style>
+        </picon:head>
+    </head>
+    <body>
+        <picon:panel>
+            <div picon:id="headings" style="display:inline-block;vertical-align: top;margin-left:5px;width:45%;">
+                <h3 picon:id="headingTitle">Heading 1</h3>
+                   <div class="singleFieldBlock"><label>Text Color: </label>
+                <input type="text" picon:id="textColour" />
+                </div>
+                <br />
+                <div class="singleFieldBlock"><label>Text Size: </label>
+                <select picon:id="textSize" />
+                </div>
+                <br />
+                <div class="singleFieldBlock"><label>Weight: </label>
+                    <div class="choiceBlock" picon:id="weight"></div>
+                </div>
+                <br />
+                <div class="singleFieldBlock"><label>Decoration </label>
+                <div class="choiceBlock" picon:id="decoration"></div>
+                </div>
+                <hr />
+            </div>
+        </picon:panel>
+    </body>
+</html>

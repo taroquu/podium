@@ -21,32 +21,22 @@
  * */
 
 /**
- * Description of PodiumFeedbackPanel
+ * Description of PopulatedTheme
  * 
  * @author Martin Cassidy
  */
-class PodiumFeedbackPanel extends picon\FeedbackPanel
+class PopulatedTheme extends Theme
 {
-    private $style;
-    public function __construct($id)
-    {
-        parent::__construct($id);
-        $this->add(new picon\AttributeModifier('class', new \picon\BasicModel('feedbackMessage')));
-        $this->add(new picon\AttributeModifier('style', new \picon\PropertyModel($this, 'style')));
-    }
+    private $page;
+    private $headings;
+    private $links;
     
-    public function beforeComponentRender()
+    public function __construct($name, $id)
     {
-        $messages = picon\FeedbackModel::get()->getModelObject();
-        if(count($messages)==0)
-        {
-            $this->style = 'display:none;';
-        }
-        else
-        {
-            $this->style = '';
-        }
-        parent::beforeComponentRender();
+        parent::__construct($name, $id);
+        $this->headings = array(new HeadingElement(),new HeadingElement(),new HeadingElement(),new HeadingElement(),new HeadingElement(),new HeadingElement());
+        $this->page = new ThemePage();
+        $this->links = new ThemeLink();
     }
 }
 

@@ -60,10 +60,10 @@ abstract class AbstractAdminPage extends WebPage
         
         $layoutMenu = array();
         $layoutMenu[] = new MenuItem('Layouts', LayoutPage::getIdentifier());
-        $layoutMenu[] = new MenuItem('Themes', LayoutPage::getIdentifier());
+        $layoutMenu[] = new MenuItem('Themes', ThemeListPage::getIdentifier());
         $layoutMenu[] = new MenuItem('Create Layout', CreateLayoutPage::getIdentifier());
         $layoutMenu[] = new MenuItem('Create Arrangement', ArrangementEditorPage::getIdentifier());
-        $layoutMenu[] = new MenuItem('Create Theme', LayoutPage::getIdentifier());
+        $layoutMenu[] = new MenuItem('Create Theme', CreateEditThemePage::getIdentifier());
         $menuItems[] = new MenuItem('layout', LayoutPage::getIdentifier(), $layoutMenu);
         
         $formMenu = array();

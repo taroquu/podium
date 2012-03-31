@@ -21,32 +21,25 @@
  * */
 
 /**
- * Description of PodiumFeedbackPanel
+ * Description of HeadingPanel
  * 
  * @author Martin Cassidy
  */
-class PodiumFeedbackPanel extends picon\FeedbackPanel
+class ThemeHeadingPanel extends \picon\Panel
 {
-    private $style;
     public function __construct($id)
     {
         parent::__construct($id);
-        $this->add(new picon\AttributeModifier('class', new \picon\BasicModel('feedbackMessage')));
-        $this->add(new picon\AttributeModifier('style', new \picon\PropertyModel($this, 'style')));
-    }
-    
-    public function beforeComponentRender()
-    {
-        $messages = picon\FeedbackModel::get()->getModelObject();
-        if(count($messages)==0)
+        
+        $this->add(new picon\ListView('headings', function(\picon\ListItem $item)
         {
-            $this->style = 'display:none;';
-        }
-        else
-        {
-            $this->style = '';
-        }
-        parent::beforeComponentRender();
+            $item->setModel(new picon\CompoundPropertyModel($item->getModel()));
+            $item->add(new picon\Label('headingTitle', new \picon\BasicModel('Heading '.($item->getIndex()+1))));
+            $item->add(new ColourPicker('textColour'));
+            $item->add(ThemeFieldFactory::newFontSize('textSize'));
+            $item->add(ThemeFieldFactory::newFontWeight('weight'));
+            $item->add(ThemeFieldFactory::newTextDecoration('decoration'));
+        }));
     }
 }
 

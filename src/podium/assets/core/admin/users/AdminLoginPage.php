@@ -44,7 +44,7 @@ class AdminLoginPage extends \picon\WebPage
         $this->add($form);
         
         $form->add(new picon\RequiredTextField('username', new picon\PropertyModel($this, 'username')));
-        $form->add(new picon\RequiredTextField('password', new picon\PropertyModel($this, 'password')));
+        $form->add(new picon\PasswordField('password', new picon\PropertyModel($this, 'password')));
         
         $self = $this;
         $form->add(new \picon\Button('login', function() use ($self)
