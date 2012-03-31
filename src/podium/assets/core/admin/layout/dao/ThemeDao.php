@@ -108,9 +108,9 @@ class ThemeDao extends AbstractDao
         return $this->getTemplate()->update("DELETE FROM theme_attributes WHERE theme_element_id = %d;", array($elementId));
     }
     
-    public function deleteElements($themeId)
+    public function deleteElement($elementId)
     {
-        return $this->getTemplate()->update("DELETE FROM theme_elements WHERE theme_id = %d;", array($themeId));
+        return $this->getTemplate()->update("DELETE FROM theme_elements WHERE id = %d;", array($elementId));
     }
 }
 

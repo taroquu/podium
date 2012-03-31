@@ -228,6 +228,21 @@ class PageService
 
         }
     }
+    
+    public function getThemeForPage($pageId)
+    {
+        $page = $this->getPage($pageId);
+        
+        if($page->theme==null)
+        {
+            return $page->contentType->theme;
+        }
+        else
+        {
+            return $page->theme;
+
+        }
+    }
 }
 
 ?>

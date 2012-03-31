@@ -74,6 +74,9 @@ class FrontPage extends WebPage
         {
             $view->add(LayoutFactory::newPageLayoutBlockPanel($view->getNextChildId(), $block, $page));
         }
+        
+        $theme = $this->pageService->getThemeForPage($pageId);
+        $this->add(new ThemeStyle('style', $theme));
     }
     
     public function renderHead(picon\HeaderResponse $headerResponse)

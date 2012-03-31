@@ -1,0 +1,68 @@
+body {
+    background-color: value(page.background);
+    color: value(page.fontcolour);
+    font-size:value(page.fontsize);
+}
+
+a {
+    color: value(links.normal.fontcolour);
+    font-size:value(links.normal.fontsize);
+    text-decoration: value(links.normal.decoration);
+    font-weight: value(links.normal.weight);
+}
+
+a:hover {
+    color: value(links.hover.fontcolour);
+    font-size:value(links.hover.fontsize);
+    text-decoration: value(links.hover.decoration);
+    font-weight: value(links.hover.weight);
+}
+
+a:active {
+    color: value(links.active.fontcolour);
+    font-size:value(links.active.fontsize);
+    text-decoration: value(links.active.decoration);
+    font-weight: value(links.active.weight);
+}
+
+h1 {
+    color: value(headings[0].textColour);
+    font-size:value(headings[0]textSize);
+    text-decoration: value(headings[0]decoration);
+    font-weight: value(headings[0].weight);
+}
+
+h2 {
+    color: value(headings[1].textColour);
+    font-size:value(headings[1]textSize);
+    text-decoration: value(headings[1]decoration);
+    font-weight: value(headings[1].weight);
+}
+
+h3 {
+    color: value(headings[2].textColour);
+    font-size:value(headings[2]textSize);
+    text-decoration: value(headings[2]decoration);
+    font-weight: value(headings[2].weight);
+}
+
+h4 {
+    color: value(headings[3].textColour);
+    font-size:value(headings[3]textSize);
+    text-decoration: value(headings[3]decoration);
+    font-weight: value(headings[3].weight);
+}
+
+h5 {
+    color: value(headings[4].textColour);
+    font-size:value(headings[4]textSize);
+    text-decoration: value(headings[4]decoration);
+    font-weight: value(headings[4].weight);
+}
+
+h6 {
+    color: value(headings[5].textColour);
+    font-size:value(headings[5]textSize);
+    text-decoration: value(headings[5]decoration);
+    font-weight: value(headings[5].weight);
+}

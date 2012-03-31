@@ -52,12 +52,7 @@ class ThemeService
         else
         {
             $this->themeDao->updateTheme($theme->name, $theme->id);
-            $elements = $this->themeDao->getElements($theme->id);
-            foreach($elements as $element)
-            {
-                $this->themeDao->deleteAttributes($element['id']);
-            }
-            $this->themeDao->deleteElements($theme->id);
+            $this->deleteElements($theme->id);
         }
         
         $reflection = new ReflectionClass($theme);
@@ -163,13 +158,19 @@ class ThemeService
         }
     }
     
-    public function deleteTheme(Theme $theme)
+    private function deleteElements($themeId, $parentId = null)
     {
-        $elements = $this->themeDao->getElements($theme->id);
+        $elements = $this->themeDao->getElements($themeId, $parentId);
         foreach($elements as $element)
         {
             $this->themeDao->deleteAttributes($element['id']);
+            $this->deleteElements($themeId, $element['id']);
+            $this->themeDao->deleteElement($element['id']);
         }
+    }
+    
+    public function deleteTheme(Theme $theme)
+    {
         $this->themeDao->deleteElements($theme->id);
         $this->themeDao->delete($theme->id);
     }
