@@ -36,7 +36,7 @@ class FormPage extends AbstractAdminTitlePage
     public function __construct()
     {
         parent::__construct();
-        
+        $this->add(new PodiumFeedbackPanel('feedback'));
         $self = $this;
         $editCallback = function($id, $formModel) use ($self)
         {
@@ -51,7 +51,14 @@ class FormPage extends AbstractAdminTitlePage
         {
             return new LinkPanel($id, 'Delete', function() use ($self, $formModel)
             {
-                $self->getFormService()->deleteForm($formModel->getModelObject());
+                $form = $formModel->getModelObject();
+                if($self->getFormService()->inUse($form->id))
+                {
+                    $self->error($form->name.' cannot be deleted because it is in use');
+                    return;
+                }
+                $self->getFormService()->deleteForm($form);
+                $self->success($form->name.' deleted successfully');
             });
         };
         

@@ -171,7 +171,7 @@ class ThemeService
     
     public function deleteTheme(Theme $theme)
     {
-        $this->themeDao->deleteElements($theme->id);
+        $this->deleteElements($theme->id);
         $this->themeDao->delete($theme->id);
     }
     

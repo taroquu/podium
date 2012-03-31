@@ -35,6 +35,7 @@ class ThemeListPage extends AbstractAdminTitlePage
     public function __construct()
     {
         parent::__construct();
+        $this->add(new PodiumFeedbackPanel('feedback'));
         $self = $this;
         $editCallback = function($id, $themeModel) use ($self)
         {
@@ -49,7 +50,15 @@ class ThemeListPage extends AbstractAdminTitlePage
         {
             return new LinkPanel($id, 'Delete', function() use ($self, $themeModel)
             {
-                $self->getThemeService()->deleteTheme($themeModel->getModelObject());
+                $theme = $themeModel->getModelObject();
+                
+                if($self->getThemeService()->inUse($theme->id))
+                {
+                    $self->error($theme->name.' cannot be deleted because it is in use');
+                    return;
+                }
+                $self->getThemeService()->deleteTheme($theme);
+                $self->success($theme->name.' deleted successfully');
             });
         };
         

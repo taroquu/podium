@@ -35,7 +35,7 @@ class ContentTypeListPage extends AbstractAdminTitlePage
     public function __construct()
     {
         parent::__construct();
-        $columns = array();
+        $this->add(new PodiumFeedbackPanel('feedback'));
         
         $self = $this;
         $editCallback = function($id, $contentTypeModel) use ($self)
@@ -51,7 +51,14 @@ class ContentTypeListPage extends AbstractAdminTitlePage
         {
             return new LinkPanel($id, 'Delete', function() use ($self, $contentTypeModel)
             {
-                $self->getContentTypeService()->deleteContentType($contentTypeModel->getModelObject()->id);
+                $contentType = $contentTypeModel->getModelObject();
+                if($self->getContentTypeService()->inUse($contentType->id))
+                {
+                    $self->error($contentType->name.' cannot be deleted because it is in use');
+                    return;
+                }
+                $self->getContentTypeService()->deleteContentType($contentType->id);
+                $self->success($contentType->name.' deleted successfully');
             });
         };
         
@@ -60,6 +67,7 @@ class ContentTypeListPage extends AbstractAdminTitlePage
             return new InUsePanel($id, $self->getContentTypeService()->inUse($contentTypeModel->getModelObject()->id));
         };
         
+        $columns = array();
         $columns[] = new \picon\PropertyColumn('Name', 'name');
         $columns[] = new \picon\PropertyColumn('Type', 'type');
         $columns[] = new PanelColumn('In Use', $inUseCallback);

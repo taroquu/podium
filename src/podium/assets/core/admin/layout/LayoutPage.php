@@ -36,6 +36,8 @@ class LayoutPage extends AbstractAdminTitlePage
     public function __construct()
     {
         parent::__construct();
+        $this->add(new PodiumFeedbackPanel('feedback'));
+        
         $self = $this;
         $panelCallback = function($id, $layoutModel) use ($self)
         {
@@ -57,7 +59,14 @@ class LayoutPage extends AbstractAdminTitlePage
         {
             return new LinkPanel($id, 'Delete', function() use ($self, $layoutModel)
             {
-                $self->getLayoutService()->delete($layoutModel->getModelObject());
+                $layout = $layoutModel->getModelObject();
+                if($self->getLayoutService()->inUse($$layout->id))
+                {
+                    $self->error($layout->name.' cannot be deleted because it is in use');
+                    return;
+                }
+                $self->getLayoutService()->delete($layout);
+                $self->success($layout->name.' deleted successfully');
             });
         };
         

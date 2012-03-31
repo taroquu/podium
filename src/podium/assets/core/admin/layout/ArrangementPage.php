@@ -37,6 +37,7 @@ class ArrangementPage extends AbstractAdminTitlePage
     public function __construct(Layout $layout)
     {
         parent::__construct();
+        $this->add(new PodiumFeedbackPanel('feedback'));
         
         $self = $this;
         $editCallback = function($id, $arrangementModel) use ($self)
@@ -54,7 +55,14 @@ class ArrangementPage extends AbstractAdminTitlePage
             return new LinkPanel($id, 'Delete', function() use ($self, $arrangementModel, $layout)
             {
                 $arrangement = $arrangementModel->getModelObject();
+                
+                if($self->arrangementService->inUse($arrangement->id))
+                {
+                    $self->error($arrangement->name.' cannot be deleted because it is in use');
+                    return;
+                }
                 $self->arrangementService->deleteArrangement($arrangement);
+                $self->success($arrangement->name.' deleted successfully');
                 $self->setPage(new ArrangementPage($layout));
             });
         };

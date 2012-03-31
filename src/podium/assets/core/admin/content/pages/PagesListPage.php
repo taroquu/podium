@@ -35,6 +35,7 @@ class PagesListPage extends AbstractAdminTitlePage
     public function __construct()
     {
         parent::__construct();
+        $this->add(new PodiumFeedbackPanel('feedback'));
         $pages = $this->pageService->getPages();
         $homeId = $this->pageService->getHomePageId();
         $pagePanel = new PageSetPanel('pages', $pages, $homeId);

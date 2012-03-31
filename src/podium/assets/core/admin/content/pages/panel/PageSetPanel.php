@@ -52,9 +52,15 @@ class PageSetPanel extends \picon\Panel
                 $self->setPage(new EditPage($self->getPageService()->getPage($page->id)));
             }));
             
-            $item->add(new \picon\Link('delete', function() use ($self, $page)
+            $item->add(new \picon\Link('delete', function() use ($self, $page, $homeId)
             {
+                if($homeId==$page->id)
+                {
+                    $self->error($page->name.' cannot be deleted because it is the homepage');
+                    return;
+                }
                 $self->getPageService()->deletePage($page);
+                $self->success($page->name.' deleted successfully');
                 $self->setPage(PagesListPage::getIdentifier());
             }));
             
