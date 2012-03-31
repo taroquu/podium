@@ -66,6 +66,13 @@ class PageSetPanel extends \picon\Panel
             
             $item->add(new PageSetPanel('nested', $page->nestedPages, $homeId));
             
+            $homePageSetLink = new picon\Link('homepage', function() use ($self, $page)
+            {
+                $self->getPageService()->setAsHomePage($page->id);
+                $self->setPage(PagesListPage::getIdentifier());
+            });
+            $homePageSetLink->setVisible($homeId!=$page->id);
+            $item->add($homePageSetLink);
             $homeImage = new \picon\MarkupContainer('home');
             $homeImage->setVisible($homeId==$page->id);
             $item->add($homeImage);

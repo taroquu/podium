@@ -257,6 +257,11 @@ class PageService
 
         }
     }
+    
+    public function setAsHomePage($pageId)
+    {
+        $this->pageDao->setAsHomePage($pageId);
+    }
 }
 
 ?>

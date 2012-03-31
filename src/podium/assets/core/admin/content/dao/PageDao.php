@@ -113,6 +113,11 @@ class PageDao extends AbstractDao
     {
         return $this->getTemplate()->queryForInt("SELECT theme_id FROM page WHERE id = %d;", array($pageId));
     }
+    
+    public function setAsHomePage($pageId)
+    {
+        $this->getTemplate()->update('UPDATE page SET homepage = CASE id WHEN %d THEN 1 ELSE 0 END', array($pageId));
+    }
 }
 
 ?>
