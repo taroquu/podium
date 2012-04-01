@@ -26,7 +26,7 @@
  * @author Martin Cassidy
  * @Service
  */
-class PostService
+class PostService implements IPostService
 {
     /**
      * @Resource
@@ -48,7 +48,7 @@ class PostService
      */
     private $widgetService;
     
-    public function getRecords($start, $count)
+    public function getPosts($start, $count)
     {
         $posts = $this->postDao->getRecords($start, $count);
         

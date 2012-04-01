@@ -26,13 +26,13 @@
  * @author Martin Cassidy
  * @Service
  */
-class WidgetService
+class WidgetService implements IWidgetService
 {
     /**
      * @Resource
      */
     private $widgetDao;
-    
+
     public function getWidgetCategories()
     {
         $categories = $this->widgetDao->getWidgetCategories();
@@ -44,12 +44,12 @@ class WidgetService
         
         return $categories;
     }
-    
+
     public function getWidget($widgetId)
     {
         return $this->widgetDao->getWidgetItem($widgetId);
     }
-    
+
     public function createOrUpdateWidgetConfig(ConfigurableWidgetItem $item)
     {
         $config = $item->config;
@@ -70,12 +70,12 @@ class WidgetService
         $this->widgetDao->createWidgetConfigDetail($item->widgetTargetTable, $config->widgetConfigId, $details);
         return $config;
     }
-    
+
     public function getWidgetConfig(WidgetItem $item, $configId)
     {
         return $this->widgetDao->getWidgetConfig($item, $item->widgetTargetTable, $configId);
     }
-    
+
     public function deleteWidgetConfig(WidgetItem $item, $configId)
     {
         $this->widgetDao->clearWidgetConfigDetail($configId, $item->widgetTargetTable);

@@ -26,7 +26,7 @@
  * @author Martin Cassidy
  * @Service
  */
-class ContentTypeService
+class ContentTypeService implements IContentTypeService
 {
     /**
      * @Resource

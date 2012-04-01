@@ -26,23 +26,23 @@
  * @author Martin Cassidy
  * @Service
  */
-class ThemeService
+class ThemeService implements IThemeService
 {
     /**
      * @Resource
      */
     private $themeDao;
-    
+
     public function getThemes($start, $count)
     {
         return $this->themeDao->getThemes($start, $count);
     }
-    
+
     public function getThemeSize()
     {
         return $this->themeDao->getThemeSize();
     }
-    
+
     public function createOrUpdateTheme(PopulatedTheme $theme)
     {
         if($theme->id==null)
@@ -107,7 +107,7 @@ class ThemeService
             }
         }
     }
-    
+
     public function getTheme($themeId)
     {
         $theme = $this->themeDao->getTheme($themeId);
@@ -168,13 +168,13 @@ class ThemeService
             $this->themeDao->deleteElement($element['id']);
         }
     }
-    
+
     public function deleteTheme(Theme $theme)
     {
         $this->deleteElements($theme->id);
         $this->themeDao->delete($theme->id);
     }
-    
+
     public function inUse($themeId)
     {
         return $this->themeDao->getThemeUseageCount($themeId)>0;

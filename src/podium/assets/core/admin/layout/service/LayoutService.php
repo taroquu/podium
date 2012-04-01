@@ -26,7 +26,7 @@
  * @author Martin Cassidy
  * @Service
  */
-class LayoutService
+class LayoutService implements ILayoutService
 {
     /**
      * @Resource
@@ -37,7 +37,7 @@ class LayoutService
      * @Resource
      */
     private $arrangementService;
-    
+
     public function getLayouts($start, $count)
     {
         $layouts = $this->layoutDao->getLayouts($start, $count);
@@ -48,12 +48,12 @@ class LayoutService
         }
         return $layouts;
     }
-    
+
     public function getLayoutsSize()
     {
         return $this->layoutDao->getLayoutSize();
     }
-    
+
     public function getLayout($id)
     {
         $layout = $this->layoutDao->getLayout($id);
@@ -95,7 +95,7 @@ class LayoutService
             }
         }
     }
-    
+
     public function createOrUpdateLayout(Layout $layout)
     {
         $id = null;
@@ -155,7 +155,7 @@ class LayoutService
             $this->layoutDao->addBlockAttribute($attribute, $blockId);
         }
     }
-    
+
     public function delete(Laout $layout)
     {
         $arrangements = $this->arrangementService->getArrangementsForLayout($layout, 0, $this->arrangementService->getArrangementCount($layout->id));
@@ -177,7 +177,7 @@ class LayoutService
         $this->layoutDao->delete($layout->id);
     }
     
-    public function deleteBlock($blockId)
+    private function deleteBlock($blockId)
     {
         $this->layoutDao->deleteBlockAttributes($blockId);
         $this->layoutDao->deleteBlock($blockId);
@@ -193,7 +193,7 @@ class LayoutService
         }
         return $arrangementGroup;
     }
-    
+
     public function inUse($layoutId)
     {
         return $this->layoutDao->getLayoutUseageCount($layoutId)>0;

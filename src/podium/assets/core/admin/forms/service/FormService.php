@@ -26,14 +26,14 @@
  * @author Martin Cassidy
  * @Service
  */
-class FormService
+class FormService implements IFormService
 {
     /**
      * @Resource
      */
     private $formDao;
     
-    public function getRecords($start, $count)
+    public function getForms($start, $count)
     {
         return $this->formDao->getRecords($start, $count);
     }
@@ -119,7 +119,7 @@ class FormService
         $this->formDao->deleteValidatorOptions($validator->id);
         $this->formDao->deleteValidator($validator->id);
     }
-    
+
     public function getFields($formId)
     {
         $fields = $this->formDao->getFormFields($formId);
@@ -138,7 +138,7 @@ class FormService
         }
         return $fields;
     }
-    
+
     public function deleteForm(Form $form)
     {
         $fields = $this->getFields($form->id);
@@ -149,7 +149,7 @@ class FormService
         }
         $this->formDao->deleteForm($form->id);
     }
-    
+
     public function createValidator($fieldId, AbstractValidator $validator)
     {
         $validatorId = $this->formDao->addValidator($fieldId, $validator);
@@ -210,7 +210,7 @@ class FormService
         $this->formDao->deleteOptions($field->id);
         $this->formDao->deleteField($field->id);
     }
-    
+
     public function inUse($formId)
     {
         return $this->formDao->getFormUseageCount($formId)>0;

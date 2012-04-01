@@ -38,7 +38,7 @@ class FormWidgetConfigPanel extends AbstractWidgetSetupPanel
     public function __construct($id, $model)
     {
         parent::__construct($id, $model);
-        $this->forms = $this->formService->getRecords(0, $this->formService->getSize());
+        $this->forms = $this->formService->getForms(0, $this->formService->getSize());
         
         $drop = new picon\DropDown('form', $this->forms, new \picon\ChoiceRenderer(function($choice, $index)
         {

@@ -34,7 +34,7 @@ class PostDataProvider extends \picon\AbstractInjectedDataProvider
     
     public function getRecords($start, $count)
     {
-        return $this->postService->getRecords($start, $count);
+        return $this->postService->getPosts($start, $count);
     }
     
     public function getSize()

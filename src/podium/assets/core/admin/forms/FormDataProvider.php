@@ -34,7 +34,7 @@ class FormDataProvider extends \picon\AbstractInjectedDataProvider
     
     public function getRecords($start, $count)
     {
-        return $this->formService->getRecords($start, $count);
+        return $this->formService->getForms($start, $count);
     }
     
     public function getSize()

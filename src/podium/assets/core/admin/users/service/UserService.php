@@ -26,7 +26,7 @@
  * @author Martin Cassidy
  * @Service
  */
-class UserService
+class UserService implements IUserService
 {
     /**
      * @Resource

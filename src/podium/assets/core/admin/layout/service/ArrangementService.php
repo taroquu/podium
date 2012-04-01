@@ -26,7 +26,7 @@
  * @author Martin Cassidy
  * @Service
  */
-class ArrangementService
+class ArrangementService implements IArrangementService
 {
     /**
      * @Resource
@@ -42,17 +42,17 @@ class ArrangementService
      * @Resource
      */
     private $widgetService;
-    
+
     public function getArrangementsForLayout(Layout $layout, $start, $count)
     {
         return $this->arrangementDao->getArrangementsForLayout($layout, $start, $count);
     }
-    
+
     public function getArrangementCount($layoutId)
     {
         return $this->arrangementDao->getArrangementCount($layoutId);
     }
-    
+
     public function getArrangement($arrangementId)
     {
         $arrangement = $this->arrangementDao->getArrangement($arrangementId);
@@ -159,7 +159,7 @@ class ArrangementService
             
         }
     }
-    
+
     public function prePopulate(Arrangement $arrangement)
     {
         $layout = $arrangement->layout;
@@ -184,7 +184,7 @@ class ArrangementService
         $arrangement->layout = $playout;
         return $arrangement;
     }
-    
+
     public function deleteArrangement(Arrangement $arrangement)
     {
         $currentWidgets = array();

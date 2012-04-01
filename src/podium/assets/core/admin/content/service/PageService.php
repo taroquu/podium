@@ -26,7 +26,7 @@
  * @author Martin Cassidy
  * @Service
  */
-class PageService
+class PageService implements IPageService
 {
     /**
      * @Resource
