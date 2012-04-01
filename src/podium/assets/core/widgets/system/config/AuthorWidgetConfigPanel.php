@@ -31,50 +31,44 @@ class AuthorWidgetConfigPanel extends AbstractWidgetSetupPanel
      * @Resource
      */
     private $userService;
-    private $chosenUser;
+    
     private $users;
     
     public function __construct($id, Model $model)
     {
         parent::__construct($id, $model);
-        $this->users = $this->userService->getUsers(0, $this->userService->getUserSize());
+        $users = $this->userService->getUsers(0, $this->userService->getUserSize());
         
-        $drop = new picon\DropDown('author', $this->users, new \picon\ChoiceRenderer(function($choice, $index)
+        $ids = array();
+        $fullusers = array();
+        foreach($users as $user)
         {
-            return $choice->id;
-        }, function($choice, $index)
+            $fullusers[$user->id] = $user;
+            $ids[] = $user->id;
+        }
+        
+        $drop = new picon\DropDown('user_id', $ids, new \picon\ChoiceRenderer(function($choice, $index)
         {
-            return $choice->username;
-        }), new \picon\PropertyModel($this, 'chosenUser'));
+            return $choice;
+        }, function($choice, $index) use($fullusers)
+        {
+            return $fullusers[$choice]->username;
+        }));
         
         $this->add($drop);
         $self = $this;
-        $drop->add(new picon\AjaxFormComponentUpdateBehavior('onChange', function (picon\AjaxRequestTarget $target) use ($self)
-        {
-            $self->setUser();
-        }));
     }
     
     protected function onInitialize()
     {
         parent::onInitialize();
-        foreach($this->users as $user)
+
+        if($this->getModelObject()->user_id==null)
         {
-            if($user->id==$this->getModelObject()->user_id)
-            {
-                $this->chosenUser = $user;
-            }
-        }
-        if($this->chosenUser==null)
-        {
-            $this->chosenUser = $_SESSION['user'];
+            $this->getModelObject()->user_id = $_SESSION['user']->id;
         }
     }
     
-    public function setUser()
-    {
-        $this->getModelObject()->user_id = $this->chosenUser->id;
-    }
 }
 
 ?>

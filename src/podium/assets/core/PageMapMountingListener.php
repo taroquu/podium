@@ -45,24 +45,10 @@ class PageMapMountingListener implements \picon\PageMapInitializationListener
         }
         
         $pages = $this->pageService->getPages();
-        $this->mountPages($pages, $map);
+        PageMountingHelper::mountPages($pages, $map);
     }
     
-    private function mountPages($pages, picon\PageMap $map, $parent = '')
-    {
-        foreach($pages as $page)
-        {
-            $path = $parent.$page->name;
-            if(!$map->isMounted($path))
-            {
-                $map->mount($path, FrontPage::getIdentifier());
-            }
-            if(count($page->nestedPages)>0)
-            {
-                $this->mountPages($page->nestedPages, $map, $path.'/');
-            }
-        }
-    }
+
 }
 
 ?>

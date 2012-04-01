@@ -166,6 +166,8 @@ class PageService implements IPageService
                 $this->contentDao->createContentEntry($page->contentId, $attribute->attributeId, $config->widgetConfigId);
             }
         }
+        $map = picon\PageMap::get();
+        PageMountingHelper::updateMount($this->getPages(), $map);
     }
     
     public function preparePopulatedPage(PopulatedPage $page)
@@ -197,6 +199,8 @@ class PageService implements IPageService
         {
             $this->widgetService->deleteWidgetConfig($attribute->widget, $configs[$attribute->attributeId]);
         }
+        $map = picon\PageMap::get();
+        PageMountingHelper::updateMount($this->getPages(), $map);
     }
     
     public function getHomePageId()
