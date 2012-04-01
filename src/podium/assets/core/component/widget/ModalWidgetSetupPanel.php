@@ -42,8 +42,9 @@ class ModalWidgetSetupPanel extends \picon\Panel
         $this->config = $model->getModelObject();
         $this->form = new \picon\Form('form', new picon\CompoundPropertyModel($this, 'config'));
         $this->add($this->form);
-        $this->form->add(new \picon\AjaxButton('save', function(\picon\AjaxRequestTarget $target) use ($mw, $updateComponent)
+        $this->form->add(new \picon\AjaxButton('save', function(\picon\AjaxRequestTarget $target) use ($mw, $updateComponent, $panel)
         {
+            $panel->preProcess();
             $mw->hide($target);
             $target->add($updateComponent);
         },

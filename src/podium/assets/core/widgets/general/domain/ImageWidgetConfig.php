@@ -27,7 +27,9 @@
  */
 class ImageWidgetConfig extends WidgetConfig
 {
-    
+    private $path;
+    private $height = 0;
+    private $width = 0;
 }
 
 ?>

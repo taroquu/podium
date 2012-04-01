@@ -27,7 +27,14 @@
  */
 class ImageWidget extends Widget
 {
-    
+    public function __construct($id, WidgetItem $item, $page = null)
+    {
+        parent::__construct($id, $item, $page);
+        $image = new \picon\MarkupContainer('images');
+        $image->add(new \picon\AttributeModifier('src', new \picon\BasicModel($item->config->path)));
+        $image->add(new \picon\AttributeModifier('style', new \picon\BasicModel(sprintf('height:%dpx;width:%dpx;', $item->config->height, $item->config->width))));
+        $this->add($image);
+    }
 }
 
 ?>

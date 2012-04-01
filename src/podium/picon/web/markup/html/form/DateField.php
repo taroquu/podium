@@ -20,16 +20,19 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
+namespace picon;
+
 /**
- * Panel abstraction for widget setup
+ * Text field with a JQuery UI date picker attached
  * 
  * @author Martin Cassidy
  */
-abstract class AbstractWidgetSetupPanel extends picon\Panel
+class DateField extends TextField
 {
-    public function preProcess()
+    public function __construct($id, Model $model = null)
     {
-        //nothing by default
+        parent::__construct($id, $model, Component::TYPE_STRING);
+        $this->add(new DatePickerBehaviour());
     }
 }
 

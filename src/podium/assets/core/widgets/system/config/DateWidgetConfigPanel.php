@@ -21,15 +21,16 @@
  * */
 
 /**
- * Panel abstraction for widget setup
+ * Config panel for the date widget
  * 
  * @author Martin Cassidy
  */
-abstract class AbstractWidgetSetupPanel extends picon\Panel
+class DateWidgetConfigPanel extends AbstractWidgetSetupPanel
 {
-    public function preProcess()
+    public function __construct($id, Model $model = null)
     {
-        //nothing by default
+        parent::__construct($id, $model);
+        $this->add(new picon\DateField('date'));
     }
 }
 

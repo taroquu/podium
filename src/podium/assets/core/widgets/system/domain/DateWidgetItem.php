@@ -21,16 +21,13 @@
  * */
 
 /**
- * Panel abstraction for widget setup
+ * Domain object for the date widget
  * 
  * @author Martin Cassidy
  */
-abstract class AbstractWidgetSetupPanel extends picon\Panel
+class DateWidgetItem extends WidgetConfig
 {
-    public function preProcess()
-    {
-        //nothing by default
-    }
+    private $date;
 }
 
 ?>

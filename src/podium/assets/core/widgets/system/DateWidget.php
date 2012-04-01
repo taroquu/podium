@@ -21,15 +21,16 @@
  * */
 
 /**
- * Panel abstraction for widget setup
+ * Widget to show a date
  * 
  * @author Martin Cassidy
  */
-abstract class AbstractWidgetSetupPanel extends picon\Panel
+class DateWidget extends Widget
 {
-    public function preProcess()
+    public function __construct($id, WidgetItem $item, $page = null)
     {
-        //nothing by default
+        parent::__construct($id, $item, $page);
+        $this->add(new \picon\Label('date', new \picon\BasicModel($item->config->date)));
     }
 }
 

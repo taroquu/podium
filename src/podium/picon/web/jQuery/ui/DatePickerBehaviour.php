@@ -20,16 +20,18 @@
  * along with Podium CMS.  If not, see <http://www.gnu.org/licenses/>.
  * */
 
+namespace picon;
+
 /**
- * Panel abstraction for widget setup
+ * Behavior to add on jQuery UI date picker functionality
  * 
  * @author Martin Cassidy
  */
-abstract class AbstractWidgetSetupPanel extends picon\Panel
+class DatePickerBehaviour extends DefaultJQueryUIBehaviour
 {
-    public function preProcess()
+    public function __construct()
     {
-        //nothing by default
+        parent::__construct('datepicker');
     }
 }
 

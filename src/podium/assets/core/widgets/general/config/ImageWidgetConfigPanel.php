@@ -27,7 +27,23 @@
  */
 class ImageWidgetConfigPanel extends AbstractWidgetSetupPanel
 {
+    private $fileModel;
     
+    public function __construct($id, Model $model = null)
+    {
+        parent::__construct($id, $model);
+        $this->fileModel = new \picon\FileModel();
+        $this->add(new \picon\FileUploadField('image', $this->fileModel));
+        $this->add(new picon\RequiredTextField('height'));
+        $this->add(new picon\RequiredTextField('width'));
+    }
+    
+    public function preProcess()
+    {
+        parent::preProcess();
+        move_uploaded_file($this->fileModel->getTempName(), 'media/images/'.$this->fileModel->getName());
+        $this->getModelObject()->path = 'media/images/'.$this->fileModel->getName();
+    }
 }
 
 ?>
