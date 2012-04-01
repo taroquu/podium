@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 31, 2012 at 05:32 PM
+-- Generation Time: Apr 01, 2012 at 02:01 PM
 -- Server version: 5.5.15
 -- PHP Version: 5.3.8
 
@@ -26,14 +26,15 @@ CREATE TABLE IF NOT EXISTS `arrangement` (
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `layout_id` (`layout_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `arrangement`
 --
 
 INSERT INTO `arrangement` (`id`, `layout_id`, `name`) VALUES
-(1, 21, 'test a 1');
+(1, 21, 'test a 1'),
+(3, 21, 'tgtgt');
 
 -- --------------------------------------------------------
 
@@ -53,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `arrangement_elements` (
   KEY `block_id` (`block_id`),
   KEY `arrangement_id` (`arrangement_id`),
   KEY `widget_id_2` (`widget_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=34 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=39 ;
 
 --
 -- Dumping data for table `arrangement_elements`
@@ -61,7 +62,8 @@ CREATE TABLE IF NOT EXISTS `arrangement_elements` (
 
 INSERT INTO `arrangement_elements` (`id`, `arrangement_id`, `block_id`, `index`, `widget_id`, `widget_config_id`) VALUES
 (32, 1, 16, 0, 3, 26),
-(33, 1, 17, 0, 8, 47);
+(34, 1, 17, 0, 8, 48),
+(38, 3, 17, 0, 8, 62);
 
 -- --------------------------------------------------------
 
@@ -75,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `content` (
   `content_type_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `content_type_id` (`content_type_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=45 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=49 ;
 
 --
 -- Dumping data for table `content`
@@ -88,8 +90,7 @@ INSERT INTO `content` (`id`, `name`, `content_type_id`) VALUES
 (40, 'test create 2dddd', 2),
 (41, 'test with arrangmenet', 1),
 (42, 'test with arrangmenet', 1),
-(43, 'test with theme', 5),
-(44, 'test with theme', 5);
+(48, 'test config delete', 2);
 
 -- --------------------------------------------------------
 
@@ -103,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `content_attributes` (
   `widget_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `widget_id` (`widget_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `content_attributes`
@@ -111,7 +112,8 @@ CREATE TABLE IF NOT EXISTS `content_attributes` (
 
 INSERT INTO `content_attributes` (`id`, `name`, `widget_id`) VALUES
 (1, 'heading', 3),
-(2, 'text block', 4);
+(2, 'text block', 4),
+(3, 'Author', 9);
 
 -- --------------------------------------------------------
 
@@ -128,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `content_entries` (
   UNIQUE KEY `widget_config_id` (`widget_config_id`),
   KEY `content_id` (`content_id`),
   KEY `content_type_attribute_id` (`content_type_attribute_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
 --
 -- Dumping data for table `content_entries`
@@ -142,7 +144,8 @@ INSERT INTO `content_entries` (`id`, `content_id`, `content_type_attribute_id`, 
 (16, 40, 9, 42),
 (17, 42, 8, 43),
 (18, 42, 3, 44),
-(19, 42, 7, 45);
+(19, 42, 7, 45),
+(20, 37, 10, 63);
 
 -- --------------------------------------------------------
 
@@ -159,7 +162,7 @@ CREATE TABLE IF NOT EXISTS `content_type` (
   PRIMARY KEY (`id`),
   KEY `arrangement_id` (`arrangement_id`),
   KEY `theme_id` (`theme_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `content_type`
@@ -169,8 +172,7 @@ INSERT INTO `content_type` (`id`, `name`, `type`, `arrangement_id`, `theme_id`) 
 (1, 'web pageddd', 'page', 1, 2),
 (2, 'blog post', 'post', 1, 2),
 (3, 'test with arrangement', 'post', 1, 2),
-(4, 'testtest', 'page', 1, 6),
-(5, 'test with theme', 'page', 1, 5);
+(4, 'testtest', 'page', 1, 6);
 
 -- --------------------------------------------------------
 
@@ -187,7 +189,7 @@ CREATE TABLE IF NOT EXISTS `content_type_attributes` (
   PRIMARY KEY (`id`),
   KEY `content_type_id` (`content_type_id`),
   KEY `attribute_id` (`attribute_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `content_type_attributes`
@@ -195,9 +197,10 @@ CREATE TABLE IF NOT EXISTS `content_type_attributes` (
 
 INSERT INTO `content_type_attributes` (`id`, `name`, `content_type_id`, `attribute_id`, `index`) VALUES
 (3, 'test attribute 3', 1, 2, 1),
-(7, 'test attribute 6', 1, 2, 0),
-(8, 'test attribute 5', 1, 1, 2),
-(9, 'text', 2, 2, 0);
+(7, 'test attribute 6', 1, 2, 2),
+(8, 'test attribute 5', 1, 1, 3),
+(9, 'text', 2, 2, 0),
+(10, 'author attribute', 1, 3, 0);
 
 -- --------------------------------------------------------
 
@@ -211,15 +214,14 @@ CREATE TABLE IF NOT EXISTS `form` (
   `action` int(11) NOT NULL,
   `action_value` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `form`
 --
 
 INSERT INTO `form` (`id`, `name`, `action`, `action_value`) VALUES
-(1, 'sample form', 1, 'AdminHomePage'),
-(2, 'test', 1, '');
+(1, 'sample form', 1, 'AdminHomePage');
 
 -- --------------------------------------------------------
 
@@ -238,7 +240,7 @@ CREATE TABLE IF NOT EXISTS `form_elements` (
   `function` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `form_id` (`form_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=26 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
 
 --
 -- Dumping data for table `form_elements`
@@ -251,9 +253,7 @@ INSERT INTO `form_elements` (`id`, `form_id`, `type`, `name`, `index`, `required
 (20, 1, 'RadioField', 'radios', 3, 0, '', ''),
 (21, 1, 'CheckBoxField', 'check', 4, 0, 'single check', ''),
 (22, 1, 'CheckGroupField', 'check group', 5, 0, '', ''),
-(23, 1, 'ButtonField', 'submit button', 6, 0, 'save', 'Submit'),
-(24, 2, 'TextField', 'test', 1, 0, '', ''),
-(25, 2, 'TextAreaField', 'test2', 0, 0, '', '');
+(23, 1, 'ButtonField', 'submit button', 6, 0, 'save', 'Submit');
 
 -- --------------------------------------------------------
 
@@ -267,21 +267,21 @@ CREATE TABLE IF NOT EXISTS `form_element_options` (
   `option` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `form_element_id` (`form_element_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=75 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=83 ;
 
 --
 -- Dumping data for table `form_element_options`
 --
 
 INSERT INTO `form_element_options` (`id`, `form_element_id`, `option`) VALUES
-(67, 19, 'op1'),
-(68, 19, 'op2'),
-(69, 19, 'op3'),
-(70, 20, 'radio op1'),
-(71, 20, 'another op'),
-(72, 22, 'check op1'),
-(73, 22, 'check op2'),
-(74, 22, 'check op3');
+(75, 19, 'op1'),
+(76, 19, 'op2'),
+(77, 19, 'op3'),
+(78, 20, 'radio op1'),
+(79, 20, 'another op'),
+(80, 22, 'check op1'),
+(81, 22, 'check op2'),
+(82, 22, 'check op3');
 
 -- --------------------------------------------------------
 
@@ -418,7 +418,7 @@ CREATE TABLE IF NOT EXISTS `page` (
   KEY `parent_id` (`parent_id`),
   KEY `arrangement_id` (`arrangement_id`),
   KEY `theme_id` (`theme_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=43 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=41 ;
 
 --
 -- Dumping data for table `page`
@@ -426,8 +426,7 @@ CREATE TABLE IF NOT EXISTS `page` (
 
 INSERT INTO `page` (`id`, `content_id`, `parent_id`, `index`, `arrangement_id`, `seo_title`, `meta_keys`, `meta_desc`, `homepage`, `theme_id`) VALUES
 (39, 37, NULL, 1, NULL, 'titleddd', 'keysdd', 'descdd', 1, NULL),
-(40, 42, NULL, 2, 1, '', '', '', 0, NULL),
-(42, 44, NULL, 3, NULL, '', '', '', 0, NULL);
+(40, 42, NULL, 2, 1, '', '', '', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -486,7 +485,7 @@ CREATE TABLE IF NOT EXISTS `theme` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `theme`
@@ -495,8 +494,7 @@ CREATE TABLE IF NOT EXISTS `theme` (
 INSERT INTO `theme` (`id`, `name`) VALUES
 (2, 'theme1'),
 (5, 'testrecursion4'),
-(6, 'testlinks'),
-(7, 'testlinksvalues2');
+(6, 'testlinks');
 
 -- --------------------------------------------------------
 
@@ -511,159 +509,52 @@ CREATE TABLE IF NOT EXISTS `theme_attributes` (
   `value` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `theme_element_id` (`theme_element_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=380 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=118 ;
 
 --
 -- Dumping data for table `theme_attributes`
 --
 
 INSERT INTO `theme_attributes` (`id`, `theme_element_id`, `name`, `value`) VALUES
-(165, 135, 'background', 'FF0F0F'),
-(166, 135, 'fontsize', '8'),
-(167, 135, 'fontcolour', 'FF00F7'),
-(168, 136, 'textColour', 'FF0000'),
-(169, 136, 'textSize', '10'),
-(170, 136, 'decoration', 'underline'),
-(171, 136, 'weight', 'bold'),
-(172, 137, 'textColour', 'FFCD03'),
-(173, 137, 'textSize', '10'),
-(174, 137, 'decoration', 'underline'),
-(175, 137, 'weight', 'normal'),
-(176, 138, 'textColour', 'E5FF00'),
-(177, 138, 'textSize', '10'),
-(178, 138, 'decoration', 'overline'),
-(179, 138, 'weight', 'lighter'),
-(180, 139, 'textColour', '00FF00'),
-(181, 139, 'textSize', '10'),
-(182, 139, 'decoration', 'line-through'),
-(183, 139, 'weight', 'lighter'),
-(184, 140, 'textColour', '0AA5FF'),
-(185, 140, 'textSize', '10'),
-(186, 140, 'decoration', 'line-through'),
-(187, 140, 'weight', 'bolder'),
-(188, 141, 'textColour', 'FF05F7'),
-(189, 141, 'textSize', '10'),
-(190, 141, 'decoration', 'overline'),
-(191, 141, 'weight', 'bolder'),
-(192, 142, 'fontsize', '72'),
-(193, 142, 'fontcolour', '5FFF0F'),
-(263, 162, 'background', 'FFFFFF'),
-(264, 162, 'fontsize', '10'),
-(265, 162, 'fontcolour', '000000'),
-(266, 163, 'textColour', '000000'),
-(267, 163, 'textSize', '10'),
-(268, 163, 'decoration', 'none'),
-(269, 163, 'weight', 'bold'),
-(270, 164, 'textColour', '000000'),
-(271, 164, 'textSize', '10'),
-(272, 164, 'decoration', 'none'),
-(273, 164, 'weight', 'bold'),
-(274, 165, 'textColour', '000000'),
-(275, 165, 'textSize', '10'),
-(276, 165, 'decoration', 'none'),
-(277, 165, 'weight', 'bold'),
-(278, 166, 'textColour', '000000'),
-(279, 166, 'textSize', '10'),
-(280, 166, 'decoration', 'none'),
-(281, 166, 'weight', 'bold'),
-(282, 167, 'textColour', '000000'),
-(283, 167, 'textSize', '10'),
-(284, 167, 'decoration', 'none'),
-(285, 167, 'weight', 'bold'),
-(286, 168, 'textColour', '000000'),
-(287, 168, 'textSize', '10'),
-(288, 168, 'decoration', 'none'),
-(289, 168, 'weight', 'bold'),
-(290, 170, 'fontsize', '10'),
-(291, 170, 'fontcolour', 'FF0000'),
-(292, 170, 'decoration', ''),
-(293, 170, 'weight', ''),
-(294, 171, 'fontsize', '10'),
-(295, 171, 'fontcolour', '22FF00'),
-(296, 171, 'decoration', ''),
-(297, 171, 'weight', ''),
-(298, 172, 'fontsize', '10'),
-(299, 172, 'fontcolour', '0000FF'),
-(300, 172, 'decoration', ''),
-(301, 172, 'weight', ''),
-(302, 173, 'background', 'FFFFFF'),
-(303, 173, 'fontsize', '10'),
-(304, 173, 'fontcolour', '000000'),
-(305, 174, 'textColour', '000000'),
-(306, 174, 'textSize', '10'),
-(307, 174, 'decoration', 'none'),
-(308, 174, 'weight', 'bold'),
-(309, 175, 'textColour', '000000'),
-(310, 175, 'textSize', '10'),
-(311, 175, 'decoration', 'none'),
-(312, 175, 'weight', 'bold'),
-(313, 176, 'textColour', '000000'),
-(314, 176, 'textSize', '10'),
-(315, 176, 'decoration', 'none'),
-(316, 176, 'weight', 'bold'),
-(317, 177, 'textColour', '000000'),
-(318, 177, 'textSize', '10'),
-(319, 177, 'decoration', 'none'),
-(320, 177, 'weight', 'bold'),
-(321, 178, 'textColour', '000000'),
-(322, 178, 'textSize', '10'),
-(323, 178, 'decoration', 'none'),
-(324, 178, 'weight', 'bold'),
-(325, 179, 'textColour', '000000'),
-(326, 179, 'textSize', '10'),
-(327, 179, 'decoration', 'none'),
-(328, 179, 'weight', 'bold'),
-(329, 181, 'fontsize', '10'),
-(330, 181, 'fontcolour', 'FF0F0F'),
-(331, 181, 'decoration', ''),
-(332, 181, 'weight', ''),
-(333, 182, 'fontsize', '10'),
-(334, 182, 'fontcolour', '22FF00'),
-(335, 182, 'decoration', ''),
-(336, 182, 'weight', ''),
-(337, 183, 'fontsize', '10'),
-(338, 183, 'fontcolour', 'FF00D4'),
-(339, 183, 'decoration', 'none'),
-(340, 183, 'weight', ''),
-(341, 184, 'background', 'FFFFFF'),
-(342, 184, 'fontsize', '10'),
-(343, 184, 'fontcolour', '000000'),
-(344, 185, 'textColour', '000000'),
-(345, 185, 'textSize', '10'),
-(346, 185, 'decoration', 'none'),
-(347, 185, 'weight', 'bold'),
-(348, 186, 'textColour', '000000'),
-(349, 186, 'textSize', '10'),
-(350, 186, 'decoration', 'none'),
-(351, 186, 'weight', 'bold'),
-(352, 187, 'textColour', '000000'),
-(353, 187, 'textSize', '10'),
-(354, 187, 'decoration', 'none'),
-(355, 187, 'weight', 'bold'),
-(356, 188, 'textColour', '000000'),
-(357, 188, 'textSize', '10'),
-(358, 188, 'decoration', 'none'),
-(359, 188, 'weight', 'bold'),
-(360, 189, 'textColour', '000000'),
-(361, 189, 'textSize', '10'),
-(362, 189, 'decoration', 'none'),
-(363, 189, 'weight', 'bold'),
-(364, 190, 'textColour', '000000'),
-(365, 190, 'textSize', '10'),
-(366, 190, 'decoration', 'none'),
-(367, 190, 'weight', 'bold'),
-(368, 192, 'fontsize', '10'),
-(369, 192, 'fontcolour', '000000'),
-(370, 192, 'decoration', 'none'),
-(371, 192, 'weight', 'bold'),
-(372, 193, 'fontsize', '10'),
-(373, 193, 'fontcolour', '000000'),
-(374, 193, 'decoration', 'none'),
-(375, 193, 'weight', 'bold'),
-(376, 194, 'fontsize', '10'),
-(377, 194, 'fontcolour', '000000'),
-(378, 194, 'decoration', 'none'),
-(379, 194, 'weight', 'bold');
+(79, 217, 'background', '2BFF00'),
+(80, 217, 'fontsize', '10'),
+(81, 217, 'fontcolour', '000000'),
+(82, 218, 'textColour', 'FF0000'),
+(83, 218, 'textSize', '10'),
+(84, 218, 'decoration', 'none'),
+(85, 218, 'weight', 'bold'),
+(86, 219, 'textColour', '000000'),
+(87, 219, 'textSize', '10'),
+(88, 219, 'decoration', 'none'),
+(89, 219, 'weight', 'bold'),
+(90, 220, 'textColour', '000000'),
+(91, 220, 'textSize', '10'),
+(92, 220, 'decoration', 'none'),
+(93, 220, 'weight', 'bold'),
+(94, 221, 'textColour', '000000'),
+(95, 221, 'textSize', '10'),
+(96, 221, 'decoration', 'none'),
+(97, 221, 'weight', 'bold'),
+(98, 222, 'textColour', '000000'),
+(99, 222, 'textSize', '10'),
+(100, 222, 'decoration', 'none'),
+(101, 222, 'weight', 'bold'),
+(102, 223, 'textColour', '000000'),
+(103, 223, 'textSize', '10'),
+(104, 223, 'decoration', 'none'),
+(105, 223, 'weight', 'bold'),
+(106, 225, 'fontsize', '10'),
+(107, 225, 'fontcolour', '000000'),
+(108, 225, 'decoration', 'none'),
+(109, 225, 'weight', 'bold'),
+(110, 226, 'fontsize', '10'),
+(111, 226, 'fontcolour', '000000'),
+(112, 226, 'decoration', 'none'),
+(113, 226, 'weight', 'bold'),
+(114, 227, 'fontsize', '10'),
+(115, 227, 'fontcolour', '000000'),
+(116, 227, 'decoration', 'none'),
+(117, 227, 'weight', 'bold');
 
 -- --------------------------------------------------------
 
@@ -682,54 +573,24 @@ CREATE TABLE IF NOT EXISTS `theme_elements` (
   PRIMARY KEY (`id`),
   KEY `theme_id` (`theme_id`),
   KEY `parent_element` (`parent_element`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=195 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=228 ;
 
 --
 -- Dumping data for table `theme_elements`
 --
 
 INSERT INTO `theme_elements` (`id`, `theme_id`, `name`, `type`, `class`, `index`, `parent_element`) VALUES
-(135, 2, 'page', 'object', 'ThemePage', NULL, NULL),
-(136, 2, 'headings', 'array', 'HeadingElement', 1, NULL),
-(137, 2, 'headings', 'array', 'HeadingElement', 2, NULL),
-(138, 2, 'headings', 'array', 'HeadingElement', 3, NULL),
-(139, 2, 'headings', 'array', 'HeadingElement', 4, NULL),
-(140, 2, 'headings', 'array', 'HeadingElement', 5, NULL),
-(141, 2, 'headings', 'array', 'HeadingElement', 6, NULL),
-(142, 2, 'links', 'object', 'ThemeLink', NULL, NULL),
-(162, 5, 'page', 'object', 'ThemePage', NULL, NULL),
-(163, 5, 'headings', 'array', 'HeadingElement', 1, NULL),
-(164, 5, 'headings', 'array', 'HeadingElement', 2, NULL),
-(165, 5, 'headings', 'array', 'HeadingElement', 3, NULL),
-(166, 5, 'headings', 'array', 'HeadingElement', 4, NULL),
-(167, 5, 'headings', 'array', 'HeadingElement', 5, NULL),
-(168, 5, 'headings', 'array', 'HeadingElement', 6, NULL),
-(169, 5, 'links', 'object', 'ThemeLink', NULL, NULL),
-(170, 5, 'normal', 'object', 'LinkState', NULL, 169),
-(171, 5, 'hover', 'object', 'LinkState', NULL, 169),
-(172, 5, 'active', 'object', 'LinkState', NULL, 169),
-(173, 6, 'page', 'object', 'ThemePage', NULL, NULL),
-(174, 6, 'headings', 'array', 'HeadingElement', 1, NULL),
-(175, 6, 'headings', 'array', 'HeadingElement', 2, NULL),
-(176, 6, 'headings', 'array', 'HeadingElement', 3, NULL),
-(177, 6, 'headings', 'array', 'HeadingElement', 4, NULL),
-(178, 6, 'headings', 'array', 'HeadingElement', 5, NULL),
-(179, 6, 'headings', 'array', 'HeadingElement', 6, NULL),
-(180, 6, 'links', 'object', 'ThemeLink', NULL, NULL),
-(181, 6, 'normal', 'object', 'LinkState', NULL, 180),
-(182, 6, 'hover', 'object', 'LinkState', NULL, 180),
-(183, 6, 'active', 'object', 'LinkState', NULL, 180),
-(184, 7, 'page', 'object', 'ThemePage', NULL, NULL),
-(185, 7, 'headings', 'array', 'HeadingElement', 1, NULL),
-(186, 7, 'headings', 'array', 'HeadingElement', 2, NULL),
-(187, 7, 'headings', 'array', 'HeadingElement', 3, NULL),
-(188, 7, 'headings', 'array', 'HeadingElement', 4, NULL),
-(189, 7, 'headings', 'array', 'HeadingElement', 5, NULL),
-(190, 7, 'headings', 'array', 'HeadingElement', 6, NULL),
-(191, 7, 'links', 'object', 'ThemeLink', NULL, NULL),
-(192, 7, 'normal', 'object', 'LinkState', NULL, 191),
-(193, 7, 'hover', 'object', 'LinkState', NULL, 191),
-(194, 7, 'active', 'object', 'LinkState', NULL, 191);
+(217, 2, 'page', 'object', 'ThemePage', NULL, NULL),
+(218, 2, 'headings', 'array', 'HeadingElement', 1, NULL),
+(219, 2, 'headings', 'array', 'HeadingElement', 2, NULL),
+(220, 2, 'headings', 'array', 'HeadingElement', 3, NULL),
+(221, 2, 'headings', 'array', 'HeadingElement', 4, NULL),
+(222, 2, 'headings', 'array', 'HeadingElement', 5, NULL),
+(223, 2, 'headings', 'array', 'HeadingElement', 6, NULL),
+(224, 2, 'links', 'object', 'ThemeLink', NULL, NULL),
+(225, 2, 'normal', 'object', 'LinkState', NULL, 224),
+(226, 2, 'hover', 'object', 'LinkState', NULL, 224),
+(227, 2, 'active', 'object', 'LinkState', NULL, 224);
 
 -- --------------------------------------------------------
 
@@ -759,7 +620,7 @@ INSERT INTO `users` (`id`, `username`, `password`) VALUES
 
 CREATE TABLE IF NOT EXISTS `widgets` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `category_id` int(11) NOT NULL,
+  `category_id` int(11) DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   `class` varchar(255) NOT NULL,
   `setup` varchar(255) NOT NULL,
@@ -767,7 +628,7 @@ CREATE TABLE IF NOT EXISTS `widgets` (
   `target_table` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `category_id` (`category_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `widgets`
@@ -778,7 +639,8 @@ INSERT INTO `widgets` (`id`, `category_id`, `name`, `class`, `setup`, `config`, 
 (4, 1, 'Text Block', 'TextWidget', 'TextWidgetConfigPanel', 'TextWidgetConfig', 'widget_config_textbox'),
 (6, 1, 'Form', 'FormWidget', 'FormWidgetConfigPanel', 'FormWidgetConfig', 'widget_config_form'),
 (7, 1, 'Image', 'ImageWidget', 'ImageWidgetConfigPanel', 'ImageWidgetConfig', 'widget_config_image'),
-(8, 1, 'Content Block', 'ContentWidget', 'ContentWidgetConfigPanel', 'ContentWidgetConfig', 'widget_config_content');
+(8, 1, 'Content Block', 'ContentWidget', 'ContentWidgetConfigPanel', 'ContentWidgetConfig', 'widget_config_content'),
+(9, NULL, 'Author', 'AuthorWidget', 'AuthorWidgetConfigPanel', 'AuthorWidgetItem', 'widget_config_author');
 
 -- --------------------------------------------------------
 
@@ -811,7 +673,7 @@ CREATE TABLE IF NOT EXISTS `widget_config` (
   `widget_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `widget_id` (`widget_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=48 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=64 ;
 
 --
 -- Dumping data for table `widget_config`
@@ -835,7 +697,8 @@ INSERT INTO `widget_config` (`id`, `widget_id`) VALUES
 (36, 3),
 (37, 3),
 (43, 3),
-(1, 4),
+(52, 3),
+(55, 3),
 (2, 4),
 (3, 4),
 (4, 4),
@@ -859,12 +722,41 @@ INSERT INTO `widget_config` (`id`, `widget_id`) VALUES
 (42, 4),
 (44, 4),
 (45, 4),
+(53, 4),
+(54, 4),
+(56, 4),
+(57, 4),
 (30, 6),
 (35, 6),
 (39, 6),
 (40, 6),
 (46, 8),
-(47, 8);
+(47, 8),
+(48, 8),
+(62, 8),
+(63, 9);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `widget_config_author`
+--
+
+CREATE TABLE IF NOT EXISTS `widget_config_author` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `config_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `config_id` (`config_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `widget_config_author`
+--
+
+INSERT INTO `widget_config_author` (`id`, `config_id`, `user_id`) VALUES
+(1, 63, 4);
 
 -- --------------------------------------------------------
 
@@ -877,14 +769,16 @@ CREATE TABLE IF NOT EXISTS `widget_config_content` (
   `config_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `config_id` (`config_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `widget_config_content`
 --
 
 INSERT INTO `widget_config_content` (`id`, `config_id`) VALUES
-(1, 47);
+(3, 47),
+(4, 48),
+(9, 62);
 
 -- --------------------------------------------------------
 
@@ -924,7 +818,7 @@ CREATE TABLE IF NOT EXISTS `widget_config_heading` (
   `text` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `attribute_id` (`config_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=43 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=48 ;
 
 --
 -- Dumping data for table `widget_config_heading`
@@ -947,7 +841,9 @@ INSERT INTO `widget_config_heading` (`id`, `config_id`, `type`, `text`) VALUES
 (36, 36, 'Heading 1', 'ghj'),
 (37, 37, 'Heading 1', 'hjk'),
 (38, 43, 'Heading 1', 'dsfsdf'),
-(42, 26, 'Heading 1', 'asdfasdf');
+(45, 26, 'Heading 1', 'asdfasdf'),
+(46, 52, 'Heading 1', 'sdafasdf'),
+(47, 55, 'Heading 2', 'asdfasdf');
 
 -- --------------------------------------------------------
 
@@ -975,7 +871,7 @@ CREATE TABLE IF NOT EXISTS `widget_config_textbox` (
   `text` longtext NOT NULL,
   PRIMARY KEY (`id`),
   KEY `attribute_id` (`config_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=43 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=47 ;
 
 --
 -- Dumping data for table `widget_config_textbox`
@@ -1003,7 +899,11 @@ INSERT INTO `widget_config_textbox` (`id`, `config_id`, `text`) VALUES
 (38, 41, '<p>testing post insert</p>'),
 (40, 42, '<p>my blog textdddd</p>'),
 (41, 44, '<p>sdfsdf</p>'),
-(42, 45, '<p>sdfsdf</p>');
+(42, 45, '<p>sdfsdf</p>'),
+(43, 53, '<p>asdfasdf</p>'),
+(44, 54, '<p>asdfasdf</p>'),
+(45, 56, '<p>asdfasdf</p>'),
+(46, 57, '<p>asdfasdf</p>');
 
 --
 -- Constraints for dumped tables
@@ -1099,10 +999,10 @@ ALTER TABLE `layout_block_attributes`
 -- Constraints for table `page`
 --
 ALTER TABLE `page`
-  ADD CONSTRAINT `page_ibfk_13` FOREIGN KEY (`theme_id`) REFERENCES `theme` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `page_ibfk_10` FOREIGN KEY (`content_id`) REFERENCES `content` (`id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `page_ibfk_11` FOREIGN KEY (`parent_id`) REFERENCES `page` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `page_ibfk_12` FOREIGN KEY (`arrangement_id`) REFERENCES `arrangement` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `page_ibfk_12` FOREIGN KEY (`arrangement_id`) REFERENCES `arrangement` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `page_ibfk_13` FOREIGN KEY (`theme_id`) REFERENCES `theme` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `post`
@@ -1126,8 +1026,8 @@ ALTER TABLE `theme_attributes`
 -- Constraints for table `theme_elements`
 --
 ALTER TABLE `theme_elements`
-  ADD CONSTRAINT `theme_elements_ibfk_2` FOREIGN KEY (`parent_element`) REFERENCES `theme_elements` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `theme_elements_ibfk_1` FOREIGN KEY (`theme_id`) REFERENCES `theme` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `theme_elements_ibfk_3` FOREIGN KEY (`theme_id`) REFERENCES `theme` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `theme_elements_ibfk_4` FOREIGN KEY (`parent_element`) REFERENCES `theme_elements` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `widgets`
@@ -1140,6 +1040,13 @@ ALTER TABLE `widgets`
 --
 ALTER TABLE `widget_config`
   ADD CONSTRAINT `widget_config_ibfk_1` FOREIGN KEY (`widget_id`) REFERENCES `widgets` (`id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `widget_config_author`
+--
+ALTER TABLE `widget_config_author`
+  ADD CONSTRAINT `widget_config_author_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `widget_config_author_ibfk_1` FOREIGN KEY (`config_id`) REFERENCES `widget_config` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `widget_config_content`

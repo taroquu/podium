@@ -83,6 +83,22 @@ class UserDao extends AbstractDao
     {
         $this->getTemplate()->update("DELETE FROM users WHERE id = %d;", array($userId));
     }
+    
+    public function getUserById($userId)
+    {
+        $mapper = new \picon\CallbackRowMapper(function($row)
+        {
+            return new User($row->id, $row->username, $row->password);
+        });
+        
+        $users = $this->getTemplate()->query("SELECT * FROM users WHERE id = %d;", $mapper, array($userId));
+        
+        if(count($users)!=1)
+        {
+            throw new IllegalStateException('Expected only one result');
+        }
+        return $users[0];
+    }
 }
 
 ?>

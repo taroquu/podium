@@ -98,6 +98,11 @@ class UserService
     {
         $this->userDao->deleteUser($userId);
     }
+    
+    public function getUserById($userId)
+    {
+        return $this->userDao->getUserById($userId);
+    }
 }
 
 ?>
