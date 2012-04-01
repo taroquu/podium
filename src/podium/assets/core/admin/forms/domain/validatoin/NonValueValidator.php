@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of NonValueValidator
+ * Domain for a validator with no config options
  * 
  * @author Martin Cassidy
  */

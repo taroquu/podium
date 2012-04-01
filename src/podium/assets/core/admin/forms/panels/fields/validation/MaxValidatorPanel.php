@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of MaxValidatorPanel
+ * Panel for configuring a max validator
  * 
  * @author Martin Cassidy
  */

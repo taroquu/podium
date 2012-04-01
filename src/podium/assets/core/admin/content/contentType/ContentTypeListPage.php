@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ContentTypeListPage
+ * Page showing a list of content types
  * 
  * @author Martin Cassidy
  */

@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of WidgetConfig
+ * Generic domain abstraction for any type of widget configuration
  * 
  * @author Martin Cassidy
  */

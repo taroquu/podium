@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of WidgetCategory
+ * Domain object for a widget category
  * 
  * @author Martin Cassidy
  */

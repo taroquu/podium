@@ -24,7 +24,7 @@ use picon\ComonDomainBase;
 use picon\Args;
 
 /**
- * Description of AbstractLayoutBlock
+ * Domain object for a layou block of which a layout is composed
  *
  * @author Martin Cassidy
  */

@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of PageDao
+ * Data access object for pages
  * 
  * @author Martin Cassidy
  * @Repository

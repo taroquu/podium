@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of PopulatedForm
+ * Domain for a fully populated form 
  * 
  * @author Martin Cassidy
  */

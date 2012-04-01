@@ -21,7 +21,8 @@
  * */
 
 /**
- *
+ * Business service for working with content types
+ * 
  * @author Martin Cassidy
  */
 interface IContentTypeService

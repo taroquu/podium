@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of TextField
+ * Domain for a text field 
  * 
  * @author Martin Cassidy
  */

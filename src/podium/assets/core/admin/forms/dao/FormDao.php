@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of FormDao
+ * Data access object for forms
  * 
  * @author Martin Cassidy
  * @Repository

@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of OptionsFieldPanel
+ * Panel for configuring a form field which has options
  * 
  * @author Martin Cassidy
  */

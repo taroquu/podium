@@ -25,7 +25,7 @@ use picon\Identifier;
 use picon\Args;
 
 /**
- * Description of MenuItem
+ * Domain for items on the main menu
  *
  * @author Martin Cassidy
  */

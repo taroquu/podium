@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of HeadingPanel
+ * Tab panel for theme heading options
  * 
  * @author Martin Cassidy
  */

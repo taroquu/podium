@@ -27,7 +27,7 @@ use picon\Label;
 use picon\AttributeModifier;
 
 /**
- * Description of HeadingPanel
+ * Main layout panel for showing the heading at the top of the page
  *
  * @author Martin Cassidy
  */

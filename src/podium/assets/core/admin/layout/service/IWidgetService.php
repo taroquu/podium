@@ -21,7 +21,7 @@
  * */
 
 /**
- *
+ * Business service for widgets
  * @author Martin Cassidy
  */
 interface IWidgetService

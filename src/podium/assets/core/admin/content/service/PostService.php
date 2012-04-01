@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of PostService
+ * Implementation of the post service
  * 
  * @author Martin Cassidy
  * @Service

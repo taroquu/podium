@@ -23,9 +23,9 @@
 use picon\Panel;
 
 /**
- * Description of AbstractToolbarItem
+ * An entry on the admin page toolbar
  *
- * @author Martin
+ * @author Martin Cassidy
  */
 abstract class AbstractToolbarItem extends Panel
 {

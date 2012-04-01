@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of SingleValueValidator
+ * Domain for a validator with a single generic value
  * 
  * @author Martin Cassidy
  */

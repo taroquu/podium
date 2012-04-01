@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of PostListPage
+ * Page for listing posts
  * 
  * @author Martin Cassidy
  */

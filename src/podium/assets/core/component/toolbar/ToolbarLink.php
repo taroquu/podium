@@ -25,7 +25,7 @@ use picon\Label;
 use picon\BasicModel;
 
 /**
- * Description of ToolbarLink
+ * A link toolbar item
  *
  * @author Martin Cassidy
  */

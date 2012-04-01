@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of AuthorWidgetConfigPanel
+ * Config panel for author widget
  * 
  * @author Martin Cassidy
  */

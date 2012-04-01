@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of SetupPanel
+ * Panel for creating/editing the form and its fields
  * 
  * @author Martin Cassidy
  */

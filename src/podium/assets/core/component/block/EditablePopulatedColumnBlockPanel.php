@@ -21,7 +21,8 @@
  * */
 
 /**
- * Description of EditablePopulatedColumnBlockPanel
+ * Panel for showing a column block which is populated with widgets
+ * and those widgets can be edited
  * 
  * @author Martin Cassidy
  */

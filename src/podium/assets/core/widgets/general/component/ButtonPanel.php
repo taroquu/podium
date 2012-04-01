@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ButtonPanel
+ * Panel which shows a button for use by the form widget
  * 
  * @author Martin Cassidy
  */

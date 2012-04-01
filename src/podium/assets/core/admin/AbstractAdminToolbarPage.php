@@ -26,7 +26,7 @@ use picon\MarkupContainer;
 use picon\AttributeModifier;
 
 /**
- * Description of AbstractAdminToolbarPage
+ * Admin page with a title and a toolbar
  *
  * @author Martin Cassidy
  */

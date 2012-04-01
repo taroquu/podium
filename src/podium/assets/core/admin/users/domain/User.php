@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of User
+ * Domain object for a user
  * 
  * @author Martin Cassidy
  */

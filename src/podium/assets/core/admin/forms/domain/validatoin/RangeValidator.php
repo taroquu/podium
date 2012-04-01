@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of RangeValidator
+ * Domain for a validator with a range of values (min and max)
  * 
  * @author Martin Cassidy
  */

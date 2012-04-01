@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of RangeValidatorPanel
+ * Panel for configuring a range validator
  * 
  * @author Martin Cassidy
  */

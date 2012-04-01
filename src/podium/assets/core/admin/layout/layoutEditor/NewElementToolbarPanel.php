@@ -27,9 +27,9 @@ use picon\BasicModel;
 use picon\Label;
 
 /**
- * Description of NewElementToolbarPanel
+ * Toolbar link for adding new layout blocks to a layout
  *
- * @author Martin
+ * @author Martin Cassidy
  */
 class NewElementToolbarPanel extends AbstractToolbarItem
 {

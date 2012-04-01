@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of PostDao
+ * Data access object for posts
  * 
  * @author Martin Cassidy
  * @Repository

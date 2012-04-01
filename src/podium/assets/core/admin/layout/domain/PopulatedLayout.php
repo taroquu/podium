@@ -21,7 +21,8 @@
  * */
 
 /**
- * Description of PopulatedLayout
+ * Domain object for a layout which has been populated with widgets inside its
+ * blocks
  * 
  * @author Martin Cassidy
  */

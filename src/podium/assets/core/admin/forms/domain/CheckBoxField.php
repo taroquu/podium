@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of CheckBoxField
+ * Domain for a checkbox form field
  * 
  * @author Martin Cassidy
  */

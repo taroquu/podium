@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ConfigurableWidgetItem
+ * Domain object for an instance of a widget which has a configuration
  * 
  * @author Martin Cassidy
  */

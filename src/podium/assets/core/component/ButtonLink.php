@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ButtonLink
+ * A link which looks like a button (through CSS) applied with a css class
  * 
  * @author Martin Cassidy
  */

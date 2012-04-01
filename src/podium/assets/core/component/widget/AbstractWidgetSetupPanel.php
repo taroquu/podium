@@ -21,11 +21,11 @@
  * */
 
 /**
- * Description of AbstractWidgetSetupPanel
+ * Panel abstraction for widget setup
  * 
  * @author Martin Cassidy
  */
-class AbstractWidgetSetupPanel extends picon\Panel
+abstract class AbstractWidgetSetupPanel extends picon\Panel
 {
 
 }

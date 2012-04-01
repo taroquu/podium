@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of RadioField
+ * Domain for a radio field
  * 
  * @author Martin Cassidy
  */

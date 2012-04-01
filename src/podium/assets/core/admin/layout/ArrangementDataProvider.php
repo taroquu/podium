@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ArrangementDataProvider
+ * Data proivder for arrangements
  * 
  * @author Martin Cassidy
  */

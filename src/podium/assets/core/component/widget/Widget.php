@@ -23,7 +23,7 @@
 use picon\Panel;
 
 /**
- * Description of Widget
+ * Panel abstraction for a visual widget instance
  * 
  * @author Martin Cassidy
  */

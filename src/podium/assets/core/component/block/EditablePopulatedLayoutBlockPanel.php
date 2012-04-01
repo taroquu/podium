@@ -21,7 +21,8 @@
  * */
 
 /**
- * Description of EditablePopulatedLayoutBlockPanel
+ * Panel for shwoing a layout block which is populated with widgets and those
+ * widgets can be edited
  * 
  * @author Martin Cassidy
  */

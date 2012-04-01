@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of AbstractOptionField
+ * Domain for a form field with options
  * 
  * @author Martin Cassidy
  */

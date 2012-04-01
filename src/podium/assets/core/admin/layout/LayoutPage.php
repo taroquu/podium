@@ -22,7 +22,7 @@
 
 
 /**
- * Description of LayoutPage
+ * Page for listing layouts
  *
  * @author Martin Cassidy
  */

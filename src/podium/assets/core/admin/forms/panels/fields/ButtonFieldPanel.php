@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ButtonFieldPanel
+ * Panel for configuring a button
  * 
  * @author Martin Cassidy
  */

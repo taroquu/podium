@@ -21,7 +21,8 @@
  * */
 
 /**
- * Description of ColourPicker
+ * A text field which is designed for colour selction using the jscolor
+ * script
  * Extract out the JS into a behaviour
  * @author Martin Cassidy
  */

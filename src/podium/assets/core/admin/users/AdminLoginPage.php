@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of LoginPage
+ * Login page for the admin portal
  * 
  * @author Martin Cassidy
  */

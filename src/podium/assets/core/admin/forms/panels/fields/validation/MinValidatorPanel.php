@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of MinValidatorPanel
+ * Panel for configuring a min validator
  * 
  * @author Martin Cassidy
  */

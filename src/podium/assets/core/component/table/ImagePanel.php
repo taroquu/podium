@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ImagePanel
+ * A panel which shows a single, specified image
  * 
  * @author Martin Cassidy
  */

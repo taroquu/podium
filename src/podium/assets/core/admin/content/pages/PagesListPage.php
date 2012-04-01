@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of PagesListPage
+ * Page for showing the page list
  * 
  * @author Martin Cassidy
  */

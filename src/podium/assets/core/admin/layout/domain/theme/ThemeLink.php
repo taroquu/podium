@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ThemeLink
+ * Domain object for a link on a theme
  * 
  * @author Martin Cassidy
  */

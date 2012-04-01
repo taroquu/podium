@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ArrangementPage
+ * Page for listing arrangements attached to a layout
  * 
  * @author Martin Cassidy
  */

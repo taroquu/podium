@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of CreateEditContentTypePage
+ * Page for creating and editing content types
  * 
  * @author Martin Cassidy
  */

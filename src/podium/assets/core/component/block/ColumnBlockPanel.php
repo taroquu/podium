@@ -26,7 +26,7 @@ use picon\AttributeAppender;
 use picon\BasicModel;
 
 /**
- * Description of ColumnBlockPanel
+ * Panel for showing a column block
  *
  * @author Martin Cassidy
  */

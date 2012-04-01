@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ImageWidgetConfig
+ * Domain object for the image widget
  * 
  * @author Martin Cassidy
  */

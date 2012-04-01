@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of WidgetItem
+ * Domain object for a widget (not an instance, just the widget info)
  * 
  * @author Martin Cassidy
  */

@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of FormService
+ * Implementation of the form service
  * 
  * @author Martin Cassidy
  * @Service

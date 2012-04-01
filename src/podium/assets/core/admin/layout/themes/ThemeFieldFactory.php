@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ThemeFieldFactory
+ * Factory for theme form fields
  * 
  * @author Martin Cassidy
  */

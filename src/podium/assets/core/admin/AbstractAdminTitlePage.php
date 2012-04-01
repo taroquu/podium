@@ -25,7 +25,7 @@ use picon\BasicModel;
 use picon\MarkupContainer;
 
 /**
- * Description of AbstractAdminInnerPage
+ * Admin page with a title
  *
  * @author Martin Cassidy
  */

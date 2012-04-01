@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of HeadingElement
+ * Domain object for a theme heading (h1 etc)
  * 
  * @author Martin Cassidy
  */

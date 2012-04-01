@@ -21,7 +21,9 @@
  * */
 
 /**
- *
+ * Components that want to insert elements onto the admin toolbar shoul
+ * implement this to have the method called when the toolbar is rendering
+ * (works conceptually like renderHead)
  * @author Martin Cassidy
  */
 interface ToolbarContributor

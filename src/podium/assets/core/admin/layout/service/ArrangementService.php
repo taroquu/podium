@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ArrangementService
+ * Implementation of the arrangement service
  * 
  * @author Martin Cassidy
  * @Service

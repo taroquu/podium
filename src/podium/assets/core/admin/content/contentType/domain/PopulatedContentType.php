@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of PopulatedContentType
+ * Fully populated content type domain
  * 
  * @author Martin Cassidy
  */

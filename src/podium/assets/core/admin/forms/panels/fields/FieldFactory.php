@@ -21,7 +21,8 @@
  * */
 
 /**
- * Description of FieldFactory
+ * Factory for form field domain mapping and instantiation, configuration panel
+ * instantiation and validator creation
  * 
  * @author Martin Cassidy
  */

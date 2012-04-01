@@ -21,7 +21,7 @@
  * */
 
 /**
- *
+ * Business service for layouts
  * @author Martin Cassidy
  */
 interface ILayoutService

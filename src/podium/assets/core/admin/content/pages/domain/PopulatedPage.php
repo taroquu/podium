@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of PopulatedPage
+ * Fully populated page domain
  * 
  * @author Martin Cassidy
  */

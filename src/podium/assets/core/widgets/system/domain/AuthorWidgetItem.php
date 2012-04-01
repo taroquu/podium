@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of AuthorWidgetItem
+ * Domain object for author widget
  * 
  * @author Martin Cassidy
  */

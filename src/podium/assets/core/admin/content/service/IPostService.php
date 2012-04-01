@@ -21,7 +21,7 @@
  * */
 
 /**
- *
+ * Business service for posts
  * @author Martin Cassidy
  */
 interface IPostService

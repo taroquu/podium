@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of EditPage
+ * Page for editing pages
  * 
  * @author Martin Cassidy
  */

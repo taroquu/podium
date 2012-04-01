@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of PostSetupPanel
+ * Setup panel for basic post options
  * 
  * @author Martin Cassidy
  */

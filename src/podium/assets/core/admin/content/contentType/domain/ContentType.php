@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ContentType
+ * Basic content type domain
  * 
  * @author Martin Cassidy
  */

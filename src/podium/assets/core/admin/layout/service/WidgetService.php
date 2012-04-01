@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of WidgetService
+ * Implemenation of the widget service
  * 
  * @author Martin Cassidy
  * @Service

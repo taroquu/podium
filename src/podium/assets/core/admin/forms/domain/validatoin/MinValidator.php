@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of MinValidator
+ * Domain for a validator with a minimum value
  * 
  * @author Martin Cassidy
  */

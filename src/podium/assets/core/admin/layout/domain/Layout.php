@@ -23,9 +23,9 @@
 use picon\ComonDomainBase;
 
 /**
- * Description of Layout
+ * Domain object for a layout
  *
- * @author Martin
+ * @author Martin Cassidy
  */
 class Layout extends ComonDomainBase
 {

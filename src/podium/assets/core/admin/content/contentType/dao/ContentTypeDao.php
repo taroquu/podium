@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ContentTypeDao
+ * Data access object for content types
  * 
  * @author Martin Cassidy
  * @Repository

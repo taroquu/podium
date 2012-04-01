@@ -21,7 +21,7 @@
  * */
 
 /**
- *
+ * Business service for themes
  * @author Martin Cassidy
  */
 interface IThemeService

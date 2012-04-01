@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of Post
+ * Basic post domain
  * 
  * @author Martin Cassidy
  */

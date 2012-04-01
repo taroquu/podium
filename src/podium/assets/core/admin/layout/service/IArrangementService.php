@@ -21,7 +21,7 @@
  * */
 
 /**
- *
+ * Business service for arrangements
  * @author Martin Cassidy
  */
 interface IArrangementService

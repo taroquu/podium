@@ -21,9 +21,7 @@
  * */
 
 /**
- * Description of AbstractPopulatabaleLayoutBlock
- * @todo sub classes should not exist for this, as not all row/column/floating blocks are populated,
- * block type should be done with an enum.
+ * A layout block which is populated with widgets
  * @author Martin Cassidy
  */
 class PopulatedLayoutBlock extends LayoutBlock

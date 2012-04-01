@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of Page
+ * Basic page domain
  * 
  * @author Martin Cassidy
  */

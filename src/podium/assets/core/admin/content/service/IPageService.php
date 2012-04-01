@@ -21,7 +21,7 @@
  * */
 
 /**
- *
+ * Business service for pages
  * @author Martin Cassidy
  */
 interface IPageService

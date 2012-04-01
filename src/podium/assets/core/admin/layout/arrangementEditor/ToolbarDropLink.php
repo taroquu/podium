@@ -24,7 +24,8 @@ use picon\ArrayModel;
 use picon\ListView;
 
 /**
- * Description of ToolbarDropLink
+ * A toolbar item which shows a drop down
+ * 
  * @author Martin Cassidy
  */
 class ToolbarDropLink extends AbstractToolbarItem

@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of CreateEditUserPage
+ * Page for creating and editing users
  * 
  * @author Martin Cassidy
  */

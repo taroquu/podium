@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of HeaderWidgetConfig
+ * Domain object for the header widget
  * 
  * @author Martin Cassidy
  */

@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of LabeledRequiredFieldPanel
+ * Panel for configuring a form field which has a label
  * 
  * @author Martin Cassidy
  */

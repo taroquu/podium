@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of Arrangement
+ * Domain object for an arrangement
  * 
  * @author Martin Cassidy
  */

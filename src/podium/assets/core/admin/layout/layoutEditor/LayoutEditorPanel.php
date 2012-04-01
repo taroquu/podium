@@ -30,7 +30,7 @@ use picon\BasicModel;
 use picon\Link;
 
 /**
- * Description of LayoutEditorPanel
+ * Layout block editor panel
  *
  * @author Martin Cassidy
  */

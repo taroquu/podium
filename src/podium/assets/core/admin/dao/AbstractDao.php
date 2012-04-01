@@ -23,7 +23,7 @@
 use picon\DaoSupport;
 
 /**
- * Description of AbstractDao
+ * Database access object abstraction for working with the podium database
  *
  * @author Martin Cassidy
  */

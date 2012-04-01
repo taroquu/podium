@@ -21,8 +21,8 @@
  * */
 
 /**
- * Description of AdminHomePage
- *
+ * The dashboard page
+ * @todo put some basic stuff on this page
  * @author Martin Cassidy
  * @Path(path='admin')
  */

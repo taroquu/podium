@@ -23,7 +23,7 @@
 use picon\CallbackRowMapper;
 
 /**
- * Description of LayoutDao
+ * Database access object for working with layous
  *
  * @author Martin
  * @Repository

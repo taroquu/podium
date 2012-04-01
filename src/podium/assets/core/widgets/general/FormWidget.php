@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of FormWidget
+ * Widget panel for forms
  * 
  * @author Martin Cassidy
  */

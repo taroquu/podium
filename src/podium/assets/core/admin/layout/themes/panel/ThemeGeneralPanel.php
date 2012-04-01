@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of GeneralPanel
+ * Tab panel for general theme options (theme name and page options)
  * 
  * @author Martin Cassidy
  */

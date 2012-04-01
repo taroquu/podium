@@ -21,7 +21,8 @@
  * */
 
 /**
- * Description of TextAreaPanel
+ * /**Panel which shows a text area for use by the form widgetDescription of TextAreaPanel
+
  * 
  * @author Martin Cassidy
  */

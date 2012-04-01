@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of EditableWidgetWrappingPanel
+ * Wraps the contents of a widget so that it has drag/options/delete controls
  * 
  * @author Martin Cassidy
  */

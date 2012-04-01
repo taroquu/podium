@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ContentWidgetConfigConfig
+ * Domain object for the content block widget
  * 
  * @author Martin Cassidy
  */

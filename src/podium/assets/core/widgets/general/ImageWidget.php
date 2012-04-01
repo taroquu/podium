@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ImageWidget
+ * Widget panel for images
  * 
  * @author Martin Cassidy
  */

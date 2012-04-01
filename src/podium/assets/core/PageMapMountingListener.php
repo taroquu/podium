@@ -21,7 +21,8 @@
  * */
 
 /**
- * Description of PageMapMountingListener
+ * Extra listener for the page map, mounts all web page types found
+ * in the database
  * 
  * @author Martin Cassidy
  */

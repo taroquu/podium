@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of PageService
+ * Implementation of the page service
  * 
  * @author Martin Cassidy
  * @Service

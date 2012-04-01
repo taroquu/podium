@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ArrangementEditorPage
+ * Page for editing the widgets within an arrangement
  * 
  * @author Martin Cassidy
  */

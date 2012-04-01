@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of WidgetElementItem
+ * Domain object for an instance of widget on an arrangement
  * 
  * @author Martin Cassidy
  */

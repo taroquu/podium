@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ThemeDao
+ * Database access object for working with themes
  * 
  * @author Martin Cassidy
  * @Repository

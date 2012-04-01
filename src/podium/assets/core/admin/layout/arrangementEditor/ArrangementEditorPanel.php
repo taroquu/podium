@@ -24,7 +24,8 @@ use picon\RepeatingView;
 use picon\HeaderResponse;
 
 /**
- * Description of ArrangementEditorPanel
+ * Panel which shows the layout blocks and the widgets within them, including
+ * drag/options/delete controls
  * 
  * @author Martin Cassidy
  */

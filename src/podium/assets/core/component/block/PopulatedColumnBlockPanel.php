@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of PopulatedColumnBlockPanel
+ * Column block populated with widgets
  * 
  * @author Martin Cassidy
  */

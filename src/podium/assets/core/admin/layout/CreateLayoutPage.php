@@ -22,9 +22,9 @@
 
 
 /**
- * Description of CreateLayoutPage
+ * Page for creating or editing a layout
  *
- * @author Martin
+ * @author Martin Cassidy
  */
 class CreateLayoutPage extends AbstractAdminToolbarPage
 {    

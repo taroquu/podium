@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of UserService
+ * Implemenation of the user service
  * 
  * @author Martin Cassidy
  * @Service

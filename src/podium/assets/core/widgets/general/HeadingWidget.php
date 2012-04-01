@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of HeadingWidget
+ * Widget panel for headings
  * 
  * @author Martin Cassidy
  */

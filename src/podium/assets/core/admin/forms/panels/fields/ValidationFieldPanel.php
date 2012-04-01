@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ValidationFieldPanel
+ * Panel for configuring a form field which can have a validator attached to it
  * 
  * @author Martin Cassidy
  */

@@ -24,9 +24,9 @@ use picon\ComonDomainBase;
 use picon\Args;
 
 /**
- * Description of LayoutBlockAttribute
+ * Domain object for an attribute (name value pair) for a layout block
  *
- * @author Martin
+ * @author Martin Cassidy
  */
 class LayoutBlockAttribute extends ComonDomainBase
 {

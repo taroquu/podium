@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of SingleValidatorPanel
+ * Panel for configuring a single value form validator
  * 
  * @author Martin Cassidy
  */

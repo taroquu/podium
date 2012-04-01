@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ContentWidget
+ * Widget panel for content block
  * 
  * @author Martin Cassidy
  */

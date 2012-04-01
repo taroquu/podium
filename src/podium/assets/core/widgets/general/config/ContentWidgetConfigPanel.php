@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ContentWidgetConfigPanel
+ * Panel for widget configuration of the content block widget
  * 
  * @author Martin Cassidy
  */

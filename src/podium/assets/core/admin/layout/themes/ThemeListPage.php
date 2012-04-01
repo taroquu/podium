@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ThemeListPage
+ * Page for listing themes
  * 
  * @author Martin Cassidy
  */

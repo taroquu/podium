@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ContentSetupPanel
+ * Form panel for insertion of a content value
  * 
  * @author Martin Cassidy
  */

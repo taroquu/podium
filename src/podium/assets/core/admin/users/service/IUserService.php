@@ -21,7 +21,7 @@
  * */
 
 /**
- *
+ * Bussines/system service hybrid for users
  * @author Martin Cassidy
  */
 interface IUserService

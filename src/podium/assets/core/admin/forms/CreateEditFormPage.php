@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of CreateEditFormPage
+ * Page for creating or editing a form
  * 
  * @author Martin Cassidy
  */

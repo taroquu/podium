@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of Theme
+ * Domain object for a basic theme
  * 
  * @author Martin Cassidy
  * @todo normalize the theme domains

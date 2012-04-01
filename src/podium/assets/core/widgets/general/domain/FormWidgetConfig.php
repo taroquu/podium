@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of FormWidgetConfig
+ * Domain object for the form widget
  * 
  * @author Martin Cassidy
  */

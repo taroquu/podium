@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of OptionsPanel
+ * Panel for setting the post submit action of a form
  * 
  * @author Martin Cassidy
  */

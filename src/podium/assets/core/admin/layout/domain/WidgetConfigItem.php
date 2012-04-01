@@ -21,8 +21,8 @@
  * */
 
 /**
- * Description of WidgetConfigItem
- * 
+ * Domain object for a name value pair on a widget config
+ * @todo is this class still being used since the widget config enhancement?
  * @author Martin Cassidy
  */
 class WidgetConfigItem extends \picon\ComonDomainBase

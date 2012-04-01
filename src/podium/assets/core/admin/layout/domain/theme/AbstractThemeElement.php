@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of AbstractThemeElement
+ * Domain object for any theme element
  * 
  * @author Martin Cassidy
  */

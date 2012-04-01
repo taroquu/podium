@@ -22,7 +22,7 @@
 
 /**
  * Prints out raw CSS generated from a them
- * @todo this is temperary only
+ * @todo this is a bit hacky and is temperary
  * @author Martin Cassidy
  */
 class ThemeStyle extends picon\MarkupContainer

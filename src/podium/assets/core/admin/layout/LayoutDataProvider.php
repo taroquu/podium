@@ -24,7 +24,7 @@ use picon\AbstractInjectedDataProvider;
 use picon\BasicModel;
 
 /**
- * Description of LayoutDataProvider
+ * Data provider for layouts
  *
  * @author Martin Cassidy
  */

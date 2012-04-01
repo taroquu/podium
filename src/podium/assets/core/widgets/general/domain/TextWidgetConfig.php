@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of TextWidgetConfig
+ * Domain object for the text widget
  * 
  * @author Martin Cassidy
  */

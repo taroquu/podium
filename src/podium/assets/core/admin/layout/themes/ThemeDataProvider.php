@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ThemeDataProvider
+ * Data provider for themes
  * 
  * @author Martin Cassidy
  */

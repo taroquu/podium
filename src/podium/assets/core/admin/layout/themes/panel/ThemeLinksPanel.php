@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of LinksPanel
+ * Tab panel for theme links
  * 
  * @author Martin Cassidy
  * @todo remove duplication with a repeating view

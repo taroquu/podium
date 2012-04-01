@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ContentPage
+ * Generic content page
  *
  * @author Martin Cassidy
  */

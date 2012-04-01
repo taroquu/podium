@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of MaxValidator
+ * Domain for a validator with a maximum value
  * 
  * @author Martin Cassidy
  */

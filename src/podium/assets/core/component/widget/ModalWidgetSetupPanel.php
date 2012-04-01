@@ -21,7 +21,8 @@
  * */
 
 /**
- * Description of ModalWidgetSetupPanel
+ * Wrapping panel for widget config modal window contents, adding form 
+ * and buttons
  * 
  * @author Martin Cassidy
  */

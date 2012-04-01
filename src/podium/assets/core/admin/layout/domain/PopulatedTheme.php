@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of PopulatedTheme
+ * A theme which has been populated with all of its elements
  * 
  * @author Martin Cassidy
  */

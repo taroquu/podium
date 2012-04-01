@@ -22,7 +22,7 @@
 
 
 /**
- * Description of FormPage
+ * Page for showing a list of forms
  *
  * @author Martin Cassidy
  */

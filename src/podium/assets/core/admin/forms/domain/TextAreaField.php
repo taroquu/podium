@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of TextAreaField
+ * Domain for a text area form field
  * 
  * @author Martin Cassidy
  */

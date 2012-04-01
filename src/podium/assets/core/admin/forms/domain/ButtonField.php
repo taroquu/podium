@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ButtonField
+ * Domain for a form button
  * 
  * @author Martin Cassidy
  */

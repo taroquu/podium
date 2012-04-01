@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of AbstractPopulatedLayoutBlockPanel
+ * A layout block panel populated with widgets
  * 
  * @author Martin Cassidy
  */

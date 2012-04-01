@@ -26,7 +26,7 @@ use picon\BasicModel;
 use picon\AttributeAppender;
 
 /**
- * Description of AbstractLayoutBlockPanel
+ * Panel representing the visual layout block
  *
  * @author Martin Cassidy
  */

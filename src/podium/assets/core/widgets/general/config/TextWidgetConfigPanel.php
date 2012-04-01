@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of TextWidgetConfigPanel
+ * Panel for widget configuration of the text block (rich text) widget
  * 
  * @author Martin Cassidy
  */

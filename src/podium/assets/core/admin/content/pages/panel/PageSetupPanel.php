@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of PageSetupPanel
+ * Page setup options panel
  * 
  * @author Martin Cassidy
  */

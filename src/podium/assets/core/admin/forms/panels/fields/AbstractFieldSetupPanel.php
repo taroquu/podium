@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of FieldSetupPanel
+ * Panel for configuring any form field
  * 
  * @author Martin Cassidy
  */

@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of UserDao
+ * Database access object for users
  * 
  * @author Martin Cassidy
  * @Repository

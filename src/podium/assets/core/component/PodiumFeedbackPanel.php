@@ -21,8 +21,10 @@
  * */
 
 /**
- * Description of PodiumFeedbackPanel
+ * Feedback panel with a bit of extra css,
+ * Panel hides itself if no messages are present
  * 
+ * @todo get a message icon in here
  * @author Martin Cassidy
  */
 class PodiumFeedbackPanel extends picon\FeedbackPanel

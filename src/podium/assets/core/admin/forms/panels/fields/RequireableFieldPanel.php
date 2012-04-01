@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of RequireableFieldPanel
+ * Panel for configuring a form field which can be made manditory
  * 
  * @author Martin Cassidy
  */

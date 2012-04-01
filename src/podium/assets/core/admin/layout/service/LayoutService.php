@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of LayoutService
+ * Implementation of the layout service
  *
  * @author Martin Cassidy
  * @Service

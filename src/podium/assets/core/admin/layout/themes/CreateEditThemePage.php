@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of CreateEditThemePage
+ * Page for creating or editing a theme
  * 
  * @author Martin Cassidy
  */

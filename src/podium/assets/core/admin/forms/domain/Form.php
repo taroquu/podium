@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of Form
+ * Domain for a form
  * 
  * @author Martin Cassidy
  */

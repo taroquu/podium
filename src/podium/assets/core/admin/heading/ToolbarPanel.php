@@ -23,9 +23,10 @@
 use picon\RepeatingView;
 
 /**
- * Description of ToolbarPanel
+ * Main heading panel for showing both the heading and a toolbar at the 
+ * top of the page
  *
- * @author Martin
+ * @author Martin Cassidy
  */
 class ToolbarPanel extends HeadingPanel
 {

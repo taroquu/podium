@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of UserDataProvider
+ * Data provider for users
  * 
  * @author Martin Cassidy
  */

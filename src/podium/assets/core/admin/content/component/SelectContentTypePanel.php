@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of SelectContentTypePanel
+ * Panel for use when selecting a content type from a dropdown
  * 
  * @author Martin Cassidy
  */

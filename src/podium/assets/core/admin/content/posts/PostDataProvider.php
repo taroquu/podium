@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of PostDataProvider
+ * Data provider for posts
  * 
  * @author Martin Cassidy
  */

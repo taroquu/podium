@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of AuthorWidget
+ * Widget which shows the authors name
  * 
  * @author Martin Cassidy
  */

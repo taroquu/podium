@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of FormField
+ * Domain for a form field
  * 
  * @author Martin Cassidy
  */

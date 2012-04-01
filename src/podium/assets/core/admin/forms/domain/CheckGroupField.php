@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of CheckGroupField
+ * Domain for a group of checkboxs
  * 
  * @author Martin Cassidy
  */

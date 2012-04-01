@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ThemeService
+ * Implemenation of the theme service
  * 
  * @author Martin Cassidy
  * @Service

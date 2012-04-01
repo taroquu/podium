@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of DropDownPanel
+ * Panel which shows a drop down for use by the form widget
  * 
  * @author Martin Cassidy
  */

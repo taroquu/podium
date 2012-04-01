@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of CheckBoxPanel
+ * Panel which shows a check box for use by the form widget
  * 
  * @author Martin Cassidy
  */

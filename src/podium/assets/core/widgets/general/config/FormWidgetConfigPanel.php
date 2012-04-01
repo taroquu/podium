@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of FormWidgetConfigPanel
+ * Panel for widget configuration of the form widget
  * 
  * @author Martin Cassidy
  */

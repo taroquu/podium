@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ContentTypeAttribute
+ * Attribute with a content type domain
  * 
  * @author Martin Cassidy
  */

@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of AbstractValidator
+ * Domain for a form field validator
  * 
  * @author Martin Cassidy
  */

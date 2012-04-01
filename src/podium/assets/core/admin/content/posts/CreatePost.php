@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of CreatePost
+ * Page for creating a post
  * 
  * @author Martin Cassidy
  */

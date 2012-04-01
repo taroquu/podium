@@ -21,7 +21,8 @@
  * */
 
 /**
- * Description of PageSetPanel
+ * Panel for showing pages on the page list,
+ * recurisvly includes itself within itself to show child pages
  * 
  * @author Martin Cassidy
  */

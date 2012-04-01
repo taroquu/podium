@@ -21,11 +21,11 @@
  * */
 
 /**
- * Description of PodiumAuthorisationStrategory
+ * Authorisation strategy for the admin portal
  * 
  * @author Martin Cassidy
  */
-class PodiumAuthorisationStrategory extends \picon\AbstractPageClassAuthorisationStrategy
+class PodiumAuthorisationStrategy extends \picon\AbstractPageClassAuthorisationStrategy
 {
     public function __construct()
     {

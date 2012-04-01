@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of HeaderWidgetConfigPanel
+ * Panel for widget configuration of the heading widget
  * 
  * @author Martin Cassidy
  */

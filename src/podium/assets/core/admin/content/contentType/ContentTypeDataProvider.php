@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ContentTypeDataProvider
+ * Data provider for content types
  * 
  * @author Martin Cassidy
  */

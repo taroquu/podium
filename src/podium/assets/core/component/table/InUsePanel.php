@@ -21,7 +21,8 @@
  * */
 
 /**
- * Description of InUsePanel
+ * An image panel which shows either a tick or a cross depending on the 
+ * passed state
  * 
  * @author Martin Cassidy
  */

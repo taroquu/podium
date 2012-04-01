@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ArrangementFormPanel
+ * Panel for the initial step of creating an arrangement
  * 
  * @author Martin Cassidy
  */

@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of RequirableFormField
+ * Domain for a form field which can be made manditory
  * 
  * @author Martin Cassidy
  */

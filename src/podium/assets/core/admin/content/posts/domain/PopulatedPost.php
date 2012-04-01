@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of PopulatedPost
+ * Fully populated post domain
  * 
  * @author Martin Cassidy
  */

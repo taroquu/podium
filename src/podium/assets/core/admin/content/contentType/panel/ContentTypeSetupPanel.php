@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ContentTypeSetupPanel
+ * Modal window content panel for setup of a content type attribute
  * 
  * @author Martin Cassidy
  */

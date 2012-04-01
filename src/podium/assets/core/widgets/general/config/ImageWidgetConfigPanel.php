@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ImageWidgetConfigPanel
+ * Panel for widget configuration of the image widget
  * 
  * @author Martin Cassidy
  */

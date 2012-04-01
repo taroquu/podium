@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of CreateUpdatePage
+ * Page for creating pages
  * 
  * @todo this page will need to use the wizard component when it exists
  * @author Martin Cassidy

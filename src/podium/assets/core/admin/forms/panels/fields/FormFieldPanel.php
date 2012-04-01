@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of FormFieldPanel
+ * Panel showing a form field on the field list of the form setup page
  * 
  * @author Martin Cassidy
  */

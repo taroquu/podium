@@ -28,9 +28,9 @@ use picon\Panel;
 use picon\SerializableClosure;
 
 /**
- * Description of PanelColumn
+ * A column for a data table which contains a panel
  *
- * @author Martin
+ * @author Martin Cassidy
  */
 class PanelColumn extends AbstractColumn
 {

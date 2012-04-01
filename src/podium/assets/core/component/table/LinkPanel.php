@@ -27,9 +27,9 @@ use picon\Label;
 use picon\Args;
 
 /**
- * Description of LinkPanel
+ * A panel which shows a link
  *
- * @author Martin
+ * @author Martin Cassidy
  */
 class LinkPanel extends Panel
 {

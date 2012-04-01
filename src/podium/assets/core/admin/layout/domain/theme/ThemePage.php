@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ThemePage
+ * Domain object for the overall page theme
  * 
  * @author Martin Cassidy
  */

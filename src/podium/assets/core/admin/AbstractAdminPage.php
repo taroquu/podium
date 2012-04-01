@@ -30,7 +30,7 @@ use picon\BasicModel;
 use picon\EmptyPanel;
 
 /**
- * Description of AbstractAdminPage
+ * Admin page abstraction, shows menu links
  *
  * @author Martin Cassidy
  */

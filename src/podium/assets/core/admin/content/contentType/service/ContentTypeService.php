@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ContentTypeService
+ * Impl of the content type service
  * 
  * @author Martin Cassidy
  * @Service

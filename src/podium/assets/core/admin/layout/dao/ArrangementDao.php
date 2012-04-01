@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of ArranagementDao
+ * Database access object for working with arrangements
  * 
  * @author Martin Cassidy
  * @Repository

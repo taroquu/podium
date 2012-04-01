@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of WidgetFactory
+ * Factory for creating widget panels and widget config panels,
  * 
  * @author Martin Cassidy
  */

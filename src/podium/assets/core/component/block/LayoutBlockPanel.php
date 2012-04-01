@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of LayoutBlockPanel
+ * Basic layout block panel, with no contents
  * 
  * @author Martin Cassidy
  */

@@ -21,7 +21,7 @@
  * */
 
 /**
- *
+ * Business service for working with forms
  * @author Martin Cassidy
  */
 interface IFormService

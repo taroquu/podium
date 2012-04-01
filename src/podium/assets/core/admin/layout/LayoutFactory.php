@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of LayoutFactory
+ * Factory for creating layout blocks
  * 
  * @author Martin Cassidy
  */

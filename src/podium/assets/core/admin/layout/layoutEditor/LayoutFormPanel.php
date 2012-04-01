@@ -24,9 +24,9 @@ use picon\Panel;
 use picon\Form;
 
 /**
- * Description of LayoutFormPanel
+ * Form panel for setting up the name of a layout
  *
- * @author Martin
+ * @author Martin Cassidy
  */
 class LayoutFormPanel extends Panel
 {

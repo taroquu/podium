@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of PostEditPage
+ * Page for editing posts
  * 
  * @author Martin Cassidy
  */

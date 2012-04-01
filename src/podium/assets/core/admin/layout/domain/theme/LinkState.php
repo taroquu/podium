@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of LinkState
+ * Domain object for a link in a state (active/hover etc)
  * 
  * @author Martin Cassidy
  */

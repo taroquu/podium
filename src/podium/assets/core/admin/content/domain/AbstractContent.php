@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of AbstractContent
+ * Abstract for all contents
  * 
  * @author Martin Cassidy
  */

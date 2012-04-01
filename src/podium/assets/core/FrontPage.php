@@ -23,7 +23,7 @@
 use picon\WebPage;
 
 /**
- * Description of FrontPage
+ * The front end page, shows any kind of web page type
  *
  * @author Martin Cassidy
  */

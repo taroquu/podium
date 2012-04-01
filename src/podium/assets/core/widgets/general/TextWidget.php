@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of TextWidget
+ * Widget panel for rich text
  * 
  * @author Martin Cassidy
  */

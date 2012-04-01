@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of DropDownField
+ * Domain for a dropdown form field
  * 
  * @author Martin Cassidy
  */

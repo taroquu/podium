@@ -21,7 +21,7 @@
  * */
 
 /**
- * Description of WidgetDao
+ * Database access object for working with widgets
  * 
  * @author Martin Cassidy
  * @Repository
