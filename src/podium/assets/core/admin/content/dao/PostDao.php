@@ -73,6 +73,15 @@ class PostDao extends AbstractDao
         
         return $posts[0];
     }
+    
+    public function getPostByContentType($typeId)
+    {
+        $mapper = new picon\CallbackRowMapper(function($row)
+        {
+            return new Post($row->post_id, $row->id, $row->name);
+        });
+        return $this->getTemplate()->query("SELECT content.*, post.id AS post_id FROM post INNER JOIN content ON post.content_id = content.id WHERE content_type_id = %d", $mapper, array($typeId));
+    }
 }
 
 ?>

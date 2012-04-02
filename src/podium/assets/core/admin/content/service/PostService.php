@@ -133,6 +133,11 @@ class PostService implements IPostService
             $this->widgetService->deleteWidgetConfig($attribute->widget, $configs[$attribute->attributeId]);
         }
     }
+    
+    public function getPostByContentType($typeId)
+    {
+        return $this->postDao->getPostByContentType($typeId);
+    }
 }
 
 ?>

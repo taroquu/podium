@@ -67,6 +67,14 @@ interface IPostService
      */
     function deletePost($post);
     
+    /**
+     * Get all the posts for a content type
+     * @todo turn this into a unified filiter method
+     * with pagination and ordering
+     * @param int $type 
+     */
+    function getPostByContentType($type);
+    
     
 }
 
