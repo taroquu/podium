@@ -21,34 +21,39 @@
  * */
 
 /**
- * Abstract for all contents
+ * Panel for form field elements for use by the form widget
  * 
  * @author Martin Cassidy
  */
-abstract class AbstractContent extends \picon\ComonDomainBase implements picon\Equalable
+abstract class AbstractFormFieldPanel extends picon\Panel
 {
-    private $id;
-    private $name;
-    private $contentType;
-    private $contentId;
+    private $field;
+    private $fieldComponent;
     
-    public function __construct($id, $contentId, $name)
+    public function __construct($id, AbstractFormField $field)
     {
-        $this->name = $name;
-        $this->id = $id;
-        $this->contentId = $contentId;
+        parent::__construct($id);
+        $this->field = $field;
+        $this->fieldComponent = $this->getFieldComponent();
+        
+        if($field instanceof AbstractRequirableFormField)
+        {
+            $this->fieldComponent->setRequired($field->required);
+        }
+        
+        $this->add($this->fieldComponent);
     }
     
-    public function equals($object)
+    public function getField()
     {
-        if(!($object instanceof AbstractContent))
-        {
-            return false;
-        }
-        else
-        {
-            return $object->id == $this->id;
-        }
+        return $this->field;
+    }
+    
+    protected abstract function getFieldComponent();
+    
+    public function getInternalFormField()
+    {
+        return $this->fieldComponent;
     }
 }
 

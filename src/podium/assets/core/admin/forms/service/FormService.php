@@ -33,6 +33,11 @@ class FormService implements IFormService
      */
     private $formDao;
     
+    /**
+     * @Resource
+     */
+    private $pageService;
+    
     public function getForms($start, $count)
     {
         return $this->formDao->getRecords($start, $count);
@@ -45,8 +50,14 @@ class FormService implements IFormService
     
     public function getPopulatedForm(Form $form)
     {
-        $populated = $this->formDao->getForm($form->id);
-        $populated->fields = $this->getFields($form->id);
+        return $this->getForm($form->id);
+    }
+    
+    public function getForm($formId)
+    {
+        $populated = $this->formDao->getForm($formId);
+        $populated->fields = $this->getFields($formId);
+        $populated->page = $this->pageService->getPage($populated->page);
         return $populated;
     }
     

@@ -25,15 +25,38 @@
  * 
  * @author Martin Cassidy
  */
-class ButtonPanel extends \picon\Panel
+class ButtonPanel extends AbstractFormFieldPanel
 {
-    public function __construct($id, $type, $text)
+    private $submit;
+    private $error;
+    
+    public function __construct($id, ButtonField $field, $submit, $error)
     {
-        parent::__construct($id);
-        $button = new \picon\Button('button');
-        $this->add($button);
-        $button->add(new picon\AttributeModifier('value', new picon\BasicModel($text)));
-        $button->add(new picon\AttributeModifier('type', new picon\BasicModel($type)));
+        parent::__construct($id, $field);
+        $this->submit = $submit;
+        $this->error = $error;
+    }
+    
+    protected function getFieldComponent()
+    {
+        $self = $this;
+        $button = new \picon\Button('button', function() use($self)
+        {
+            $callable = $self->submit;
+            $callable();
+        }, function () use($self)
+        {
+            $callable = $self->error;
+            $callable();
+        });
+        $button->add(new picon\AttributeModifier('value', new picon\BasicModel($this->getField()->text)));
+        $button->add(new picon\AttributeModifier('type', new picon\BasicModel($this->getField()->type)));
+        return $button;
+    }
+    
+    public function __get($name)
+    {
+        return $this->$name;
     }
 }
 

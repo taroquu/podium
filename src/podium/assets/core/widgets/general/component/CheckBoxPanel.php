@@ -25,13 +25,17 @@
  * 
  * @author Martin Cassidy
  */
-class CheckBoxPanel extends \picon\Panel
+class CheckBoxPanel extends AbstractFormFieldPanel
 {
-    public function __construct($id, $label, Model $model = null)
+    public function __construct($id, CheckBoxField $field)
     {
-        parent::__construct($id, $model);
-        $this->add(new picon\Label('checkLabel', new picon\BasicModel($label)));
-        $this->add(new picon\CheckBox('check'));
+        parent::__construct($id, $field);
+        $this->add(new picon\Label('checkLabel', new picon\BasicModel($field->label)));
+    }
+    
+    protected function getFieldComponent()
+    {
+        return new picon\CheckBox('check');
     }
 }
 

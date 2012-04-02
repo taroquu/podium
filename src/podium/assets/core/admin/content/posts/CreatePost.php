@@ -56,6 +56,7 @@ class CreatePost extends AbstractAdminTitlePage
             }
             else
             {
+                $form->get('panel')->preProcess();
                 $self->getPostService()->createOrUpdatePost($form->getModelObject());
                 $self->setPage(PostListPage::getIdentifier());
             }

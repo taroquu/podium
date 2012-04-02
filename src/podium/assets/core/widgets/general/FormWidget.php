@@ -22,7 +22,7 @@
 
 /**
  * Widget panel for forms
- * 
+ * @todo update the form to use a compound model
  * @author Martin Cassidy
  */
 class FormWidget extends Widget
@@ -32,18 +32,57 @@ class FormWidget extends Widget
      */
     private $formService;
     
+    /**
+     * @Resource
+     */
+    private $submissionService;
+    
+    private $formFields;
+    
     public function __construct($id, WidgetItem $item)
     {
         parent::__construct($id, $item);
+        
+        $fullForm = $this->formService->getForm($item->config->form);
+        
+        $this->formFields = array();
         $form = new picon\Form('form');
         $this->add($form);
+        
+        $this->add(new \picon\FeedbackPanel('feedback'));
         
         $fields = new picon\RepeatingView('field');
         $form->add($fields);
         
+        $self = $this;
+        $onSubmit = function() use ($self, $form, $fullForm)
+        {
+            $values = array();
+            foreach($self->getFormFields() as $field)
+            {
+                $values[$field->getField()->name] = $field->getInternalFormField()->getConvertedInput();
+            }
+            $self->getSubmissionService()->submit($fullForm, $values);
+            
+            if($fullForm->sumitActionType==1)
+            {
+                $self->success($fullForm->message);
+                $form->setVisible(false);
+            }
+            else
+            {
+                $self->setPage(new FrontPage($fullForm->page->id));
+            }
+        };
+        
+        $onError = function()
+        {
+            //nothing
+        };
+        
         if($item->config->form!=null)
         {
-            $formFields = $this->formService->getFields($item->config->form);
+            $formFields = $fullForm->fields;
             
             foreach($formFields as $field)
             {
@@ -54,39 +93,50 @@ class FormWidget extends Widget
                 
                 $fieldElement = null;
                 
+                //@todo turn this into a factory
                 if($field instanceof DropDownField)
                 {
-                    $fieldElement = new DropDownPanel('element', $field->options);
+                    $fieldElement = new DropDownPanel('element', $field);
                 }
                 else if($field instanceof TextField)
                 {
-                    $fieldElement = new TextFieldPanel('element');
+                    $fieldElement = new TextFieldPanel('element', $field);
                 }
                 else if($field instanceof TextAreaField)
                 {
-                    $fieldElement = new TextAreaPanel('element');
+                    $fieldElement = new TextAreaPanel('element', $field);
                 }
                 else if($field instanceof CheckBoxField)
                 {
-                    $fieldElement = new CheckBoxPanel('element', $field->label);
+                    $fieldElement = new CheckBoxPanel('element', $field);
                 }
                 else if($field instanceof CheckGroupField)
                 {
-                    $fieldElement = new \picon\CheckChoice('element', $field->options);
+                    $fieldElement = new CheckChoicePanel('element', $field);
                 }
                 else if($field instanceof RadioField)
                 {
-                    $fieldElement = new \picon\RadioChoice('element', $field->options);
+                    $fieldElement = new RadioChoicePanel('element', $field);
                 }
                 else if($field instanceof ButtonField)
                 {
-                    $fieldElement = new ButtonPanel('element', $field->type, $field->text);
+                    $fieldElement = new ButtonPanel('element', $field, $onSubmit, $onError);
                     $label->setVisible(false);
                 }
-
+                $this->formFields[] = $fieldElement;
                 $element->add($fieldElement);
             }
         }
+    }
+    
+    public function getSubmissionService()
+    {
+        return $this->submissionService;
+    }
+    
+    public function getFormFields()
+    {
+        return $this->formFields;
     }
 }
 

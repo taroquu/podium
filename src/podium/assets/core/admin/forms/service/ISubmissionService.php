@@ -21,35 +21,46 @@
  * */
 
 /**
- * Abstract for all contents
- * 
+ * Business service for working with submissions
  * @author Martin Cassidy
  */
-abstract class AbstractContent extends \picon\ComonDomainBase implements picon\Equalable
+interface ISubmissionService
 {
-    private $id;
-    private $name;
-    private $contentType;
-    private $contentId;
+    /**
+     * Insert a form submission
+     * @param string $formName
+     * @param array $values 
+     */
+    function submit(Form $form, $values);
     
-    public function __construct($id, $contentId, $name)
-    {
-        $this->name = $name;
-        $this->id = $id;
-        $this->contentId = $contentId;
-    }
     
-    public function equals($object)
-    {
-        if(!($object instanceof AbstractContent))
-        {
-            return false;
-        }
-        else
-        {
-            return $object->id == $this->id;
-        }
-    }
+    /**
+     * Get form submissions
+     * @param int $start
+     * @param int $count 
+     * @return array
+     */
+    function getSubmissions($start, $count);
+    
+    
+    /**
+     * Get the total number of submissions
+     * @return int
+     */
+    function getSubmissionSize();
+    
+    /**
+     * Delete the given submission
+     * @param Submission $submission
+     */
+    function delete(Submission $submission);
+    
+    /**
+     * Get a submission by its Id
+     * @param type $submissionId 
+     * @return Submission
+     */
+    function getSubmission($submissionId);
 }
 
 ?>

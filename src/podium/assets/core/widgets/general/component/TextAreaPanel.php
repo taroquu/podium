@@ -21,17 +21,20 @@
  * */
 
 /**
- * /**Panel which shows a text area for use by the form widgetDescription of TextAreaPanel
-
+ * Panel which shows a text area for use by the form widgetDescription of TextAreaPanel
  * 
  * @author Martin Cassidy
  */
-class TextAreaPanel extends \picon\Panel
+class TextAreaPanel extends AbstractFormFieldPanel
 {
-    public function __construct($id, Model $model = null)
+    public function __construct($id, TextAreaField $field)
     {
-        parent::__construct($id, $model);
-        $this->add(new picon\TextArea('textArea'));
+        parent::__construct($id, $field);
+    }
+    
+    protected function getFieldComponent()
+    {
+        return new picon\TextArea('textArea');
     }
 }
 

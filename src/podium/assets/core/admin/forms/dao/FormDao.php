@@ -51,11 +51,11 @@ class FormDao extends AbstractDao
             
             if($form->sumitActionType==1)
             {
-                $form->message = $row->action_value;
+                $form->message = $row->message;
             }
             else
             {
-                $form->page = $row->action_value;
+                $form->page = $row->page_id;
             }
             return $form;
         });
@@ -80,14 +80,14 @@ class FormDao extends AbstractDao
     
     public function create(PopulatedForm $form)
     {
-        $action = $form->sumitActionType==1?$form->message:$form->page;
-        return $this->getTemplate()->insert("INSERT INTO form (name, action, action_value) VALUES ('%s', '%s','%s' )", array($form->name, $form->sumitActionType, $action));
+        $page = $form->page==null?'NULL':sprintf("'%s'", $form->page->id);
+        return $this->getTemplate()->insert("INSERT INTO form (name, action, message, page_id) VALUES ('%s', '%s','%s', %s)", array($form->name, $form->sumitActionType, $form->message, $page));
     }
     
     public function update(PopulatedForm $form)
     {
-        $action = $form->sumitActionType==1?$form->message:$form->page;
-        $this->getTemplate()->update("UPDATE form SET name = '%s', action = '%s', action_value = '%s' WHERE id = %d;", array($form->name, $form->sumitActionType, $action, $form->id));
+        $page = $form->page==null?'NULL':sprintf("'%s'", $form->page->id);
+        $this->getTemplate()->update("UPDATE form SET name = '%s', action = '%s', message = '%s', page_id = %s WHERE id = %d;", array($form->name, $form->sumitActionType, $form->message, $page, $form->id));
     }
     
     public function createField(AbstractFormField $field, $formId, $index)

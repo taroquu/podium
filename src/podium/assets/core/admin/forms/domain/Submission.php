@@ -21,34 +21,23 @@
  * */
 
 /**
- * Abstract for all contents
+ * Domain object for a submission
  * 
  * @author Martin Cassidy
  */
-abstract class AbstractContent extends \picon\ComonDomainBase implements picon\Equalable
+class Submission extends \picon\ComonDomainBase
 {
     private $id;
-    private $name;
-    private $contentType;
-    private $contentId;
+    private $formName;
+    private $date;
+    private $attributes;
     
-    public function __construct($id, $contentId, $name)
+    public function __construct($id, $formName, $date, $attributes = array())
     {
-        $this->name = $name;
         $this->id = $id;
-        $this->contentId = $contentId;
-    }
-    
-    public function equals($object)
-    {
-        if(!($object instanceof AbstractContent))
-        {
-            return false;
-        }
-        else
-        {
-            return $object->id == $this->id;
-        }
+        $this->formName = $formName;
+        $this->date = $date;
+        $this->attributes = $attributes;
     }
 }
 

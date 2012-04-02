@@ -25,12 +25,16 @@
  * 
  * @author Martin Cassidy
  */
-class DropDownPanel extends \picon\Panel
+class DropDownPanel extends AbstractFormFieldPanel
 {
-    public function __construct($id, $options)
+    public function __construct($id, DropDownField $field)
     {
-        parent::__construct($id);
-        $this->add(new \picon\DropDown('dropDown', $options));
+        parent::__construct($id, $field);
+    }
+    
+    protected function getFieldComponent()
+    {
+        return new \picon\DropDown('dropDown', $this->getField()->options);
     }
 }
 

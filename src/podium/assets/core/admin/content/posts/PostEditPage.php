@@ -33,6 +33,8 @@ class PostEditPage extends AbstractAdminTitlePage
     private $postService;
     private $post;
     
+    public $contentPanel;
+    
     public function __construct(PopulatedPost $post)
     {
         parent::__construct();
@@ -41,22 +43,25 @@ class PostEditPage extends AbstractAdminTitlePage
         $form = new picon\Form('form', new picon\CompoundPropertyModel($this, 'post'));
         $this->add($form);
         
+        $self = $this;
         $tabs = array();
         $tabs[] = new picon\Tab('Post Setup', function($id) use($post)
         {
             return new PostSetupPanel($id, $post);
         });
-        $tabs[] = new picon\Tab('Content', function($id) use($post)
+        $tabs[] = new picon\Tab('Content', function($id) use($post, $self)
         {
-            return new ContentSetupPanel($id, $post);
+            $self->contentPanel = new ContentSetupPanel($id, $post);
+            return $self->contentPanel;
         });
         
         $tabCollection = new \picon\TabCollection($tabs);
         $form->add(new \picon\StaticTabPanel('tabs', $tabCollection));
         
-        $self = $this;
+        
         $form->add(new picon\Button('save', function() use($self, $form)
         {
+            $self->contentPanel->preProcess();
             $self->getPostService()->createOrUpdatePost($form->getModelObject());
             $self->setPage(PostListPage::getIdentifier());
         }));

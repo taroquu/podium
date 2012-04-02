@@ -56,6 +56,7 @@ class CreatePage extends AbstractAdminTitlePage
             }
             else
             {
+                $form->get('panel')->preProcess();
                 $self->getPageService()->createOrUpdatePage($form->getModelObject());
                 $self->setPage(PagesListPage::getIdentifier());
             }

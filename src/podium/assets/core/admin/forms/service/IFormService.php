@@ -48,6 +48,14 @@ interface IFormService
     function getPopulatedForm(Form $form);
     
     /**
+     * Get a form by its id
+     * @todo this should replace getPopulatedForm();
+     * @param int $formId
+     * @return PopulatedForm 
+     */
+    function getForm($formId);
+    
+    /**
      * Create the form if it does not exist,
      * update otherwise
      * @param PopulatedForm $form 

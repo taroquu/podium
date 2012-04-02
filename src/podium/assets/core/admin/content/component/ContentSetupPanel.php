@@ -27,19 +27,12 @@
  */
 class ContentSetupPanel extends \picon\Panel
 {
-    /**
-     * @Resource
-     */
-    private $widgetService;
-    
-    /**
-     * @Resource
-     */
-    private $contentTypeService;
+    private $panels;
     
     public function __construct($id, PopulatedPage $page)
     {
         parent::__construct($id);
+        $this->panels = array();
         $view = new picon\RepeatingView('configEdit');
         $this->add($view);
 
@@ -48,8 +41,17 @@ class ContentSetupPanel extends \picon\Panel
             $configPanel = WidgetFactory::getWidgetConfigPanel($view->getNextChildId(), $attribute->widget);
             $configPanel->setModel(new \picon\CompoundPropertyModel($attribute, 'widget.config'));
             $view->add($configPanel);
+            $this->panels [] = $configPanel;
         }
         
+    }
+    
+    public function preProcess()
+    {
+        foreach($this->panels as $panel)
+        {
+            $panel->preProcess();
+        }
     }
 }
 

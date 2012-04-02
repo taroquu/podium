@@ -21,34 +21,20 @@
  * */
 
 /**
- * Abstract for all contents
+ * Panel for showing a radio choice for the form widget
  * 
  * @author Martin Cassidy
  */
-abstract class AbstractContent extends \picon\ComonDomainBase implements picon\Equalable
+class CheckChoicePanel extends AbstractFormFieldPanel
 {
-    private $id;
-    private $name;
-    private $contentType;
-    private $contentId;
-    
-    public function __construct($id, $contentId, $name)
+    public function __construct($id, TextField $field)
     {
-        $this->name = $name;
-        $this->id = $id;
-        $this->contentId = $contentId;
+        parent::__construct($id, $field);
     }
     
-    public function equals($object)
+    protected function getFieldComponent()
     {
-        if(!($object instanceof AbstractContent))
-        {
-            return false;
-        }
-        else
-        {
-            return $object->id == $this->id;
-        }
+        return new picon\CheckChoice('element', $this->getField()->options);
     }
 }
 

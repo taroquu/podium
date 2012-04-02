@@ -33,6 +33,8 @@ class EditPage extends AbstractAdminTitlePage
     private $pageService;
     private $page;
     
+    public $contentPanel;
+    
     public function __construct(PopulatedPage $page)
     {
         parent::__construct();
@@ -40,23 +42,26 @@ class EditPage extends AbstractAdminTitlePage
         $this->add(new PodiumFeedbackPanel('feedback'));
         $form = new picon\Form('form', new picon\CompoundPropertyModel($this, 'page'));
         $this->add($form);
+        $self = $this;
         
         $tabs = array();
         $tabs[] = new picon\Tab('Page Setup', function($id) use($page)
         {
             return new PageSetupPanel($id, $page);
         });
-        $tabs[] = new picon\Tab('Content', function($id) use($page)
+        $tabs[] = new picon\Tab('Content', function($id) use($page, $self)
         {
-            return new ContentSetupPanel($id, $page);
+            $self->contentPanel = new ContentSetupPanel($id, $page);
+            return $self->contentPanel;
         });
         
         $tabCollection = new \picon\TabCollection($tabs);
         $form->add(new \picon\StaticTabPanel('tabs', $tabCollection));
         
-        $self = $this;
+        
         $form->add(new picon\Button('save', function() use($self, $form)
         {
+            $self->contentPanel->preProcess();
             $self->getPageService()->createOrUpdatePage($form->getModelObject());
             $self->setPage(PagesListPage::getIdentifier());
         }));

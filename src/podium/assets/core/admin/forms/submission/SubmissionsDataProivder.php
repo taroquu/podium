@@ -21,34 +21,30 @@
  * */
 
 /**
- * Abstract for all contents
+ * Data provider for form submissions
  * 
  * @author Martin Cassidy
  */
-abstract class AbstractContent extends \picon\ComonDomainBase implements picon\Equalable
+class SubmissionsDataProivder extends picon\AbstractInjectedDataProvider
 {
-    private $id;
-    private $name;
-    private $contentType;
-    private $contentId;
+    /**
+     * @Resource
+     */
+    private $submissionService;
     
-    public function __construct($id, $contentId, $name)
+    public function getRecords($start, $count)
     {
-        $this->name = $name;
-        $this->id = $id;
-        $this->contentId = $contentId;
+        return $this->submissionService->getSubmissions($start, $count);
     }
     
-    public function equals($object)
+    public function getSize()
     {
-        if(!($object instanceof AbstractContent))
-        {
-            return false;
-        }
-        else
-        {
-            return $object->id == $this->id;
-        }
+        return $this->submissionService->getSubmissionSize();
+    }
+    
+    public function getModel($object)
+    {
+        return new \picon\BasicModel($object);
     }
 }
 

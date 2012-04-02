@@ -34,18 +34,27 @@ class FrontPage extends WebPage
      */
     private $pageService;
     
-    public function __construct()
+    public function __construct($overrideId = null)
     {
         parent::__construct();
         $path = substr(urldecode(str_replace($this->getRequest()->getRootPath(), '', $this->getRequest()->getPath())), 1);
-        $pageId = null;
-        if(empty($path))
+        
+        $page = null;
+        if($overrideId==null)
         {
-            $pageId = $this->pageService->getHomePageId();
+            $pageId = null;
+            if(empty($path))
+            {
+                $pageId = $this->pageService->getHomePageId();
+            }
+            else
+            {
+                $pageId = $this->pageService->getPageIdForPath($path);
+            }
         }
         else
         {
-            $pageId = $this->pageService->getPageIdForPath($path);
+            $pageId = $overrideId;
         }
         $page = $this->pageService->getPage($pageId);
         

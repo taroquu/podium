@@ -27,6 +27,11 @@
  */
 class OptionsPanel extends picon\Panel
 {
+    /**
+     * @Resource
+     */
+    private $pageService;
+    
     public function __construct($id)
     {
         parent::__construct($id);
@@ -48,7 +53,16 @@ class OptionsPanel extends picon\Panel
         $this->add($action);
         
         $messageField = new picon\TextArea('message');
-        $pageField = new picon\DropDown('page', array('example page'));
+        
+        $pages = $this->pageService->getPagesStack();
+        $pageField = new picon\DropDown('page', $pages, new \picon\ChoiceRenderer(function($choice, $index)
+        {
+            return 'v'.$index;
+        }, function($choice, $index)
+        {
+            return $choice->name;
+        }));
+
         $action->add($messageField);
         $action->add($pageField);
         
