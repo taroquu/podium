@@ -34,7 +34,47 @@ class TextFieldPanel extends AbstractFormFieldPanel
     
     protected function getFieldComponent()
     {
-        return new picon\TextField('textField');
+        $field = new picon\TextField('textField');
+        
+        if($this->getField()->validator!=null)
+        {
+            $field->add($this->validatorFactory($this->getField()->validator));
+        }
+        
+        return $field;
+    }
+    
+    private function validatorFactory($validator)
+    {
+        switch($validator->name)
+        {
+            case 'Minimum Text Validator':
+                return new picon\MinimumLengthValidator($validator->min);
+            break;
+            case 'Minimum Number Validator':
+                return new \picon\MinimumValidator($validator->min);
+            break;
+            case 'Maximum Text Validator':
+                return new \picon\MaximumLengthValidator($validator->max);
+            break;
+            case 'Maximum Number Validator':
+                return new picon\MaximumValidator($validator->max);
+            break;
+            case 'Range Text Validator':
+                return new picon\RangeLengthValidator($validator->min, $validator->max);
+            break;
+            case 'Range Number Validator':
+                return new picon\RangeValidator($validator->max);
+            break;
+            case 'Pattern Validator':
+                return new picon\PatternValidator($validator->value);
+            break;
+            case 'Email Validator':
+                return new \picon\EmailAddressValidator();
+            break;
+            default:
+                throw new InvalidArgumentException(sprintf('Validator %s does not exist', $validator->name));
+        }
     }
 }
 
