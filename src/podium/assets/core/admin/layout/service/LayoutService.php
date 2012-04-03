@@ -198,6 +198,20 @@ class LayoutService implements ILayoutService
     {
         return $this->layoutDao->getLayoutUseageCount($layoutId)>0;
     }
+    
+    public function checkNameExists($name, $id = null)
+    {
+        $layouts = $this->layoutDao->getLayoutByName($name);
+
+        if(count($layouts)==0)
+        {
+            return false;
+        }
+        else
+        {
+            return $id==null?true:$layouts[0]->id!=$id;
+        }
+    }
 }
 
 ?>

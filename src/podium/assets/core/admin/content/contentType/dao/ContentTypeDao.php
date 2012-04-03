@@ -121,6 +121,16 @@ class ContentTypeDao extends AbstractDao
     {
         return $this->getTemplate()->queryForInt("SELECT count(*) FROM content WHERE content_type_id = %d;", array($contentTypeId));
     }
+    
+    public function getContentTypeByName($name)
+    {
+        $mapper = new picon\CallbackRowMapper(function($row)
+        {
+            return new ContentType($row->name, $row->type, $row->id);
+        });
+        
+        return $this->getTemplate()->query("SELECT * FROM content_type WHERE name = '%s';", $mapper, array($name));
+    }
 }
 
 ?>

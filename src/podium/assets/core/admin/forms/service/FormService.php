@@ -57,7 +57,7 @@ class FormService implements IFormService
     {
         $populated = $this->formDao->getForm($formId);
         $populated->fields = $this->getFields($formId);
-        $populated->page = $this->pageService->getPage($populated->page);
+        $populated->page = $populated->page==null?null:$this->pageService->getPage($populated->page);
         return $populated;
     }
     
@@ -225,6 +225,20 @@ class FormService implements IFormService
     public function inUse($formId)
     {
         return $this->formDao->getFormUseageCount($formId)>0;
+    }
+    
+    public function checkNameExists($name, $id = null)
+    {
+        $forms = $this->formDao->getFormByName($name);
+
+        if(count($forms)==0)
+        {
+            return false;
+        }
+        else
+        {
+            return $id==null?true:$forms[0]->id!=$id;
+        }
     }
 }
 

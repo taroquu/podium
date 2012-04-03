@@ -138,6 +138,20 @@ class PostService implements IPostService
     {
         return $this->postDao->getPostByContentType($typeId);
     }
+    
+    public function checkNameExists($name, $id = null)
+    {
+        $posts = $this->postDao->getPostByName($name);
+
+        if(count($posts)==0)
+        {
+            return false;
+        }
+        else
+        {
+            return $id==null?true:$posts[0]->id!=$id;
+        }
+    }
 }
 
 ?>

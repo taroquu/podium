@@ -45,7 +45,16 @@ class PageSetupPanel extends \picon\Panel
     public function __construct($id, $page)
     {
         parent::__construct($id);
-        $this->add(new picon\RequiredTextField('name'));
+        
+        $name = new picon\RequiredTextField('name');
+        
+        $self = $this;
+        $name->add(new NameExistsValidator(function($name) use ($self, $page)
+        {
+            return $self->getPageService()->checkNameExists($name, $page->id);
+        }));
+        
+        $this->add($name);
         $pages = $this->pageService->getPagesStack();
         $this->add(new picon\DropDown('parent_page', $pages, new \picon\ChoiceRenderer(function($choice, $index)
         {
@@ -97,6 +106,11 @@ class PageSetupPanel extends \picon\Panel
         $this->add(new picon\TextField('seoTitle'));
         $this->add(new picon\TextField('metaKeys'));
         $this->add(new picon\TextField('metaDescription'));
+    }
+    
+    public function getPageService()
+    {
+        return $this->pageService;
     }
 }
 

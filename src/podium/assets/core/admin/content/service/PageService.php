@@ -266,6 +266,20 @@ class PageService implements IPageService
     {
         $this->pageDao->setAsHomePage($pageId);
     }
+    
+    public function checkNameExists($name, $id = null)
+    {
+        $pages = $this->pageDao->getPageByName($name);
+
+        if(count($pages)==0)
+        {
+            return false;
+        }
+        else
+        {
+            return $id==null?true:$pages[0]->id!=$id;
+        }
+    }
 }
 
 ?>

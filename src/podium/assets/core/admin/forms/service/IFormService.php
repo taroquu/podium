@@ -101,6 +101,14 @@ interface IFormService
      * @return boolean
      */
     function inUse($formId);
+    
+    /**
+     * Checks whether the form name exists, ensuring it is not itself
+     * @param string $name
+     * @param int $id The id of the form (if it exists)
+     * @return boolean 
+     */
+    function checkNameExists($name, $id = null);
 }
 
 ?>

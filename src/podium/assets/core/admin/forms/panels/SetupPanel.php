@@ -27,13 +27,24 @@
  */
 class SetupPanel extends picon\Panel
 {
+    /**
+     * @Resource
+     */
+    private $formService;
+    
     private $fieldList;
     
     public function __construct($id, PopulatedForm $form)
     {
         parent::__construct($id);
         
-        $this->add(new picon\RequiredTextField('name'));
+        $name = new picon\RequiredTextField('name');
+        $self = $this;
+        $name->add(new NameExistsValidator(function($name) use ($self, $form)
+        {
+            return $self->getFormService()->checkNameExists($name, $form->id);
+        }));
+        $this->add($name);
         
         $fields = new \picon\MarkupContainer('fieldList');
         $sortable = new picon\SortableBehavior();
@@ -45,7 +56,6 @@ class SetupPanel extends picon\Panel
         $mw->setHeight(500);
         $mw->setWidth(700);
         
-        $self = $this;
         $deleteCallback = function(picon\AjaxRequestTarget $target, AbstractFormField $field) use ($form, $self, $fields)
         {
             $form->removeField($field);
@@ -109,6 +119,11 @@ class SetupPanel extends picon\Panel
     public function __set($name, $value)
     {
         $this->$name = $value;
+    }
+    
+    public function getFormService()
+    {
+        return $this->formService;
     }
 }
 

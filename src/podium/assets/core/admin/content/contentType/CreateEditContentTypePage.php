@@ -60,7 +60,16 @@ class CreateEditContentTypePage extends AbstractAdminTitlePage
         $this->add(new PodiumFeedbackPanel('feedback'));
         $form = new \picon\Form('form', new picon\CompoundPropertyModel($this, 'contentType'));
         $this->add($form);
-        $form->add(new picon\RequiredTextField('name'));
+        
+        $self = $this;
+        
+        $name = new picon\RequiredTextField('name');
+        $name->add(new NameExistsValidator(function($name) use ($self, $type)
+        {
+            return $self->getContentTypeService()->checkNameExists($name, $type->id);
+        }));
+        $form->add($name);
+        
         $typeDrop = new \picon\DropDown('type', array('page', 'post'), new \picon\ChoiceRenderer(function($choice, $index)
         {
             return $choice;
@@ -114,7 +123,6 @@ class CreateEditContentTypePage extends AbstractAdminTitlePage
         $attributeList->add($sortable);
         $form->add($attributeList);
         
-        $self = $this;
         $settingSubmitCallback = function(\picon\AjaxRequestTarget $target, ContentTypeAttribute $attribute) use ($mw, $attributeList)
         {
             $target->add($attributeList);

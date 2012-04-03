@@ -118,6 +118,16 @@ class PageDao extends AbstractDao
     {
         $this->getTemplate()->update('UPDATE page SET homepage = CASE id WHEN %d THEN 1 ELSE 0 END', array($pageId));
     }
+    
+    public function getPageByName($name)
+    {
+        $mapper = new picon\CallbackRowMapper(function($row)
+        {
+            $page = new Page($row->id, $row->content_id, $row->name);
+            return $page;
+        });
+        return $this->getTemplate()->query("SELECT page.*, content.name FROM page INNER JOIN content ON page.content_id = content.id WHERE content.name = '%s';", $mapper, array($name));
+    }
 }
 
 ?>

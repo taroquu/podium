@@ -52,6 +52,14 @@ interface IContentTypeService
     function getContentType($typeId);
     
     /**
+     * Checks whether the content type name exists, ensuring it is not itself
+     * @param string $name
+     * @param int $id The id of the content type (if it exists)
+     * @return boolean 
+     */
+    function checkNameExists($name, $id = null);
+    
+    /**
      * Get the fully populated attributes (include widget) for a content type
      * @param int $typeId
      * @return array 

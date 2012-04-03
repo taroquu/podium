@@ -108,6 +108,14 @@ interface IPageService
      * @param int $pageId 
      */
     function setAsHomePage($pageId);
+    
+    /**
+     * Checks whether the page name exists, ensuring it is not itself
+     * @param string $name
+     * @param int $id The id of the page (if it exists)
+     * @return boolean 
+     */
+    function checkNameExists($name, $id = null);
 }
 
 ?>

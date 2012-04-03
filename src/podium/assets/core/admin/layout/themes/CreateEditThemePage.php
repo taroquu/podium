@@ -48,9 +48,9 @@ class CreateEditThemePage extends AbstractAdminTitlePage
         $this->add($form);
         
         $tabs = array();
-        $tabs[] = new picon\Tab('General', function($id)
+        $tabs[] = new picon\Tab('General', function($id) use ($theme)
         {
-            return new ThemeGeneralPanel($id);
+            return new ThemeGeneralPanel($id, $theme);
         });
         $tabs[] = new picon\Tab('Headings', function($id)
         {

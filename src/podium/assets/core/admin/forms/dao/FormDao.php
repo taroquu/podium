@@ -198,6 +198,16 @@ class FormDao extends AbstractDao
     {
         return $this->getTemplate()->queryForInt("SELECT count(*) FROM form WHERE id = %d AND id IN (SELECT form FROM widget_config_form)", array($formId));
     }
+    
+    public function getFormByName($name)
+    {
+        $mapper = new picon\CallbackRowMapper(function($row)
+        {
+            return new Form($row->id, $row->name);
+        });
+        
+        return $this->getTemplate()->query("SELECT * FROM form WHERE name = '%s'", $mapper, array($name));
+    }
 }
 
 ?>

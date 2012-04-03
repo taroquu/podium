@@ -117,6 +117,15 @@ class ThemeDao extends AbstractDao
     {
         return $this->getTemplate()->queryForInt("SELECT count(*) FROM theme WHERE id = %d AND (id IN (SELECT theme_id FROM content_type) OR id IN (SELECT theme_id FROM page))", array($themeId));
     }
+    
+    public function getThemeByName($name)
+    {
+        $mapper = function($row)
+        {
+            return new Theme($row->name, $row->id);
+        };
+        return $this->getTemplate()->query("SELECT * FROM theme WHERE name = '%s'", new picon\CallbackRowMapper($mapper), array($name));
+    }
 }
 
 ?>

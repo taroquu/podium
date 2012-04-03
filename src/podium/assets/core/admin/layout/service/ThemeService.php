@@ -179,6 +179,20 @@ class ThemeService implements IThemeService
     {
         return $this->themeDao->getThemeUseageCount($themeId)>0;
     }
+    
+    public function checkNameExists($name, $id = null)
+    {
+        $themes = $this->themeDao->getThemeByName($name);
+
+        if(count($themes)==0)
+        {
+            return false;
+        }
+        else
+        {
+            return $id==null?true:$themes[0]->id!=$id;
+        }
+    }
 }
 
 ?>

@@ -80,6 +80,14 @@ interface IArrangementService
      * @return boolean
      */
     function inUse($arrangementId);
+    
+    /**
+     * Checks whether the arrangement name exists, ensuring it is not itself
+     * @param string $name
+     * @param int $id The id of the arrangement (if it exists)
+     * @return boolean 
+     */
+    function checkNameExists($name, $id = null);
 }
 
 ?>

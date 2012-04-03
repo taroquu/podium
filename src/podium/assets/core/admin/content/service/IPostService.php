@@ -76,6 +76,13 @@ interface IPostService
     function getPostByContentType($type);
     
     
+    /**
+     * Checks whether the post name exists, ensuring it is not itself
+     * @param string $name
+     * @param int $id The id of the post (if it exists)
+     * @return boolean 
+     */
+    function checkNameExists($name, $id = null);
 }
 
 ?>

@@ -129,6 +129,16 @@ class LayoutDao extends AbstractDao
     {
         return $this->getTemplate()->queryForInt("SELECT count(*) FROM arrangement WHERE layout_id = %d AND (id IN (SELECT arrangement_id FROM content_type) OR id IN (SELECT arrangement_id FROM page))", array($layoutId));
     }
+    
+    public function getLayoutByName($name)
+    {
+        $mapper = function($row)
+        {
+            $layout = new Layout($row->name, array(), $row->id);
+            return $layout;
+        };
+        return $this->getTemplate()->query("SELECT * FROM layout WHERE name = '%s'", new CallbackRowMapper($mapper), array($name));
+    }
 }
 
 ?>

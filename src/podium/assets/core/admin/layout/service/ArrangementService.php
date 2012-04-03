@@ -209,6 +209,20 @@ class ArrangementService implements IArrangementService
     {
         return $this->arrangementDao->getArrangementUseageCount($arrangementId)>0;
     }
+    
+    public function checkNameExists($name, $id = null)
+    {
+        $arrangements = $this->arrangementDao->getArrangementByName($name);
+
+        if(count($arrangements)==0)
+        {
+            return false;
+        }
+        else
+        {
+            return $id==null?true:$arrangements[0]->id!=$id;
+        }
+    }
 }
 
 ?>

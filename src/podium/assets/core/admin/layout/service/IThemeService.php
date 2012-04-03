@@ -66,6 +66,14 @@ interface IThemeService
      * @return boolean
      */
     function inUse($themeId);
+    
+    /**
+     * Checks whether the theme name exists, ensuring it is not itself
+     * @param string $name
+     * @param int $id The id of the theme (if it exists)
+     * @return boolean 
+     */
+    function checkNameExists($name, $id = null);
 }
 
 ?>

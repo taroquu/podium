@@ -78,6 +78,20 @@ class ContentTypeService implements IContentTypeService
         return $type;
     }
     
+    public function checkNameExists($name, $id = null)
+    {
+        $types = $this->contentTypeDao->getContentTypeByName($name);
+
+        if(count($types)==0)
+        {
+            return false;
+        }
+        else
+        {
+            return $id==null?true:$types[0]->id!=$id;
+        }
+    }
+    
     public function getContentTypeAttributes($typeId)
     {
         $attributes = $this->contentTypeDao->getContentTypeAttributes($typeId);

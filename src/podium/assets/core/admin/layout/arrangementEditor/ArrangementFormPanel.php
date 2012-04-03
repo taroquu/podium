@@ -30,6 +30,11 @@ class ArrangementFormPanel extends picon\Panel
     /**
      * @Resource
      */
+    private $arrangementService;
+    
+    /**
+     * @Resource
+     */
     private $layoutService;
     
     private $arrangement;
@@ -41,7 +46,14 @@ class ArrangementFormPanel extends picon\Panel
         $this->add(new PodiumFeedbackPanel('feedback'));
         $form = new picon\Form('form', new picon\CompoundPropertyModel($this, 'arrangement'));
         $this->add($form);
-        $form->add(new \picon\RequiredTextField('name'));
+        $name = new \picon\RequiredTextField('name');
+        $self = $this;
+        //This will need altering when names are editable
+        $name->add(new NameExistsValidator(function($name) use($self)
+        {
+            return $self->getArrangementService()->checkNameExists($name);
+        }));
+        $form->add($name);
         
         $layoutDrop = new picon\DropDown('layout', $this->layoutService->getLayouts(0, $this->layoutService->getLayoutsSize()), new picon\ChoiceRenderer(function($item, $index)
         {
@@ -52,7 +64,7 @@ class ArrangementFormPanel extends picon\Panel
         }));
         $layoutDrop->setRequired(true);
         $form->add($layoutDrop);
-        $self = $this;
+        
         $form->add(new \picon\Button('submit', function() use ($self, $onSave)
         {
             $onSave();
@@ -67,6 +79,11 @@ class ArrangementFormPanel extends picon\Panel
     public function __set($name, $value)
     {
         $this->$name = $value;
+    }
+    
+    public function getArrangementService()
+    {
+        return $this->arrangementService;
     }
 }
 

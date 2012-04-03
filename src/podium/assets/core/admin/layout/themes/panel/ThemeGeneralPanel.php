@@ -27,13 +27,29 @@
  */
 class ThemeGeneralPanel extends \picon\Panel
 {
-    public function __construct($id)
+    /**
+     * @Resource
+     */
+    private $themeService;
+    
+    public function __construct($id, Theme $theme)
     {
         parent::__construct($id);
-        $this->add(new picon\RequiredTextField('name'));
+        $name = new picon\RequiredTextField('name');
+        $self = $this;
+        $name->add(new NameExistsValidator(function($name) use ($self, $theme)
+        {
+            return $self->getThemeService()->checkNameExists($name, $theme->id);
+        }));
+        $this->add($name);
         $this->add(new ColourPicker('page.background'));
         $this->add(new ColourPicker('page.fontcolour'));
         $this->add(ThemeFieldFactory::newFontSize('page.fontsize'));
+    }
+    
+    public function getThemeService()
+    {
+        return $this->themeService;
     }
 }
 

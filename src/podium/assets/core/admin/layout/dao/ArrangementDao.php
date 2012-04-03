@@ -105,6 +105,15 @@ class ArrangementDao extends AbstractDao
     {
         return $this->getTemplate()->queryForInt("SELECT count(*) FROM arrangement WHERE id = %d AND (id IN (SELECT arrangement_id FROM content_type) OR id IN (SELECT arrangement_id FROM page))", array($arrangementId));
     }
+    
+    public function getArrangementByName($name)
+    {
+        $mapper = new \picon\CallbackRowMapper(function($row) use ($layout)
+        {
+            return new Arrangement($row->layout_id, $row->name, $row->id);
+        });
+        return $this->getTemplate()->query("SELECT * FROM arrangement WHERE name = '%s'", $mapper, array($name));
+    }
 }
 
 ?>

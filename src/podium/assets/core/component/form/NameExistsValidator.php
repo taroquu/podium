@@ -21,41 +21,28 @@
  * */
 
 /**
- * Setup panel for basic post options
+ * Validates that the value of a string text field is not already in use
  * 
  * @author Martin Cassidy
  */
-class PostSetupPanel extends picon\Panel
+class NameExistsValidator extends picon\StringValidator
 {
-    /**
-     * @Resource
-     */
-    private $postService;
+    private $nameCallback;
     
-    public function __construct($id, Post $post)
+    public function __construct($nameCallback)
     {
-        parent::__construct($id);
-        $name = new picon\RequiredTextField('name');
-        $self = $this;
-        $name->add(new NameExistsValidator(function($name) use ($self, $post)
-        {
-            return $self->getPostService()->checkNameExists($name, $post->id);
-        }));
-        $this->add($name);
-        
-        if($post->contentType==null)
-        {
-            $this->add(new SelectContentTypePanel('contentType', 'post'));
-        }
-        else
-        {
-            $this->add(new \picon\EmptyPanel('contentType'));
-        }
+        picon\Args::callBackArgs($nameCallback, 1, 'nameCallback');
+        $this->nameCallback = new \picon\SerializableClosure($nameCallback);
     }
     
-    public function getPostService()
+    public function validateValue(picon\Validatable $validateable)
     {
-        return $this->postService;
+        parent::validateValue($validateable);
+        $callable = $this->nameCallback;
+        if($callable($validateable->getValue()))
+        {
+            return new picon\ValidationResponse($this->getKeyName(get_called_class()));
+        }
     }
 }
 

@@ -30,6 +30,11 @@ use picon\Form;
  */
 class LayoutFormPanel extends Panel
 {
+    /**
+     * @Resource
+     */
+    private $layoutService;
+    
     private $layout;
     
     public function __construct($id, Model $model, $onSubmit)
@@ -40,9 +45,15 @@ class LayoutFormPanel extends Panel
         $form = new Form('form', new picon\CompoundPropertyModel($this, 'layout'));
         $this->add($form);
         $name = new picon\TextField('name');
+        $self = $this;
+        //This will need updating when names change by edited
+        $name->add(new NameExistsValidator(function($name) use ($self)
+        {
+            return $self->getLayoutService()->checkNameExists($name);
+        }));
         $name->setRequired(true);
         $form->add($name);
-        $self = $this;
+        
         $form->add(new \picon\Button('submit', function() use ($onSubmit, $self)
         {
             $onSubmit();
@@ -60,6 +71,11 @@ class LayoutFormPanel extends Panel
     public function __set($name, $value)
     {
         $this->$name = $value;
+    }
+    
+    public function getLayoutService()
+    {
+        return $this->layoutService;
     }
 }
 

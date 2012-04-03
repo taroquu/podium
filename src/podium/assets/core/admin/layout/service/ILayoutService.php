@@ -74,6 +74,14 @@ interface ILayoutService
      * @return boolean
      */
     function inUse($layoutId);
+    
+    /**
+     * Checks whether the layout name exists, ensuring it is not itself
+     * @param string $name
+     * @param int $id The id of the layout (if it exists)
+     * @return boolean 
+     */
+    function checkNameExists($name, $id = null);
 }
 
 ?>
