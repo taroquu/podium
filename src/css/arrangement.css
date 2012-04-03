@@ -2,7 +2,7 @@
     border:1px #000 solid;
 }
 
-.layoutBlock li {
+.layoutBlock li.podiumWidgetElement {
     position:relative;
 }
 
@@ -15,7 +15,7 @@
     z-index:1;
 }
 
-.layoutBlock ul {
+.layoutBlock ul.widgetHolder {
     width:100%;
     height:100%;
     margin:0px;
@@ -31,24 +31,24 @@
     display:none;
 }
 
-li:hover .blockControl {
+.layoutBlock ul.widgetHolder li.podiumWidgetElement:hover .blockControl {
     display:block;
 }
 
-.rowBlock li {
+.rowBlock ul.widgetHolder li.podiumWidgetElement {
     min-width: 150px !important; 
     width: auto !important; width: 150px;
     float:left;
     height:100%;
 }
 
-.columnElement li {
+.columnElement ul.widgetHolder li.podiumWidgetElement {
     min-height: 60px !important; 
     height: 100% !important; height: 6px;
     width:100%;
 }
 
-li .widgetPlaceholder {
+ul.widgetHolder li.podiumWidgetElement .widgetPlaceholder {
     display:block;
 }
 
@@ -64,7 +64,7 @@ li .widgetPlaceholder {
     z-index:50000;
 }
 
-li:hover .hoverBox {
+ul.widgetHolder li.podiumWidgetElement:hover .hoverBox {
     display:block;
 }
 
