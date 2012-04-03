@@ -91,7 +91,7 @@ class CreateEditContentTypePage extends AbstractAdminTitlePage
         
         $arrangementDrop = new picon\DropDown('arrangement', $arrangementChoices, new picon\ChoiceRenderer(function($choice, $index)
         {
-            return $index;
+            return $choice->id;
         },
         function($choice, $index)
         {

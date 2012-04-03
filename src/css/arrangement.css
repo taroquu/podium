@@ -44,7 +44,7 @@
 
 .columnElement ul.widgetHolder li.podiumWidgetElement {
     min-height: 60px !important; 
-    height: 100% !important; height: 6px;
+    height: auto !important; height: 6px;
     width:100%;
 }
 

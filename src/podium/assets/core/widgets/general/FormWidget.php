@@ -43,7 +43,7 @@ class FormWidget extends Widget
     {
         parent::__construct($id, $item);
         
-        $fullForm = $this->formService->getForm($item->config->form);
+        $fullForm = $item->config->form==null?new PopulatedForm():$this->formService->getForm($item->config->form);
         
         $this->formFields = array();
         $form = new picon\Form('form');

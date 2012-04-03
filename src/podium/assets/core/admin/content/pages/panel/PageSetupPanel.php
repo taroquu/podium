@@ -78,15 +78,15 @@ class PageSetupPanel extends \picon\Panel
         
         $arrangements = $this->layoutService->getLayoutsAndArrangement();
 
+        $arrangementChoices = array();
         foreach($arrangements as $name => $arranement)
         {
-            $arrangements[ucwords($name)] = $arranement;
-            unset($arrangements[$name]);
+            $arrangementChoices[ucwords($name)] = $arranement;
         }
         
-        $this->add(new picon\DropDown('arrangement', $arrangements, new picon\ChoiceRenderer(function($choice, $index)
+        $this->add(new picon\DropDown('arrangement', $arrangementChoices, new picon\ChoiceRenderer(function($choice, $index)
         {
-            return $index;
+            return $choice->id;
         },
         function($choice, $index)
         {
