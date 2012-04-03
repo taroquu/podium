@@ -26,6 +26,8 @@ define("CACHE_DIRECTORY", __DIR__.'/cache');
 
 require_once("podium/picon/PiconApplication.php");
 
+session_name("PodiumCMS");
+
 use picon\PiconApplication;
 use picon\PageClassAuthorisationStrategy;
 
