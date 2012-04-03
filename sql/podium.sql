@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 02, 2012 at 06:47 PM
+-- Generation Time: Apr 03, 2012 at 04:36 PM
 -- Server version: 5.5.15
 -- PHP Version: 5.3.8
 
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `arrangement_elements` (
   KEY `block_id` (`block_id`),
   KEY `arrangement_id` (`arrangement_id`),
   KEY `widget_id_2` (`widget_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=41 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=43 ;
 
 --
 -- Dumping data for table `arrangement_elements`
@@ -65,7 +65,9 @@ INSERT INTO `arrangement_elements` (`id`, `arrangement_id`, `block_id`, `index`,
 (34, 1, 17, 0, 8, 48),
 (38, 3, 17, 0, 8, 62),
 (39, 1, 20, 0, 7, 106),
-(40, 1, 18, 0, 6, 119);
+(40, 1, 18, 0, 6, 119),
+(41, 1, 6, 0, 11, 127),
+(42, 1, 20, 1, 12, 131);
 
 -- --------------------------------------------------------
 
@@ -79,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `content` (
   `content_type_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `content_type_id` (`content_type_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=74 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=77 ;
 
 --
 -- Dumping data for table `content`
@@ -99,7 +101,10 @@ INSERT INTO `content` (`id`, `name`, `content_type_id`) VALUES
 (70, 'testdate', 1),
 (71, 'testimagepage', 1),
 (72, 'testnewimagepage', 1),
-(73, 'thank you', 1);
+(73, 'thank you', 1),
+(74, 'My second post', 2),
+(75, 'test update', 2),
+(76, 'test update 2', 2);
 
 -- --------------------------------------------------------
 
@@ -141,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `content_entries` (
   UNIQUE KEY `widget_config_id` (`widget_config_id`),
   KEY `content_id` (`content_id`),
   KEY `content_type_attribute_id` (`content_type_attribute_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=79 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=82 ;
 
 --
 -- Dumping data for table `content_entries`
@@ -186,7 +191,10 @@ INSERT INTO `content_entries` (`id`, `content_id`, `content_type_attribute_id`, 
 (75, 73, 7, 122),
 (76, 73, 12, 123),
 (77, 73, 10, 124),
-(78, 73, 11, 125);
+(78, 73, 11, 125),
+(79, 74, 9, 128),
+(80, 75, 9, 129),
+(81, 76, 9, 130);
 
 -- --------------------------------------------------------
 
@@ -318,21 +326,21 @@ CREATE TABLE IF NOT EXISTS `form_element_options` (
   `option` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `form_element_id` (`form_element_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=123 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=131 ;
 
 --
 -- Dumping data for table `form_element_options`
 --
 
 INSERT INTO `form_element_options` (`id`, `form_element_id`, `option`) VALUES
-(115, 19, 'op1'),
-(116, 19, 'op2'),
-(117, 19, 'op3'),
-(118, 20, 'radio op1'),
-(119, 20, 'another op'),
-(120, 22, 'check op1'),
-(121, 22, 'check op2'),
-(122, 22, 'check op3');
+(123, 19, 'op1'),
+(124, 19, 'op2'),
+(125, 19, 'op3'),
+(126, 20, 'radio op1'),
+(127, 20, 'another op'),
+(128, 22, 'check op1'),
+(129, 22, 'check op2'),
+(130, 22, 'check op3');
 
 -- --------------------------------------------------------
 
@@ -346,7 +354,14 @@ CREATE TABLE IF NOT EXISTS `form_validation` (
   `type` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `form_element_id` (`form_element_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `form_validation`
+--
+
+INSERT INTO `form_validation` (`id`, `form_element_id`, `type`) VALUES
+(1, 1, 'Email Validator');
 
 -- --------------------------------------------------------
 
@@ -450,6 +465,55 @@ INSERT INTO `layout_block_attributes` (`id`, `block_id`, `name`, `value`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `navigation_menu`
+--
+
+CREATE TABLE IF NOT EXISTS `navigation_menu` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `navigation_menu`
+--
+
+INSERT INTO `navigation_menu` (`id`, `name`) VALUES
+(1, ''),
+(2, ''),
+(3, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `navigation_menu_elements`
+--
+
+CREATE TABLE IF NOT EXISTS `navigation_menu_elements` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `menu_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `type` enum('page','post','external') NOT NULL,
+  `page_id` int(11) DEFAULT NULL,
+  `post_id` int(11) DEFAULT NULL,
+  `url` longtext,
+  PRIMARY KEY (`id`),
+  KEY `post_id` (`post_id`),
+  KEY `page_id` (`page_id`),
+  KEY `menu_id` (`menu_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `navigation_menu_elements`
+--
+
+INSERT INTO `navigation_menu_elements` (`id`, `menu_id`, `title`, `type`, `page_id`, `post_id`, `url`) VALUES
+(2, 1, 'test1', 'page', 65, NULL, NULL),
+(8, 3, 'google', 'external', NULL, NULL, 'google.com');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `page`
 --
 
@@ -481,9 +545,9 @@ INSERT INTO `page` (`id`, `content_id`, `parent_id`, `index`, `arrangement_id`, 
 (41, 49, NULL, 3, NULL, '', '', '', 0, NULL),
 (43, 51, 41, 1, NULL, '', '', '', 0, NULL),
 (46, 54, 41, 2, NULL, '', '', '', 0, NULL),
-(62, 70, NULL, 4, NULL, '', '', '', 1, NULL),
+(62, 70, NULL, 4, NULL, '', '', '', 0, NULL),
 (63, 71, NULL, 5, NULL, '', '', '', 0, NULL),
-(64, 72, NULL, 6, NULL, '', '', '', 0, NULL),
+(64, 72, NULL, 6, NULL, '', '', '', 1, NULL),
 (65, 73, NULL, 7, NULL, '', '', '', 0, NULL);
 
 -- --------------------------------------------------------
@@ -497,14 +561,17 @@ CREATE TABLE IF NOT EXISTS `post` (
   `content_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `content_id` (`content_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `post`
 --
 
 INSERT INTO `post` (`id`, `content_id`) VALUES
-(2, 40);
+(2, 40),
+(3, 74),
+(4, 75),
+(5, 76);
 
 -- --------------------------------------------------------
 
@@ -517,7 +584,7 @@ CREATE TABLE IF NOT EXISTS `submits` (
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `formName` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `submits`
@@ -533,7 +600,9 @@ INSERT INTO `submits` (`id`, `date`, `formName`) VALUES
 (7, '2012-04-02 17:42:00', 'sample form'),
 (8, '2012-04-02 17:42:31', 'sample form'),
 (9, '2012-04-02 17:43:34', 'sample form'),
-(10, '2012-04-02 17:45:26', 'sample form');
+(10, '2012-04-02 17:45:26', 'sample form'),
+(11, '2012-04-02 17:53:42', 'sample form'),
+(12, '2012-04-02 18:24:17', 'sample form');
 
 -- --------------------------------------------------------
 
@@ -548,7 +617,7 @@ CREATE TABLE IF NOT EXISTS `submit_attributes` (
   `value` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `submit_id` (`submit_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=57 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=69 ;
 
 --
 -- Dumping data for table `submit_attributes`
@@ -610,7 +679,19 @@ INSERT INTO `submit_attributes` (`id`, `submit_id`, `name`, `value`) VALUES
 (53, 10, 'radios', ''),
 (54, 10, 'check', ''),
 (55, 10, 'check group', 'Array'),
-(56, 10, 'submit button', '');
+(56, 10, 'submit button', ''),
+(57, 11, 'name', 'test full submit'),
+(58, 11, 'area', 'hi there!'),
+(59, 11, 'drop down', 'op1'),
+(60, 11, 'radios', 'radio op1'),
+(61, 11, 'check', 'Checked'),
+(62, 11, 'check group', 'check op1,check op3'),
+(63, 12, 'name', 'gfhgfh'),
+(64, 12, 'area', ''),
+(65, 12, 'drop down', ''),
+(66, 12, 'radios', ''),
+(67, 12, 'check', 'Not Checked'),
+(68, 12, 'check group', '');
 
 -- --------------------------------------------------------
 
@@ -622,7 +703,7 @@ CREATE TABLE IF NOT EXISTS `theme` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `theme`
@@ -631,7 +712,8 @@ CREATE TABLE IF NOT EXISTS `theme` (
 INSERT INTO `theme` (`id`, `name`) VALUES
 (2, 'theme1'),
 (5, 'testrecursion4'),
-(6, 'testlinks');
+(6, 'testlinks'),
+(7, 'testlinksf');
 
 -- --------------------------------------------------------
 
@@ -646,7 +728,7 @@ CREATE TABLE IF NOT EXISTS `theme_attributes` (
   `value` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `theme_element_id` (`theme_element_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=118 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=157 ;
 
 --
 -- Dumping data for table `theme_attributes`
@@ -691,7 +773,46 @@ INSERT INTO `theme_attributes` (`id`, `theme_element_id`, `name`, `value`) VALUE
 (114, 227, 'fontsize', '10'),
 (115, 227, 'fontcolour', '000000'),
 (116, 227, 'decoration', 'none'),
-(117, 227, 'weight', 'bold');
+(117, 227, 'weight', 'bold'),
+(118, 228, 'background', 'FFFFFF'),
+(119, 228, 'fontsize', '10'),
+(120, 228, 'fontcolour', '000000'),
+(121, 229, 'textColour', '000000'),
+(122, 229, 'textSize', '10'),
+(123, 229, 'decoration', 'none'),
+(124, 229, 'weight', 'bold'),
+(125, 230, 'textColour', '000000'),
+(126, 230, 'textSize', '10'),
+(127, 230, 'decoration', 'none'),
+(128, 230, 'weight', 'bold'),
+(129, 231, 'textColour', '000000'),
+(130, 231, 'textSize', '10'),
+(131, 231, 'decoration', 'none'),
+(132, 231, 'weight', 'bold'),
+(133, 232, 'textColour', '000000'),
+(134, 232, 'textSize', '10'),
+(135, 232, 'decoration', 'none'),
+(136, 232, 'weight', 'bold'),
+(137, 233, 'textColour', '000000'),
+(138, 233, 'textSize', '10'),
+(139, 233, 'decoration', 'none'),
+(140, 233, 'weight', 'bold'),
+(141, 234, 'textColour', '000000'),
+(142, 234, 'textSize', '10'),
+(143, 234, 'decoration', 'none'),
+(144, 234, 'weight', 'bold'),
+(145, 236, 'fontsize', '10'),
+(146, 236, 'fontcolour', '000000'),
+(147, 236, 'decoration', 'none'),
+(148, 236, 'weight', 'bold'),
+(149, 237, 'fontsize', '10'),
+(150, 237, 'fontcolour', '000000'),
+(151, 237, 'decoration', 'none'),
+(152, 237, 'weight', 'bold'),
+(153, 238, 'fontsize', '10'),
+(154, 238, 'fontcolour', '000000'),
+(155, 238, 'decoration', 'none'),
+(156, 238, 'weight', 'bold');
 
 -- --------------------------------------------------------
 
@@ -710,7 +831,7 @@ CREATE TABLE IF NOT EXISTS `theme_elements` (
   PRIMARY KEY (`id`),
   KEY `theme_id` (`theme_id`),
   KEY `parent_element` (`parent_element`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=228 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=239 ;
 
 --
 -- Dumping data for table `theme_elements`
@@ -727,7 +848,18 @@ INSERT INTO `theme_elements` (`id`, `theme_id`, `name`, `type`, `class`, `index`
 (224, 2, 'links', 'object', 'ThemeLink', NULL, NULL),
 (225, 2, 'normal', 'object', 'LinkState', NULL, 224),
 (226, 2, 'hover', 'object', 'LinkState', NULL, 224),
-(227, 2, 'active', 'object', 'LinkState', NULL, 224);
+(227, 2, 'active', 'object', 'LinkState', NULL, 224),
+(228, 7, 'page', 'object', 'ThemePage', NULL, NULL),
+(229, 7, 'headings', 'array', 'HeadingElement', 1, NULL),
+(230, 7, 'headings', 'array', 'HeadingElement', 2, NULL),
+(231, 7, 'headings', 'array', 'HeadingElement', 3, NULL),
+(232, 7, 'headings', 'array', 'HeadingElement', 4, NULL),
+(233, 7, 'headings', 'array', 'HeadingElement', 5, NULL),
+(234, 7, 'headings', 'array', 'HeadingElement', 6, NULL),
+(235, 7, 'links', 'object', 'ThemeLink', NULL, NULL),
+(236, 7, 'normal', 'object', 'LinkState', NULL, 235),
+(237, 7, 'hover', 'object', 'LinkState', NULL, 235),
+(238, 7, 'active', 'object', 'LinkState', NULL, 235);
 
 -- --------------------------------------------------------
 
@@ -765,7 +897,7 @@ CREATE TABLE IF NOT EXISTS `widgets` (
   `target_table` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `category_id` (`category_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `widgets`
@@ -778,7 +910,9 @@ INSERT INTO `widgets` (`id`, `category_id`, `name`, `class`, `setup`, `config`, 
 (7, 1, 'Image', 'ImageWidget', 'ImageWidgetConfigPanel', 'ImageWidgetConfig', 'widget_config_image'),
 (8, 1, 'Content Block', 'ContentWidget', 'ContentWidgetConfigPanel', 'ContentWidgetConfig', 'widget_config_content'),
 (9, NULL, 'Author', 'AuthorWidget', 'AuthorWidgetConfigPanel', 'AuthorWidgetItem', 'widget_config_author'),
-(10, NULL, 'Date', 'DateWidget', 'DateWidgetConfigPanel', 'DateWidgetItem', 'widget_config_date');
+(10, NULL, 'Date', 'DateWidget', 'DateWidgetConfigPanel', 'DateWidgetItem', 'widget_config_date'),
+(11, 2, 'Post List', 'PostListWidget', 'PostListConfigPanel', 'PostListItem', 'widget_config_postlist'),
+(12, 2, 'Menu', 'NavigationMenuWidget', 'NavigationMenuConfigPanel', 'NavigationMenuItem', 'widget_config_navigation');
 
 -- --------------------------------------------------------
 
@@ -811,7 +945,7 @@ CREATE TABLE IF NOT EXISTS `widget_config` (
   `widget_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `widget_id` (`widget_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=126 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=132 ;
 
 --
 -- Dumping data for table `widget_config`
@@ -891,6 +1025,9 @@ INSERT INTO `widget_config` (`id`, `widget_id`) VALUES
 (115, 4),
 (121, 4),
 (122, 4),
+(128, 4),
+(129, 4),
+(130, 4),
 (30, 6),
 (35, 6),
 (39, 6),
@@ -918,7 +1055,10 @@ INSERT INTO `widget_config` (`id`, `widget_id`) VALUES
 (105, 10),
 (112, 10),
 (118, 10),
-(125, 10);
+(125, 10),
+(126, 11),
+(127, 11),
+(131, 12);
 
 -- --------------------------------------------------------
 
@@ -933,7 +1073,7 @@ CREATE TABLE IF NOT EXISTS `widget_config_author` (
   PRIMARY KEY (`id`),
   KEY `config_id` (`config_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=26 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
 
 --
 -- Dumping data for table `widget_config_author`
@@ -947,8 +1087,8 @@ INSERT INTO `widget_config_author` (`id`, `config_id`, `user_id`) VALUES
 (20, 99, 4),
 (21, 104, 4),
 (23, 111, 4),
-(24, 117, 4),
-(25, 124, 4);
+(25, 124, 4),
+(26, 117, 4);
 
 -- --------------------------------------------------------
 
@@ -961,7 +1101,7 @@ CREATE TABLE IF NOT EXISTS `widget_config_content` (
   `config_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `config_id` (`config_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 --
 -- Dumping data for table `widget_config_content`
@@ -969,7 +1109,7 @@ CREATE TABLE IF NOT EXISTS `widget_config_content` (
 
 INSERT INTO `widget_config_content` (`id`, `config_id`) VALUES
 (3, 47),
-(11, 48),
+(14, 48),
 (9, 62);
 
 -- --------------------------------------------------------
@@ -984,7 +1124,7 @@ CREATE TABLE IF NOT EXISTS `widget_config_date` (
   `date` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `config_id` (`config_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `widget_config_date`
@@ -994,8 +1134,8 @@ INSERT INTO `widget_config_date` (`id`, `config_id`, `date`) VALUES
 (1, 100, '04/04/2012'),
 (2, 105, '04/02/2012'),
 (4, 112, '04/17/2012'),
-(5, 118, '04/24/2012'),
-(6, 125, '05/05/2012');
+(6, 125, '05/05/2012'),
+(7, 118, '04/24/2012');
 
 -- --------------------------------------------------------
 
@@ -1010,7 +1150,7 @@ CREATE TABLE IF NOT EXISTS `widget_config_form` (
   PRIMARY KEY (`id`),
   KEY `config_id` (`config_id`),
   KEY `form` (`form`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `widget_config_form`
@@ -1021,7 +1161,7 @@ INSERT INTO `widget_config_form` (`id`, `config_id`, `form`) VALUES
 (6, 35, 1),
 (7, 39, 1),
 (8, 40, 1),
-(9, 119, 1);
+(12, 119, 1);
 
 -- --------------------------------------------------------
 
@@ -1036,7 +1176,7 @@ CREATE TABLE IF NOT EXISTS `widget_config_heading` (
   `text` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `attribute_id` (`config_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=75 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=79 ;
 
 --
 -- Dumping data for table `widget_config_heading`
@@ -1068,9 +1208,9 @@ INSERT INTO `widget_config_heading` (`id`, `config_id`, `type`, `text`) VALUES
 (67, 96, 'Heading 1', 'werwer'),
 (68, 101, 'Heading 1', 'sdfsdf'),
 (71, 107, 'Heading 2', 'sdsd'),
-(72, 113, 'Heading 2', 'dsfsdf'),
-(73, 26, 'Heading 1', 'asdfasdf'),
-(74, 120, 'Heading 1', 'THANK YOU');
+(74, 120, 'Heading 1', 'THANK YOU'),
+(76, 113, 'Heading 2', 'dsfsdf'),
+(78, 26, 'Heading 1', 'asdfasdf');
 
 -- --------------------------------------------------------
 
@@ -1086,7 +1226,7 @@ CREATE TABLE IF NOT EXISTS `widget_config_image` (
   `width` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `config_id` (`config_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `widget_config_image`
@@ -1094,9 +1234,55 @@ CREATE TABLE IF NOT EXISTS `widget_config_image` (
 
 INSERT INTO `widget_config_image` (`id`, `config_id`, `path`, `height`, `width`) VALUES
 (3, 110, 'media/images/^black granite-04.jpg', 100, 100),
-(4, 116, 'media/images/clouds_6434sm-721218.jpg', 40, 40),
-(5, 106, 'media/images/marble_ioannina.JPG', 50, 50),
-(6, 123, 'media/images/orig3.png', 150, 150);
+(6, 123, 'media/images/orig3.png', 150, 150),
+(8, 116, 'media/images/', 40, 40),
+(10, 106, 'media/images/marble_ioannina.JPG', 50, 50);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `widget_config_navigation`
+--
+
+CREATE TABLE IF NOT EXISTS `widget_config_navigation` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `config_id` int(11) NOT NULL,
+  `orientation` tinyint(1) NOT NULL,
+  `menu_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `config_id` (`config_id`),
+  KEY `menu_id` (`menu_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `widget_config_navigation`
+--
+
+INSERT INTO `widget_config_navigation` (`id`, `config_id`, `orientation`, `menu_id`) VALUES
+(2, 131, 1, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `widget_config_postlist`
+--
+
+CREATE TABLE IF NOT EXISTS `widget_config_postlist` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `config_id` int(11) NOT NULL,
+  `content_type_id` int(11) NOT NULL,
+  `amount` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `config_id` (`config_id`),
+  KEY `content_type_id` (`content_type_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `widget_config_postlist`
+--
+
+INSERT INTO `widget_config_postlist` (`id`, `config_id`, `content_type_id`, `amount`) VALUES
+(3, 127, 2, 4);
 
 -- --------------------------------------------------------
 
@@ -1110,7 +1296,7 @@ CREATE TABLE IF NOT EXISTS `widget_config_textbox` (
   `text` longtext NOT NULL,
   PRIMARY KEY (`id`),
   KEY `attribute_id` (`config_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=97 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=103 ;
 
 --
 -- Dumping data for table `widget_config_textbox`
@@ -1157,10 +1343,13 @@ INSERT INTO `widget_config_textbox` (`id`, `config_id`, `text`) VALUES
 (88, 103, '<p>sdfsdf</p>'),
 (91, 108, '<p>asdasd</p>'),
 (92, 109, '<p style="text-align: right;">asdasd</p>'),
-(93, 114, '<p>sdfsdf</p>'),
-(94, 115, '<p>sdfsdf</p>'),
 (95, 121, '<p>hhh</p>'),
-(96, 122, '<p>hhhh</p>');
+(96, 122, '<p>hhhh</p>'),
+(97, 128, '<p>Hi there</p>'),
+(99, 130, '<p>asdfasdf</p>'),
+(100, 114, '<p>sdfsdf</p>'),
+(101, 115, '<p>sdfsdf</p>'),
+(102, 129, '<p>asdfasdf</p>');
 
 --
 -- Constraints for dumped tables
@@ -1259,6 +1448,14 @@ ALTER TABLE `layout_block_attributes`
   ADD CONSTRAINT `layout_block_attributes_ibfk_1` FOREIGN KEY (`block_id`) REFERENCES `layout_blocks` (`id`) ON UPDATE CASCADE;
 
 --
+-- Constraints for table `navigation_menu_elements`
+--
+ALTER TABLE `navigation_menu_elements`
+  ADD CONSTRAINT `navigation_menu_elements_ibfk_6` FOREIGN KEY (`menu_id`) REFERENCES `navigation_menu` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `navigation_menu_elements_ibfk_7` FOREIGN KEY (`page_id`) REFERENCES `page` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `navigation_menu_elements_ibfk_8` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON UPDATE CASCADE;
+
+--
 -- Constraints for table `page`
 --
 ALTER TABLE `page`
@@ -1335,6 +1532,20 @@ ALTER TABLE `widget_config_heading`
 --
 ALTER TABLE `widget_config_image`
   ADD CONSTRAINT `widget_config_image_ibfk_1` FOREIGN KEY (`config_id`) REFERENCES `widget_config` (`id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `widget_config_navigation`
+--
+ALTER TABLE `widget_config_navigation`
+  ADD CONSTRAINT `widget_config_navigation_ibfk_2` FOREIGN KEY (`menu_id`) REFERENCES `navigation_menu` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `widget_config_navigation_ibfk_1` FOREIGN KEY (`config_id`) REFERENCES `widget_config` (`id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `widget_config_postlist`
+--
+ALTER TABLE `widget_config_postlist`
+  ADD CONSTRAINT `widget_config_postlist_ibfk_1` FOREIGN KEY (`config_id`) REFERENCES `widget_config` (`id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `widget_config_postlist_ibfk_2` FOREIGN KEY (`content_type_id`) REFERENCES `content_type` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `widget_config_textbox`

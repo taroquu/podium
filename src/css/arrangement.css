@@ -61,6 +61,7 @@ li .widgetPlaceholder {
     width:20px;
     position:absolute;
     top:10px;
+    z-index:50000;
 }
 
 li:hover .hoverBox {

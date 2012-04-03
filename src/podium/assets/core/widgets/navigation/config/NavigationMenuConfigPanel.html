@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:picon="http://picon.webquub.com/dtds/picon-xhtml.dtd"  
+      xml:lang="en"  
+      lang="en"> 
+    <head>
+    </head>
+    <body>
+        <picon:panel>
+            <ul picon:id="updateBlock">
+                <li picon:id="elements">
+                    <b><span picon:id="title"></span>:</b>&nbsp;
+                    <em><span picon:id="type"></span>:</em>&nbsp;
+                    <span picon:id="value"></span>&nbsp;
+                    <a picon:id="delete"><img src="images/delete.png" width="15" height="15"/></a>
+                </li>
+            </ul>
+            <hr />
+            <form picon:id="elementForm">
+                <div picon:id="feedback"></div>
+                <div class="singleFieldBlock"><label>Title: </label>
+                    <input type="text" picon:id="title" /></div>
+                <select picon:id="type"></select>&nbsp;
+                <span picon:id="fields">
+                <select picon:id="page"></select>
+                <select picon:id="post"></select>
+                <input type="text" picon:id="externalUrl" />
+                </span><br /><br />
+                <input type="button" picon:id="add" value="Add" />
+            </form>
+            <hr />
+            <div class="singleFieldBlock"><label>Orientation: </label><select picon:id="orientation"></select></div>
+        </picon:panel>
+    </body>
+</html>
