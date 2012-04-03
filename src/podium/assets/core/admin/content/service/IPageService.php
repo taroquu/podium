@@ -116,6 +116,12 @@ interface IPageService
      * @return boolean 
      */
     function checkNameExists($name, $id = null);
+    
+    /**
+     * The the total number of pages
+     * @return int
+     */
+    function getPageSize();
 }
 
 ?>

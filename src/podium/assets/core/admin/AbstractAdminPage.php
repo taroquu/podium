@@ -116,7 +116,7 @@ abstract class AbstractAdminPage extends WebPage
     protected function getSecondaryHead($id)
     {
         $panel = new EmptyPanel($id);
-        $panel->setVisible(false);
+        $panel->add(new \picon\AttributeModifier('class', new BasicModel('headerSpace')));
         return $panel;
     }
     

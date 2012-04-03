@@ -22,13 +22,34 @@
 
 /**
  * The dashboard page
- * @todo put some basic stuff on this page
  * @author Martin Cassidy
  * @Path(path='admin')
  */
 class AdminHomePage extends AbstractAdminPage
 {
-    //put your code here
+    public function __construct()
+    {
+        parent::__construct();
+        $cols = array(array('Common Tasks' => ComonTasksPanel::getIdentifier()), array('System Status' => StatusPanel::getIdentifier()));
+        
+        $columns = new \picon\RepeatingView('col');
+        $this->add($columns);
+        
+        foreach($cols as $name => $elements)
+        {
+            $container = new \picon\RepeatingView($columns->getNextChildId());
+            $columns->add($container);
+            
+            foreach($elements as $title => $element)
+            {
+                $wrapper = new DashbaordWidgetBox($container->getNextChildId(), $title);
+                $container->add($wrapper);
+                $panelClass = $element->getFullyQualifiedName();
+                $wrapper->add(new $panelClass('content'));
+            }
+
+        }
+    }
 }
 
 ?>

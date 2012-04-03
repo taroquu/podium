@@ -258,6 +258,30 @@ body {
     vertical-align: top;
 }
 
+.headerSpace {
+    height:30px;
+}
+
+
+/****************************
+  Wraps
+****************************/
+
+.wrappingBox {
+    border:1px solid #336600;
+}
+
+.wrappingBox h2 {
+    background: #336600;
+    color:#fff;
+    padding:2px;
+    font-size:12pt;
+}
+
+.wrappingBox div {
+    padding:5px;
+}
+
 /****************************
   Forms
 ****************************/

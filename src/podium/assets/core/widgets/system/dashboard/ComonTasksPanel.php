@@ -21,45 +21,32 @@
  * */
 
 /**
- * Generic content page
- *
+ * Common tasks dashbaord panel
+ * 
  * @author Martin Cassidy
  */
-class ContentPage extends AbstractAdminTitlePage
+class ComonTasksPanel extends \picon\Panel
 {
-    public function __construct()
+    public function __construct($id, Model $model = null)
     {
-        parent::__construct();
+        parent::__construct($id, $model);
         $self = $this;
-        $this->add(new \picon\Link('pages', function() use ($self)
-        {
-            $self->setPage(PagesListPage::getIdentifier());
-        }));
         $this->add(new \picon\Link('createPage', function() use ($self)
         {
             $self->setPage(CreatePage::getIdentifier());
-        }));
-        $this->add(new \picon\Link('posts', function() use ($self)
-        {
-            $self->setPage(PostListPage::getIdentifier());
         }));
         $this->add(new \picon\Link('createPost', function() use ($self)
         {
             $self->setPage(CreatePost::getIdentifier());
         }));
-        $this->add(new \picon\Link('types', function() use ($self)
-        {
-            $self->setPage(ContentTypeListPage::getIdentifier());
-        }));
         $this->add(new \picon\Link('createType', function() use ($self)
         {
             $self->setPage(CreateEditContentTypePage::getIdentifier());
         }));
-    }
-    
-    protected function getTitle()
-    {
-        return 'Content';
+        $this->add(new \picon\Link('createForm', function() use ($self)
+        {
+            $self->setPage(CreateEditFormPage::getIdentifier());
+        }));
     }
 }
 

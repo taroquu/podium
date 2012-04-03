@@ -280,6 +280,11 @@ class PageService implements IPageService
             return $id==null?true:$pages[0]->id!=$id;
         }
     }
+    
+    public function getPageSize()
+    {
+        return $this->pageDao->getPageSize();
+    }
 }
 
 ?>

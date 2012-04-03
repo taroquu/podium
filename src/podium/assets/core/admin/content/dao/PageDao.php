@@ -128,6 +128,11 @@ class PageDao extends AbstractDao
         });
         return $this->getTemplate()->query("SELECT page.*, content.name FROM page INNER JOIN content ON page.content_id = content.id WHERE content.name = '%s';", $mapper, array($name));
     }
+    
+    public function getPageSize()
+    {
+        return $this->getTemplate()->queryForInt("SELECT count(*) FROM page;");
+    }
 }
 
 ?>
