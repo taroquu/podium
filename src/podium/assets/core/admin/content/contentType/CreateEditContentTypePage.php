@@ -83,14 +83,13 @@ class CreateEditContentTypePage extends AbstractAdminTitlePage
         $form->add($typeDrop);
         
         $arrangements = $this->layoutService->getLayoutsAndArrangement();
-        
+        $arrangementChoices = array();
         foreach($arrangements as $name => $arranement)
         {
-            $arrangements[ucwords($name)] = $arranement;
-            unset($arrangements[$name]);
+            $arrangementChoices[ucwords($name)] = $arranement;
         }
         
-        $arrangementDrop = new picon\DropDown('arrangement', $arrangements, new picon\ChoiceRenderer(function($choice, $index)
+        $arrangementDrop = new picon\DropDown('arrangement', $arrangementChoices, new picon\ChoiceRenderer(function($choice, $index)
         {
             return $index;
         },

@@ -33,15 +33,18 @@ class ContentSetupPanel extends \picon\Panel
     {
         parent::__construct($id);
         $this->panels = array();
-        $view = new picon\RepeatingView('configEdit');
+        $view = new picon\RepeatingView('element');
         $this->add($view);
 
         foreach($page->contentType->attributes as $attribute)
         {
-            $configPanel = WidgetFactory::getWidgetConfigPanel($view->getNextChildId(), $attribute->widget);
+            $container = new \picon\MarkupContainer($view->getNextChildId());
+            $view->add($container);
+            $configPanel = WidgetFactory::getWidgetConfigPanel('configEdit', $attribute->widget);
             $configPanel->setModel(new \picon\CompoundPropertyModel($attribute, 'widget.config'));
-            $view->add($configPanel);
+            $container->add($configPanel);
             $this->panels [] = $configPanel;
+            $container->add(new \picon\Label('name', new picon\BasicModel($attribute->name)));
         }
         
     }
